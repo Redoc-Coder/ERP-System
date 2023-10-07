@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Dashboard</h1>
+    <p>Sa Dashboard nandito ang mga:</p>
+    <p>
+      <a href="{{ url_for('AddMerchandise')}}">Posting Merchandise Page</a>
+    </p>
+    <p><a href="{{ url_for('Transactions')}}">View Transactions Page</a></p>
+
+    <p>Logout</p>
+
+    <p><a href="{{ url_for('Inventory')}}">View/Edit Inventory Page</a></p>
+
+    <p><a href="{{ url_for('Accounting')}}">View Accounting Page</a></p>
+
+    <p><a href="{{ url_for('Courier')}}">View Courier Page</a></p>
+  </body>
+</html>
