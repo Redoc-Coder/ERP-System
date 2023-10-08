@@ -3,22 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Dashboard</h1>
-    <p>Sa Dashboard nandito ang mga:</p>
-    <p>
-      <a href="{{ url_for('AddMerchandise')}}">Posting Merchandise Page</a>
-    </p>
-    <p><a href="{{ url_for('Transactions')}}">View Transactions Page</a></p>
+    <div class="container mt-5">
+      <h1 class="display-4">Dashboard</h1>
+      <p class="lead">Sa Dashboard nandito ang mga:</p>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <a href="{{ url_for('AddMerchandise')}}">Posting Merchandise Page</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{{ url_for('Transactions')}}">View Transactions Page</a>
+        </li>
+        <li class="list-group-item">Logout</li>
+        <li class="list-group-item">
+          <a href="{{ url_for('Inventory')}}">View/Edit Inventory Page</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{{ url_for('Accounting')}}">View Accounting Page</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{{ url_for('Courier')}}">View Courier Page</a>
+        </li>
+      </ul>
+    </div>
 
-    <p>Logout</p>
-
-    <p><a href="{{ url_for('Inventory')}}">View/Edit Inventory Page</a></p>
-
-    <p><a href="{{ url_for('Accounting')}}">View Accounting Page</a></p>
-
-    <p><a href="{{ url_for('Courier')}}">View Courier Page</a></p>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
