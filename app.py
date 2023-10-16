@@ -3,9 +3,19 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+@app.route("/")
+def Index():
+    return render_template("index.html")
+
+
 @app.route("/login")
 def Login():
     return render_template("login.html")
+
+
+@app.route("/aboutus")
+def AboutUs():
+    return render_template("aboutus.html")
 
 
 @app.route("/storeprofile")
