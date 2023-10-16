@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700;800&display=swap");
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-image: linear-gradient(#242F9B, #DBDFFD);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px 40px;
+  background-color: #0E49B5;
+}
+
+.header h2 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.form {
+  padding: 30px 24px;	
+}
+
+.form-control {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  position: relative;
+}
+
+.form-control-gender {
+  margin-bottom: 5px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.form-control label,
+.form-control-gender label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.form-control input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px;
+  width: 100%;
+}
+
+.gender-border {
+  padding-top: 5px;
+  padding-left: 10px;
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.form-control input:focus {
+  outline: 0;
+  border-color: #777777;
+}
+
+.form-control.success input {
+  border-color: #2ecc71;
+}
+
+.form-control.error input {
+  border-color: #e74c3c;
+}
+
+.form-control-gender.success fieldset {
+  border-color: #2ecc71;
+}
+
+.form-control-gender.error fieldset {
+  border-color: #e74c3c;
+}
+
+.form-control i {
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}
+
+.form-control i#bday-check-circle,
+.form-control i#bday-exclamation-circle {
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  right: 45px;
+}
+
+.form-control-gender i {
+  visibility: hidden;
+  position: absolute;
+  top: 45px; 
+  right: 10px;
+}
+
+.form-control.success i.fa-check-circle,
+.form-control.success i#bday-check-circle,
+.form-control-gender.success i.fa-check-circle {
+  color: #2ecc71;
+  visibility: visible;
+}
+
+.form-control.error i.fa-exclamation-circle,
+.form-control.error i#bday-exclamation-circle,
+.form-control-gender.error i.fa-exclamation-circle {
+  color: #e74c3c;
+  visibility: visible;
+}
+
+.form-control small {
+  color: #e74c3c;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  visibility: hidden;
+}
+
+.form-control-gender small {
+  color: #e74c3c;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+}
+
+.form-control.error small,
+.form-control-gender.error small {
+  visibility: visible;
+}
+
+.form button {
+  background-color: #0E49B5;
+  border: 2px solid #0E49B5;
+  border-radius: 4px;
+  color: #ffffff;
+  display: block;
+  font-family: inherit;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.form button:hover {
+  background-color:  #2D31FA;
+  border: 2px solid  #008080;
+}
+
+.static/img-set {
+  height: 450px;
+  width: 450px;
+  margin: 0 auto;
+  display:block;
+}
+
+.relative {
+  position: relative;
+  width: fit-content;
+}
+
+.relative i {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}
+
+.form-control i.fa-eye-slash,
+.form-control i.fa-eye {
+  visibility: visible;
+  position: absolute;
+  top: 45px;
+  right: 20px;
+}
+
+.form-control.error i.fa-eye-slash,
+.form-control.success i.fa-eye-slash,
+.form-control.error i.fa-eye,
+.form-control.success i.fa-eye {
+  visibility: visible;
+  position: absolute;
+  top: 50px;
+  right: 40px;
+}
+
+.disclaimer {
+  display: none;
+}
+
+.img-set-medium {
+  max-width: auto; /* Adjust the size as needed */
+  height: 500px;
+  margin-left: 80px;
+}

@@ -1,17 +1,19 @@
-// Get references to the button and badge
-const addToCartButton = document.getElementById("add-to-cart-button");
-const cartBadge = document.getElementById("cart-badge");
+ // Initialize the cart count
+ let cartCount = 0;
 
-// Initialize the cart count
-let cartCount = 0;
+ // Function to update the cart badge
+ function updateCartBadge() {
+     const cartBadge = document.getElementById("cart-badge");
+     cartBadge.textContent = cartCount;
+ }
 
-// Add a click event listener to the "Add to Cart" button
-addToCartButton.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default link behavior
-
-  // Increment the cart count
-  cartCount++;
-
-  // Update the badge value
-  cartBadge.textContent = cartCount;
-});
+ // Add a click event listener to all buttons with the class "add-to-cart"
+ const addToCartButtons = document.querySelectorAll(".add-to-cart");
+ addToCartButtons.forEach(function (button) {
+     button.addEventListener("click", function () {
+         // Increment the cart count
+         cartCount++;
+         // Update the cart badge
+         updateCartBadge();
+     });
+ });

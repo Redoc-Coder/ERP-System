@@ -4,8 +4,8 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def Index():
-    return render_template("index.html")
+def LandingPage():
+    return render_template("landingpage.html")
 
 
 @app.route("/login")
@@ -13,9 +13,19 @@ def Login():
     return render_template("login.html")
 
 
+@app.route("/signup")
+def SignUp():
+    return render_template("signup.html")
+
+
 @app.route("/aboutus")
 def AboutUs():
     return render_template("aboutus.html")
+
+
+@app.route("/cart")
+def Cart():
+    return render_template("cart.html")
 
 
 @app.route("/storeprofile")
