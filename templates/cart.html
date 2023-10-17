@@ -3,9 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart</title>
+    <title>About Us</title>
+    <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../static/css/landingpage.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>Here is your Cart</h1>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-navbar">
+      <div class="container px-4 px-lg-5">
+        <!-- Logo and Brand -->
+        <div class="d-flex align-items-center">
+          <img
+            src="/static/images/XPerience-LOGO only.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="#!">XPerience</a>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{{ url_for('LandingPage') }}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('AboutUs') }}">About</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Shop</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <a class="btn btn-outline-dark" href="{{ url_for('Cart') }}">
+              <i class="bi-cart-fill me-1"></i>
+              Cart
+              <span
+                id="cart-badge"
+                class="badge bg-dark text-white ms-1 rounded-pill"
+                >0</span
+              >
+            </a>
+          </form>
+
+          <!-- Profile Section -->
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/nigs.png"
+                  class="rounded-circle ms-2"
+                  height="32"
+                  width="35"
+                  alt="Avatar"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('Profile') }}"
+                    >My profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('Dashboard') }}"
+                    >Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('Login') }}"
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- End Profile Section -->
+        </div>
+      </div>
+    </nav>
+    <h1 class="mt-5">Your Cart</h1>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

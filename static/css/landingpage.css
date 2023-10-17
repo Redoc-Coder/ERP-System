@@ -1,5 +1,10 @@
 
-.navbar--bg,
+.navbar-logo {
+    max-height: 32px; /* Adjust the size as needed */
+    margin-right: 10px; /* Add margin for spacing */
+}
+
+
 .footer--bg {
     background-image: linear-gradient(to right, #8b33c5, #15a0e1);
 }
@@ -10,6 +15,4 @@
     left: 0;
     width: 100%;
     z-index: 1000; /* Adjust the z-index as needed */
-  }
-
-  
+}

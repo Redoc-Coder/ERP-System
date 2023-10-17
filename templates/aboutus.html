@@ -22,7 +22,16 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-navbar">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">XPerience</a>
+        <!-- Logo and Brand -->
+        <div class="d-flex align-items-center">
+          <img
+            src="/static/images/XPerience-LOGO only.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="#!">XPerience</a>
+        </div>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -37,7 +46,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#!">Home</a>
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{{ url_for('LandingPage') }}"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('AboutUs') }}">About</a>

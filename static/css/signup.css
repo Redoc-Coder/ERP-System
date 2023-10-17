@@ -48,7 +48,7 @@ body {
 
 .form-control-gender {
   margin-bottom: 5px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   position: relative;
 }
 
@@ -68,7 +68,7 @@ body {
   width: 100%;
 }
 
-.gender-border {
+.account-border {
   padding-top: 5px;
   padding-left: 10px;
   border: 2px solid #f0f0f0;
