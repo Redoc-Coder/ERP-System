@@ -26,23 +26,35 @@
             Please provide login credentials to proceed and have access to all
             our services.
           </p>
-          <form class="login-form" action="" method="">
-            <div class="form-control">
-              <input type="text" name="username" placeholder="Username" />
-              <i class="fas fa-user"></i>
+         
+          <form class="login-form g-3" action="{{url_for('Login')}}" method="POST">
+            <div class="col-auto">
+       
+              <input name='username' type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address">
+       
             </div>
-            <div class="form-control">
-              <input type="password" name="password" placeholder="Password" />
-              <i class="fas fa-lock"></i>
+            <div class="col-auto">
+             
+              <input name="password" type="password" class="form-control" id="inputPassword2" placeholder="Password">
             </div>
-            <button class="submit" type="submit" name="login">Login</button>
-            <p>
-              Don't have an account?
-              <a style="text-align: center" href="{{ url_for('SignUp') }}"
-                >Sign Up</a
-              >
-            </p>
+            <div class="col-auto">
+              <button style="width: 100%;" type="submit" class="btn btn-primary mb-3">Login</button>
+            </div>
           </form>
+          {% if error %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endif %}
+          <p>
+            Don't have an account?
+            <a style="text-align: center" href="{{ url_for('SignUp') }}"
+              >Sign Up</a
+            >
+          </p>
+          <a style="text-align: center" href="{{ url_for('SignUp') }}"
+            >Forgot password?</a
+          >
         </center>
       </div>
     </section>
