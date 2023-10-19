@@ -22,7 +22,7 @@
         <h2>Create Your Account</h2>
       </div>
       <!-- Form -->
-      <form class="form" id="" method="" action="">
+      <form class="form" id="" method="POST" action="{{ url_for('SignUp') }}">
         <div class="row">
           <div class="col-md-3 col-sm-12">
             <!-- First name -->
@@ -114,9 +114,15 @@
               </div>
             </div>
 
-            <!-- Submit button -->
+                        <!-- Submit button -->
             <button type="submit" name="register"><b>Submit</b></button>
             <p>Already have an account? <a href="{{ url_for('Login') }}">Login</a></p>
+
+            {% if error %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endif %}
           </div>
           <!-- Image column -->
           <div class="col-md-6 col-sm-12 d-sm-none d-md-block">
