@@ -16,3 +16,15 @@
     width: 100%;
     z-index: 1000; /* Adjust the z-index as needed */
 }
+
+ /* Set a fixed height for the carousel */
+ #imageCarousel {
+    height: 400px; /* Adjust the height as needed */
+  }
+
+  /* Adjust image dimensions while maintaining aspect ratio */
+  .carousel-inner img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }
