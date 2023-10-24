@@ -4,10 +4,6 @@
     margin-right: 10px; /* Add margin for spacing */
 }
 
-.footer--bg {
-    background-image: linear-gradient(to right, #8b33c5, #15a0e1);
-}
-
 .sticky-navbar {
     position: fixed;
     top: 0;
@@ -16,3 +12,11 @@
     z-index: 1000; /* Adjust the z-index as needed */
 }
 
+.container-margin {
+    margin-top: 120px; 
+}
+
+.header--gradient {
+    background-image: linear-gradient(to right, #8b33c5, #15a0e1);
+    color: white;
+}

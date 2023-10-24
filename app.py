@@ -53,7 +53,7 @@ def Login():
     return render_template("login.html", error=error)
 
 
-@app.route("/landingpage", methods=["GET"])
+@app.route("/Customers/landingpage", methods=["GET"])
 def LandingPage():
     if "user_id" in session:
         # User is logged in
@@ -64,7 +64,7 @@ def LandingPage():
         # User is not logged in, or no cart data found
         cart_count = 0
 
-    return render_template("landingpage.html", cart_count=cart_count)
+    return render_template("Customers/landingpage.html", cart_count=cart_count)
 
 
 # functions for cart
@@ -177,11 +177,6 @@ def ResetPassword():
     return render_template("reset_password.html")
 
 
-@app.route("/aboutus")
-def AboutUs():
-    return render_template("aboutus.html")
-
-
 @app.route("/cart")
 def Cart():
     if "user_id" in session:
@@ -203,9 +198,9 @@ def Cart():
         return render_template("cart.html", products=[], cart_count=0, total_price=0)
 
 
-@app.route("/storeprofile")
-def Profile():
-    return render_template("store_profile.html")
+@app.route("/myprofile")
+def MyProfile():
+    return render_template("my_profile.html")
 
 
 @app.route("/sellerdashboard")
