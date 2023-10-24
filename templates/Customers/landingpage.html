@@ -72,10 +72,10 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#!">All Products</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Camping and Hiking Gear</a></li>
-                <li><a class="dropdown-item" href="#!">Exercise and Fitness Gear</a></li>
-                <li><a class="dropdown-item" href="#!">Sports Equipment</a></li>
-                <li><a class="dropdown-item" href="#!">Outdoor Clothing</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('CampingHikingGear') }}">Camping and Hiking Gear</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('ExerciseFitnessGear') }}">Exercise and Fitness Gear</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('SportsEquipment') }}">Sports Equipment</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('OutdoorClothing') }}">Outdoor Clothing</a></li>
               </ul>
             </li>
           </ul>
@@ -413,7 +413,7 @@
         <div class="container px-4 px-lg-5 mt-5">
           <h2 class="mb-4 d-flex justify-content-between align-items-center">
             <span class="mr-2">Outdoor Clothing</span>
-            <a href="" class="fs-5">See All Products</a>
+            <a href="{{ url_for('OutdoorClothing') }}" class="fs-5">See All Products</a>
           </h2>
   
           <div
@@ -575,7 +575,7 @@
           <div class="container px-4 px-lg-5 mt-5">
             <h2 class="mb-4 d-flex justify-content-between align-items-center">
               <span class="mr-2">Exercise and Fitness Gear</span>
-              <a href="" class="fs-5">See All Products</a>
+              <a href="{{ url_for('ExerciseFitnessGear') }}" class="fs-5">See All Products</a>
             </h2>
     
             <div
@@ -737,7 +737,7 @@
             <div class="container px-4 px-lg-5 mt-5">
               <h2 class="mb-4 d-flex justify-content-between align-items-center">
                 <span class="mr-2">Sports Equipment</span>
-                <a href="" class="fs-5">See All Products</a>
+                <a href="{{ url_for('SportsEquipment') }}" class="fs-5">See All Products</a>
               </h2>
       
               <div
@@ -819,6 +819,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col mb-5">
                   <div class="card h-100">
                     <!-- Sale badge-->
@@ -900,7 +901,7 @@
               <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="mb-4 d-flex justify-content-between align-items-center">
                   <span class="mr-2">Camping and Hiking Gear  </span>
-                  <a href="" class="fs-5">See All Products</a>
+                  <a href="{{ url_for('CampingHikingGear') }}" class="fs-5">See All Products</a>
                 </h2>
         
                 <div
