@@ -26,33 +26,50 @@
             Please provide login credentials to proceed and have access to all
             our services.
           </p>
-         
-          <form class="login-form g-3" action="{{url_for('Login')}}" method="POST">
+
+          <form
+            class="login-form g-3"
+            action="{{url_for('Login')}}"
+            method="POST"
+          >
             <div class="col-auto">
-       
-              <input name='username' type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address">
-       
+              <input
+                name="username"
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Email address"
+              />
             </div>
             <div class="col-auto">
-             
-              <input name="password" type="password" class="form-control" id="inputPassword2" placeholder="Password">
+              <input
+                name="password"
+                type="password"
+                class="form-control"
+                id="inputPassword2"
+                placeholder="Password"
+              />
             </div>
             <div class="col-auto">
-              <button style="width: 100%;" type="submit" class="btn btn-primary mb-3">Login</button>
+              <button
+                style="width: 100%"
+                type="submit"
+                class="btn btn-primary mb-3"
+              >
+                Login
+              </button>
             </div>
           </form>
           {% if error %}
-<div class="alert alert-danger">
-    {{ error }}
-</div>
-{% endif %}
+          <div class="alert alert-danger">{{ error }}</div>
+          {% endif %}
           <p>
             Don't have an account?
             <a style="text-align: center" href="{{ url_for('SignUp') }}"
               >Sign Up</a
             >
           </p>
-          <a style="text-align: center" href="{{ url_for('SignUp') }}"
+          <a style="text-align: center" href="{{ url_for('ForgotPassword') }}"
             >Forgot password?</a
           >
         </center>
