@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.icon-number{
+    display: flex;
+ }
+ .icon-number .number{
+   
+     width: 50%;
+ }
+ .icon-number .icon{
+ 
+ width: 50%;
+ }
+ .card-body{
+
+    height: 110px;
+}
+
+@media (max-width: 990px){
+.all-cards {
+    flex-basis: 100% !important; /* Change to col-*-12 for small screens */
+    max-width: 100% !important; /* Change to col-*-12 for small screens */
+  }
+  .backg{
+    flex-basis: 100% !important; /* Change to col-*-12 for small screens */
+    max-width: 100% !important; /* Change to col-*-12 for small screens */
+  }
+  .offset-md-2, .offset-sm-2, .offset-lg-2 {
+    margin-left: 0 !important; /* Remove offset for small screens */
+  }
+}

@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding:0;
+}
+
+.pag-con{
+ 
+    display: flex;
+    justify-content: center;
+}
+.hidden{
+    display: none;
+}
+
+@media (max-width: 990px){
+
+    .the-table {
+        flex-basis: 100% !important; /* Change to col-*-12 for small screens */
+        max-width: 100% !important; /* Change to col-*-12 for small screens */
+      }
+      .offset-md-2, .offset-sm-2, .offset-lg-2 {
+        margin-left: 0 !important; /* Remove offset for small screens */
+      }
+
+}
+td,th{
+ 
+    vertical-align: middle; /* Center text vertically */
+}
+.pag-con{
+    position: absolute;
+ 
+    bottom: 1%;
+    left: 50%;
+}

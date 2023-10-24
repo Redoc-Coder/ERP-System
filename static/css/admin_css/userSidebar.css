@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.nav-item{
+    display: flex;
+    padding: 10px;
+
+
+}
+.nav-icon{
+
+    display: flex;
+    align-items: center;
+width: 40px;
+}
+
+.nav-text a{
+    margin-top: 5px;
+}
+.links{
+position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-right: 1px solid #d1d1d1; /* Optional: Add a border for separation */
+display: flex;
+flex-direction: column;
+
+align-items:center;
+
+
+}

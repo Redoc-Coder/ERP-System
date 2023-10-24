@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/admin_css/sidebar.css">
+    <link rel="stylesheet" href="/static/css/admin_css/specUser.css">
+    <link rel="stylesheet" href="/static/css/admin_css/mainNav.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Document</title>
+    </head> 
+    <body>
+      <div class="main-navbar shadow-sm fixed-top ">
+        <div class="top-navbar">
+          <div class="container-fluid">
+            <div class="row">
+              <div
+                class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block"
+              >
+                <h5 class="brand-name">XPerience</h5>
+              </div>
+              <div class="col-md-5 my-auto">
+            
+              </div>
+              <div class="col-md-5 my-auto">
+                <ul class="nav justify-content-end">
+                 
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-user"></i> Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li>
+                        <a class="dropdown-item" href="#"
+                          ><i class="fa fa-sign-out"></i> Logout</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+        <nav class="navbar fixed-top" id="navb"">
+            <div class="container-fluid">
+         
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            
+                            <li class="nav-item">
+                                <div class="nav-icon">
+                                    <i class="fa fa-dashboard" style="font-size: 28px;"></i>
+                                </div>
+                                <div class="nav-text">
+                                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                                </div>
+                             
+                            </li>
+                            <li class="nav-item">
+                                <div class="nav-icon">
+                                    <i class="fa fa-dashboard" style="font-size: 28px;"></i>
+                                </div>
+                                <div class="nav-text">
+                                    <a class="nav-link active" aria-current="page" href="#">Users</a>
+                                </div>
+                             
+                            </li>
+                            <li class="nav-item">
+                                <div class="nav-icon">
+                                    <i class="fa fa-dashboard" style="font-size: 28px;"></i>
+                                </div>
+                                <div class="nav-text">
+                                    <a class="nav-link active" aria-current="page" href="#">Product listing requests</a>
+                                </div>
+                             
+                            </li>
+                            <li class="nav-item">
+                                <div class="nav-icon">
+                                    <i class="fa fa-dashboard" style="font-size: 28px;"></i>
+                                </div>
+                                <div class="nav-text">
+                                    <a class="nav-link active" aria-current="page" href="#">Audit trail</a>
+                                </div>
+                             
+                            </li>
+                            <li class="nav-item">
+                                <div class="nav-icon">
+                                    <i class="fa fa-dashboard" style="font-size: 28px;"></i>
+                                </div>
+                                <div class="nav-text">
+                                    <a class="nav-link active" aria-current="page" href="#">Cashout requests</a>
+                                </div>
+                             
+                            </li>
+                        </ul>
+  
+                    </div>
+                </div>
+        
+
+            </div>
+        </nav>
+
+        <div class="container-fluid " style="height: 100vh; background-color: #F3F7F9;"  >
+            <div class="row">
+                <div class="links col-md-2 col-sm-2 col-lg-2 ">
+                  <div class="back-cont" style="margin-top: 70px; width: 100%;">
+                    <a class="btn btn-primary" href="{{ url_for('users')}}" role="button"><i class="fa fa-arrow-left"></i></a>
+                    
+                </div>
+               <div class="links-cont  ">
+                <div class="user-profile" style="display: flex; justify-content: center;">
+                  <img src="/static/images/beanie.jpg" class="img-thumbnail" alt="..." style="height: 100px; width: 100px; border-radius: 50%;">
+                </div>
+                
+                <div class="user mb-4">
+                   <a style="text-decoration: none; color: black; font-size: 14px;">Seller 1</a>
+
+                </div>
+
+ 
+                  <div class="product-cont" style="background-color: #0C144D; border-radius: 8px;">
+                      <div class="products">
+                      <i class="fa fa-box fa-sm" style="color: #CDE2FF; padding-left: 10px; padding-right: 25px;"></i> <a href="#" style="text-decoration: none; color: #CDE2FF; ">Products</a>
+                     </div>
+                  </div>
+                
+               
+                  <div class="transactions">
+                      <i class="fa fa-exchange fa-lg" style="padding-left: 7px; padding-right: 25px; "></i> <a href="{{ url_for('specificUserTransaction')}}" style="text-decoration: none; color: black; font-size: 14px">Transactions</a>
+                  </div>
+
+                  <div class="user-audit-trail">
+                    <i class="fa fa-history fa-lg" style=" padding-left: 9px; padding-right: 25px; "></i> <a href="{{ url_for('specificUserAuditTrail')}}" style="text-decoration: none; color: black; font-size: 14px">Audit trail</a>
+                </div>
+
+                <div class="suspend" style=" position:absolute; bottom: 2%; left: 25%; cursor: pointer;">
+                  <span class="text-danger" style="font-size: 14px;"> Suspend user</span>
+
+                  
+
+                </div>
+                  
+
+            </div>
+                
+            </div>
+            <div class=" the-table col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mt-5" >
+              <div class="container mt-4">
+               
+                  <div class="row mt-4">
+                      <div class="col-md-4">
+                          <div class="card" style="background-color: #0C144D;">
+                              <div class="card-body d-flex align-items-center">
+                                  <span class="d-flex align-items-center justify-content-center " style="color: white;">
+                                      <i class="fa-solid fa-peso-sign fa-2x" style="margin-right: 10px;"></i>
+                                  </span>
+                                  <h5 style="color: white;" class="card-title"> Total sales: 5</h5>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card" style="background-color: #0C144D;">
+                              <div class="card-body d-flex align-items-center" style="color:white">
+                                  <span class="d-flex align-items-center justify-content-center" style="margin-right: 10px;">
+                                      <i class="fa-solid fa-box fa-2x"></i>
+                                  </span>
+                                  <h5 class="card-title">Total products: 5</h5>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card" style="background-color: #0C144D;">
+                          <div class="card-body d-flex align-items-center">
+                            <span class="d-flex align-items-center justify-content-center " style="color: white;">
+                                <i class="fa-solid fa-peso-sign fa-2x" style="margin-right: 10px;"></i>
+                            </span>
+                            <h5 style="color: white;" class="card-title"> Balance: 1000</h5>
+                        </div>
+                          </div>
+                      </div>
+                  </div>
+
+              
+                
+            <div class="drop-search mb-2">
+                <form class="d-flex mt-3" style="margin-right: 10px;" role="search">
+                  <div class="input-group">
+                      <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="height: 29px; border-right: none;">                     
+                          <span class="input-group-text" style="border-left: none;" >
+                              <i class="fa fa-search"></i> <!-- Replace with your desired icon -->
+                          </span>
+                  </div>
+              </form>
+              <div class="btn-group">
+                <button id="dropdown-categ" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+               All
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li class="dropdown-item" onclick="changeDropdownValue('All')">All</li>
+                  <li class="dropdown-item" onclick="changeDropdownValue('Camping and Hiking Gear')">Camping and Hiking Gear</li>
+                  <li class="dropdown-item" onclick="changeDropdownValue('Exercise and Fitness Gear')">Exercise and Fitness Gear</li>
+                  <li class="dropdown-item" onclick="changeDropdownValue('Sports Equipment')">Sports Equipment</li>
+                  <li class="dropdown-item" onclick="changeDropdownValue('Outdoor Clothing')">Outdoor Clothing</li>
+                </ul>
+              </div>
+            </div>
+
+
+                <div class="lalagyan">
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th scope="col">Product name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stocks</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
+                      </td>
+                        <td>Frenzy</td>
+                        <td >Camping and Hiking Gear</td>
+                        <td>100</td>
+                        <td>10</td>
+                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                           
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                Are you sure you want to remove the product?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger">remove</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div></td>
+                      
+                      </tr>
+                      
+                      <tr>
+                        <td>
+                              <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
+                      </td>
+                      <td>Frenzy</td>
+                      <td >Camping and Hiking Gear</td>
+                      <td>100</td>
+                      <td>10</td>
+                      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                         
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure you want to remove the product?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-danger">remove</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td>
+                      
+                      </tr>
+                      <tr>
+                        <td>
+                          <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
+                      </td>
+                      <td>Frenzy</td>
+                      <td >Camping and Hiking Gear</td>
+                      <td>100</td>
+                      <td>10</td>
+                      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                         
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure you want to remove the product?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-danger">remove</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td>
+                      
+                      </tr>
+                      <tr>
+                        <td>
+                          <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
+                      </td>
+                      <td>Frenzy</td>
+                      <td >Camping and Hiking Gear</td>
+                      <td>100</td>
+                      <td>10</td>
+                      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                         
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure you want to remove the product?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-danger">remove</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  <nav class="pag-con d-flex">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        
+
+        <script src="/static/js/admin_functions/specUser.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.pag-con{
+ 
+    display: flex;
+    justify-content: center;
+}
+.hidden{
+    display: none;
+}
+.drop-search{
+    display: flex;
+  width: 50%;
+
+    
+align-items: end;
+}
+
+
+table thead th {
+    background-color: transparent !important; /* Set the background color to transparent */
+}
+th, td{
+border: none !important;
+}
+td{
+    vertical-align: middle;
+}
+@media (max-width: 990px){
+
+    .the-table {
+        flex-basis: 100% !important; /* Change to col-*-12 for small screens */
+        max-width: 100% !important; /* Change to col-*-12 for small screens */
+      }
+      .offset-md-2, .offset-sm-2, .offset-lg-2 {
+        margin-left: 0 !important; /* Remove offset for small screens */
+      }
+
+}
+.pag-con{
+    position: absolute;
+ 
+    bottom: 1%;
+    left: 50%;
+}
+.pagination .page-link {
+    color: #0C144D;
+  }
+  
