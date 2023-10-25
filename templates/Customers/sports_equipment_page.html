@@ -22,7 +22,7 @@
       crossorigin="anonymous"
     />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../static/css/landingpage.css" rel="stylesheet" />
+    <link href="/static/css/customers_css/landingpage.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Navigation-->
@@ -70,12 +70,40 @@
                 >Shop</a
               >
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('LandingPage') }}"
+                    >All Products</a
+                  >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Camping and Hiking Gear</a></li>
-                <li><a class="dropdown-item" href="#!">Exercise and Fitness Gear</a></li>
-                <li><a class="dropdown-item" href="#!">Sports Equipment</a></li>
-                <li><a class="dropdown-item" href="#!">Outdoor Clothing</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('CampingHikingGear') }}"
+                    >Camping and Hiking Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('ExerciseFitnessGear') }}"
+                    >Exercise and Fitness Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('SportsEquipment') }}"
+                    >Sports Equipment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('OutdoorClothing') }}"
+                    >Outdoor Clothing</a
+                  >
+                </li>
               </ul>
             </li>
           </ul>
@@ -83,7 +111,11 @@
             <a class="btn btn-outline-dark" href="{{ url_for('Cart') }}">
               <i class="bi-cart-fill me-1"></i>
               Cart
-          <span id="cart-badge" class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_count }}</span>
+              <span
+                id="cart-badge"
+                class="badge bg-dark text-white ms-1 rounded-pill"
+                >{{ cart_count }}</span
+              >
             </a>
           </form>
 
@@ -129,140 +161,46 @@
       </div>
     </nav>
 
-
-
     <!--Top Products-->
- 
 
     <section class="mt-5 py-3">
       <div class="container px-5 px-lg-5 mt-5">
         <h2 class="mb-4 d-flex justify-content-between align-items-center">
           <span class="mr-2">Sports Equipment</span>
-        
         </h2>
 
         <div
-        class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-      >
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Product image-->
-            <img
-              class="card-img-top"
-              src="/static/images/baseball_bat.jpg"
-              alt="..." height="200"
-            />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">
-                 baseball bat
-                </h5>
-                <!-- Product price-->
-                ₱14,499.00
-              </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto add-to-cart"
-                  >Add to Cart</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Sale badge-->
-            <div
-              class="badge bg-dark text-white position-absolute"
-              style="top: 0.5rem; right: 0.5rem"
-            >
-              Sale
-            </div>
-            <!-- Product image-->
-            <img
-              class="card-img-top"
-              src="/static/images/basketball.webp"
-              alt="..." height="200"
-            />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">basketball</h5>
-                <!-- Product reviews-->
-                <div
-                  class="d-flex justify-content-center small text-warning mb-2"
-                >
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
+          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+        >
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Product image-->
+              <img
+                class="card-img-top"
+                src="/static/images/baseball_bat.jpg"
+                alt="..."
+                height="200"
+              />
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">baseball bat</h5>
+                  <!-- Product price-->
+                  ₱14,499.00
                 </div>
-                <!-- Product price-->
-                <span class="text-muted text-decoration-line-through"
-                  >₱1,043.00</span
-                >
-                ₱599.00
               </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto add-to-cart"
-                  >Add to Cart</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Sale badge-->
-            <div
-              class="badge bg-dark text-white position-absolute"
-              style="top: 0.5rem; right: 0.5rem"
-            >
-              Sale
-            </div>
-            <!-- Product image-->
-            <img
-              class="card-img-top"
-              src="/static/images/baseball_gloves.jpg"
-              alt="..." height="200"
-            />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class=" product-name fw-bolder">Convertible pants</h5>
-                <!-- Product price-->
-                <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-               
-                  <p class="price">₱900</p>
-                  
-                  <p >Color: <span class="color"> Gray</span></p>
-                  <p>Size: <span class="size">XL</span> </p>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
                 </div>
               </div>
             </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto add-to-cart"
-                  >Add to Cart</a
-                >
-              </div>
-            </div>
-          </div>  
-        </div>
-
-        <div class="col mb-5">
+          </div>
+          <div class="col mb-5">
             <div class="card h-100">
               <!-- Sale badge-->
               <div
@@ -274,22 +212,30 @@
               <!-- Product image-->
               <img
                 class="card-img-top"
-                src="/static/images/baseball_gloves.jpg"
-                alt="..." height="200"
+                src="/static/images/basketball.webp"
+                alt="..."
+                height="200"
               />
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
                   <!-- Product name-->
-                  <h5 class=" product-name fw-bolder">Convertible pants</h5>
-                  <!-- Product price-->
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                 
-                    <p class="price">₱900</p>
-                    
-                    <p >Color: <span class="color"> Gray</span></p>
-                    <p>Size: <span class="size">XL</span> </p>
+                  <h5 class="fw-bolder">basketball</h5>
+                  <!-- Product reviews-->
+                  <div
+                    class="d-flex justify-content-center small text-warning mb-2"
+                  >
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
                   </div>
+                  <!-- Product price-->
+                  <span class="text-muted text-decoration-line-through"
+                    >₱1,043.00</span
+                  >
+                  ₱599.00
                 </div>
               </div>
               <!-- Product actions-->
@@ -300,7 +246,7 @@
                   >
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
 
           <div class="col mb-5">
@@ -316,20 +262,30 @@
               <img
                 class="card-img-top"
                 src="/static/images/baseball_gloves.jpg"
-                alt="..." height="200"
+                alt="..."
+                height="200"
               />
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
                   <!-- Product name-->
-                  <h5 class=" product-name fw-bolder">Convertible pants</h5>
+                  <h5 class="product-name fw-bolder">Convertible pants</h5>
                   <!-- Product price-->
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                 
+                  <div
+                    class="description-cont"
+                    style="
+                      line-height: 0.8;
+                      font-family: assistant, sans-serif;
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 14px;
+                      color: rgba(18, 18, 18, 0.75);
+                    "
+                  >
                     <p class="price">₱900</p>
-                    
-                    <p >Color: <span class="color"> Gray</span></p>
-                    <p>Size: <span class="size">XL</span> </p>
+
+                    <p>Color: <span class="color"> Gray</span></p>
+                    <p>Size: <span class="size">XL</span></p>
                   </div>
                 </div>
               </div>
@@ -341,7 +297,7 @@
                   >
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
 
           <div class="col mb-5">
@@ -357,20 +313,30 @@
               <img
                 class="card-img-top"
                 src="/static/images/baseball_gloves.jpg"
-                alt="..." height="200"
+                alt="..."
+                height="200"
               />
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
                   <!-- Product name-->
-                  <h5 class=" product-name fw-bolder">Convertible pants</h5>
+                  <h5 class="product-name fw-bolder">Convertible pants</h5>
                   <!-- Product price-->
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                 
+                  <div
+                    class="description-cont"
+                    style="
+                      line-height: 0.8;
+                      font-family: assistant, sans-serif;
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 14px;
+                      color: rgba(18, 18, 18, 0.75);
+                    "
+                  >
                     <p class="price">₱900</p>
-                    
-                    <p >Color: <span class="color"> Gray</span></p>
-                    <p>Size: <span class="size">XL</span> </p>
+
+                    <p>Color: <span class="color"> Gray</span></p>
+                    <p>Size: <span class="size">XL</span></p>
                   </div>
                 </div>
               </div>
@@ -382,7 +348,7 @@
                   >
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
 
           <div class="col mb-5">
@@ -398,20 +364,30 @@
               <img
                 class="card-img-top"
                 src="/static/images/baseball_gloves.jpg"
-                alt="..." height="200"
+                alt="..."
+                height="200"
               />
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
                   <!-- Product name-->
-                  <h5 class=" product-name fw-bolder">Convertible pants</h5>
+                  <h5 class="product-name fw-bolder">Convertible pants</h5>
                   <!-- Product price-->
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                 
+                  <div
+                    class="description-cont"
+                    style="
+                      line-height: 0.8;
+                      font-family: assistant, sans-serif;
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 14px;
+                      color: rgba(18, 18, 18, 0.75);
+                    "
+                  >
                     <p class="price">₱900</p>
-                    
-                    <p >Color: <span class="color"> Gray</span></p>
-                    <p>Size: <span class="size">XL</span> </p>
+
+                    <p>Color: <span class="color"> Gray</span></p>
+                    <p>Size: <span class="size">XL</span></p>
                   </div>
                 </div>
               </div>
@@ -423,42 +399,152 @@
                   >
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
 
-        <div class="col mb-5">
-          <div class="card h-100">
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Sale badge-->
+              <div
+                class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem"
+              >
+                Sale
+              </div>
+              <!-- Product image-->
+              <img
+                class="card-img-top"
+                src="/static/images/baseball_gloves.jpg"
+                alt="..."
+                height="200"
+              />
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="product-name fw-bolder">Convertible pants</h5>
+                  <!-- Product price-->
+                  <div
+                    class="description-cont"
+                    style="
+                      line-height: 0.8;
+                      font-family: assistant, sans-serif;
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 14px;
+                      color: rgba(18, 18, 18, 0.75);
+                    "
+                  >
+                    <p class="price">₱900</p>
+
+                    <p>Color: <span class="color"> Gray</span></p>
+                    <p>Size: <span class="size">XL</span></p>
+                  </div>
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Sale badge-->
+              <div
+                class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem"
+              >
+                Sale
+              </div>
+              <!-- Product image-->
+              <img
+                class="card-img-top"
+                src="/static/images/baseball_gloves.jpg"
+                alt="..."
+                height="200"
+              />
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="product-name fw-bolder">Convertible pants</h5>
+                  <!-- Product price-->
+                  <div
+                    class="description-cont"
+                    style="
+                      line-height: 0.8;
+                      font-family: assistant, sans-serif;
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 14px;
+                      color: rgba(18, 18, 18, 0.75);
+                    "
+                  >
+                    <p class="price">₱900</p>
+
+                    <p>Color: <span class="color"> Gray</span></p>
+                    <p>Size: <span class="size">XL</span></p>
+                  </div>
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col mb-5">
+            <div class="card h-100">
               <!-- Product image -->
-              <img class="product-image" src="/static/images/trail_running_shoes.jpg" alt="Trail running shoes" height="200" />
+              <img
+                class="product-image"
+                src="/static/images/trail_running_shoes.jpg"
+                alt="Trail running shoes"
+                height="200"
+              />
               <!-- Product details -->
               <div class="card-body p-4">
-                  <div class="text-center">
-                      <!-- Product name -->
-                      <h5 class="product-name fw-bolder">Trail running shoes</h5>
-                      <!-- Product price -->
-                      <div class="product-price">
-                          ₱899
-                      </div>
-                  </div>
+                <div class="text-center">
+                  <!-- Product name -->
+                  <h5 class="product-name fw-bolder">Trail running shoes</h5>
+                  <!-- Product price -->
+                  <div class="product-price">₱899</div>
+                </div>
               </div>
               <!-- Product actions -->
               <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center">
-                      <!-- Hidden input fields for the product data -->
-                      <input type="hidden" class="product-name" value="Trail running shoes">
-                      <input type="hidden" class="product-price" value="899">
-                      <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
-                      
-                  </div>
+                <div class="text-center">
+                  <!-- Hidden input fields for the product data -->
+                  <input
+                    type="hidden"
+                    class="product-name"
+                    value="Trail running shoes"
+                  />
+                  <input type="hidden" class="product-price" value="899" />
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark mt-auto add-to-cart"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
-          
+            </div>
           </div>
+        </div>
       </div>
-        </div>
-        </div>
     </section>
-
-    
 
     <!-- Footer-->
     <footer class="py-5 footer--bg">
@@ -468,7 +554,7 @@
         </p>
       </div>
     </footer>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap core JS-->
     <script

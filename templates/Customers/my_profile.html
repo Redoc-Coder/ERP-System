@@ -16,7 +16,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link href="../static/css/store_profile.css" rel="stylesheet" />
+    <link href="/static/css/customers_css/my_profile.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Navigation-->
@@ -64,10 +64,40 @@
                 >Shop</a
               >
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('LandingPage') }}"
+                    >All Products</a
+                  >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('CampingHikingGear') }}"
+                    >Camping and Hiking Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('ExerciseFitnessGear') }}"
+                    >Exercise and Fitness Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('SportsEquipment') }}"
+                    >Sports Equipment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('OutdoorClothing') }}"
+                    >Outdoor Clothing</a
+                  >
+                </li>
               </ul>
             </li>
           </ul>
@@ -338,6 +368,7 @@
             ></button>
           </div>
           <div class="modal-body">
+            <p>This will notify the Admin and Approve Your Application</p>
             <form>
               <div class="mb-3">
                 <label for="sellerEmail" class="form-label">Email</label>

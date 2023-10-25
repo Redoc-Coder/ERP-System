@@ -1,229 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout Page</title>
     <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
-  />
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-    crossorigin="anonymous"
-  />
-    <link href="../static/css/landingpage.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="/static/css/customers_css/landingpage.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-navbar">
+      <div class="container px-4 px-lg-5">
+        <!-- Logo and Brand -->
+        <div class="d-flex align-items-center">
+          <img
+            src="/static/images/XPerience-LOGO only.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="#!">XPerience</a>
+        </div>
 
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-navbar">
-            <div class="container px-4 px-lg-5">
-              <!-- Logo and Brand -->
-              <div class="d-flex align-items-center">
-                <img
-                  src="/static/images/XPerience-LOGO only.png"
-                  alt="Logo"
-                  class="navbar-logo"
-                />
-                <a class="navbar-brand" href="#!">XPerience</a>
-              </div>
-      
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{{ url_for('LandingPage') }}"
+                >Home</a
               >
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link active"
-                      aria-current="page"
-                      href="{{ url_for('LandingPage') }}"
-                      >Home</a
-                    >
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      id="navbarDropdown"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      >Shop</a
-                    >
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#!">All Products</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="{{ url_for('CampingHikingGear') }}">Camping and Hiking Gear</a></li>
-                      <li><a class="dropdown-item" href="{{ url_for('ExerciseFitnessGear') }}">Exercise and Fitness Gear</a></li>
-                      <li><a class="dropdown-item" href="{{ url_for('SportsEquipment') }}">Sports Equipment</a></li>
-                      <li><a class="dropdown-item" href="{{ url_for('OutdoorClothing') }}">Outdoor Clothing</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <a class="btn btn-outline-dark" href="{{ url_for('Cart') }}">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                <span id="cart-badge" class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_count }}</span>
-                  </a>
-                </form>
-      
-                <!-- Profile Section -->
-                <ul class="navbar-nav">
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle d-flex align-items-center"
-                      href="#"
-                      id="navbarDropdownMenuLink"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <img
-                        src="../static/images/nigs.png"
-                        class="rounded-circle ms-2"
-                        height="32"
-                        width="35"
-                        alt="Avatar"
-                        loading="lazy"
-                      />
-                    </a>
-                    <ul
-                      class="dropdown-menu"
-                      aria-labelledby="navbarDropdownMenuLink"
-                    >
-                      <li>
-                        <a class="dropdown-item" href="{{ url_for('MyProfile') }}"
-                          >My profile</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="{{ url_for('Login') }}"
-                          >Logout</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-                <!-- End Profile Section -->
-              </div>
-            </div>
-          </nav>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Shop</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('LandingPage') }}"
+                    >All Products</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('CampingHikingGear') }}"
+                    >Camping and Hiking Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('ExerciseFitnessGear') }}"
+                    >Exercise and Fitness Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('SportsEquipment') }}"
+                    >Sports Equipment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('OutdoorClothing') }}"
+                    >Outdoor Clothing</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <a class="btn btn-outline-dark" href="{{ url_for('Cart') }}">
+              <i class="bi-cart-fill me-1"></i>
+              Cart
+              <span
+                id="cart-badge"
+                class="badge bg-dark text-white ms-1 rounded-pill"
+                >{{ cart_count }}</span
+              >
+            </a>
+          </form>
 
+          <!-- Profile Section -->
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/nigs.png"
+                  class="rounded-circle ms-2"
+                  height="32"
+                  width="35"
+                  alt="Avatar"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('MyProfile') }}"
+                    >My profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('Login') }}"
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- End Profile Section -->
+        </div>
+      </div>
+    </nav>
 
     <div class="container mt-3">
-        <h1>Checkout</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Billing Information</h4>
-                        <form>
-                            <div class="form-group">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" placeholder="Frenz Ricafort">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" placeholder="frinz@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="secret">
-                            </div>
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" class="form-control" id="city" placeholder="City">
-                            </div>
-                            <div class="form-group">
-                                <label for="zipCode">Zip Code</label>
-                                <input type="text" class="form-control" id="zipCode" placeholder="4032">
-                            </div>
-            
-                        </form>
-                                        
-                <div class="mt-3 mb-3">
-                    <h4>Select Payment Method:</h4>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked>
-                        <label class="form-check-label" for="creditCard">
-                            Credit Card
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
-                        <label class="form-check-label" for="paypal">
-                            PayPal
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="paymentMethod" id="gcash" value="gcash">
-                        <label class="form-check-label" for="gcash">
-                            GCash
-                        </label>
-                    </div>
+      <h1>Checkout</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Billing Information</h4>
+              <form>
+                <div class="form-group">
+                  <label for="fullName">Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    placeholder="Frenz Ricafort"
+                  />
                 </div>
-                        
-                    </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="frinz@example.com"
+                  />
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Order Summary</h4>
-                        
-          {% block content %}
-          <div class="row">
-            {% for product in products %}
-            <div class="product col-md-12 mt-3" data-product-id="{{ product.id }}">
-                <div class="container d-flex ">
-                  <div class="img-cont">
-                    <div class="mb-3">
-                   
-                    </div>
-                    <img src="data:{{ product.mime_type }};base64, {{ product.product_image }}" class="rounded float-start" alt="Product Image" height="120" width="100" style="margin-right: 30px;">
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    placeholder="secret"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="city"
+                    placeholder="City"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="zipCode">Zip Code</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="zipCode"
+                    placeholder="4032"
+                  />
+                </div>
+              </form>
 
-                  </div>
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                    <p style="color: #121212;">{{ product.product_name }}</p>
-                    <p>{{ product.price }}.00</p>
-                    <p>Type: {{ product.category }}</p>
-                    <p>Color: {{ product.color }}</p>
-                    <p>Size: {{ product.size }}</p>
-                  </div>
+              <div class="mt-3 mb-3">
+                <h4>Select Payment Method:</h4>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="paymentMethod"
+                    id="creditCard"
+                    value="creditCard"
+                    checked
+                  />
+                  <label class="form-check-label" for="creditCard">
+                    Credit Card
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="paymentMethod"
+                    id="paypal"
+                    value="paypal"
+                  />
+                  <label class="form-check-label" for="paypal"> PayPal </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="paymentMethod"
+                    id="gcash"
+                    value="gcash"
+                  />
+                  <label class="form-check-label" for="gcash"> GCash </label>
                 </div>
               </div>
- 
-            {% endfor %}
-          </div>
-        {% endblock %}
-                        
-                    </div>
-                </div>
-                <div class="text-center mt-3">
-                    <button class="btn btn-primary">Place Order</button>
-                </div>
-                <div class="total">
-                    <div class="container">
-                        <h2>Total: ₱899</h2>
-                    </div>
-                    
-                </div>
             </div>
+          </div>
         </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Order Summary</h4>
+
+              {% block content %}
+              <div class="row">
+                {% for product in products %}
+                <div
+                  class="product col-md-12 mt-3"
+                  data-product-id="{{ product.id }}"
+                >
+                  <div class="container d-flex">
+                    <div class="img-cont">
+                      <div class="mb-3"></div>
+                      <img
+                        src="data:{{ product.mime_type }};base64, {{ product.product_image }}"
+                        class="rounded float-start"
+                        alt="Product Image"
+                        height="120"
+                        width="100"
+                        style="margin-right: 30px"
+                      />
+                    </div>
+                    <div
+                      class="description-cont"
+                      style="
+                        line-height: 0.8;
+                        font-family: assistant, sans-serif;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        color: rgba(18, 18, 18, 0.75);
+                      "
+                    >
+                      <p style="color: #121212">{{ product.product_name }}</p>
+                      <p>{{ product.price }}.00</p>
+                      <p>Type: {{ product.category }}</p>
+                      <p>Color: {{ product.color }}</p>
+                      <p>Size: {{ product.size }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+              </div>
+              {% endblock %}
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <button class="btn btn-primary">Place Order</button>
+          </div>
+          <div class="total">
+            <div class="container">
+              <h2>Total: ₱899</h2>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -236,5 +322,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>

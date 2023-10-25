@@ -98,16 +98,16 @@
                 <div class="links col-md-2 col-sm-2 col-lg-2 ">
                         
                   <div class="dashboard">
-                    <i class="" style="font-size: 24px;"></i> <a href="dashboard.html" style="text-decoration: none; color: black;  font-size: 14px;">Dashboard</a>
+                    <i class="" style="font-size: 24px;"></i> <a href="{{ url_for('AdminDashboard') }}" style="text-decoration: none; color: black;  font-size: 14px;">Dashboard</a>
                 </div>
                 <div class="users">
-                    <i class="" style="font-size: 27px;"></i> <a href="user.html" style="text-decoration: none; color: black;  font-size: 14px">Users</a>
+                    <i class="" style="font-size: 27px;"></i> <a href="{{ url_for('User') }}" style="text-decoration: none; color: black;  font-size: 14px">Users</a>
                 </div>
                 <div class="product-l-req">
-                    <i class="" style="font-size: 24px;"></i> <a href="productListing.html" style="text-decoration: none; color: black;  font-size: 14px">Product listing</a>
+                    <i class="" style="font-size: 24px;"></i> <a href="{{ url_for('ProductListing') }}" style="text-decoration: none; color: black;  font-size: 14px">Product listing</a>
                 </div>
                 <div class="audit-trail">
-                    <i class="" style="font-size: 24px;"></i> <a href="auditTrail.html" style="text-decoration: none; color: black;  font-size: 14px">Audit trail</a>
+                    <i class="" style="font-size: 24px;"></i> <a href="{{ url_for('AuditTrail') }}" style="text-decoration: none; color: black;  font-size: 14px">Audit trail</a>
                 </div>
                 <div class="accounting">   
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenu" >
