@@ -1,0 +1,207 @@
+*{
+    margin: 0;
+    padding: 0;
+        font-weight: 400;
+
+        font-family:assistant, sans-serif;
+        font-style: normal;
+}
+.nav-item{
+    display: flex;
+    padding: 10px;
+
+
+}
+.nav-icon{
+
+    display: flex;
+    align-items: center;
+width: 40px;
+}
+
+.nav-text a{
+    margin-top: 5px;
+}
+.links{
+position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-right: 1px solid #d1d1d1; /* Optional: Add a border for separation */
+display: flex;
+flex-direction: column;
+
+align-items:center;
+
+
+}
+.links-cont{
+    width: 90%;
+}
+.dashb-cont{
+background-color: #0C144D;
+border-radius: 8px;
+}
+.dashboard{
+
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+    font-weight: 400;
+
+font-family: Plus Jakarta Sans, sans-serif;
+font-style: normal;
+}
+
+.links i{
+   
+    width: 15px;
+}
+.users{
+    color: #3D3D3D;
+    margin-right: 20px;
+    height: 40px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+
+font-family:assistant, sans-serif;
+font-style: normal;
+}
+.users a{
+    margin-top: 2px;
+}
+
+.product-l-req{
+    height: 40px;
+    
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+}
+.product-l-req a    {
+    margin-top: 2px;
+}
+.audit-trail{
+    font-weight: 400;
+
+    font-family:assistant, sans-serif;
+    font-style: normal;
+    height: 40px;
+  
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #3D3D3D;
+  
+}
+
+.accounting{
+    color: #3D3D3D;
+    height: 40px;
+    width: 150px;
+display: flex;
+align-items: center;
+font-weight: 400;
+
+font-family:assistant, sans-serif;
+font-style: normal;
+}
+
+#navb{
+    display: none;
+}
+
+@media (max-width: 990px){
+
+    #navb{
+        display: block;
+    }
+    .links{
+        display: none;
+    }
+    .links-cont{
+        width: 100%;
+    }
+    .dashboard{
+        margin-top: 0;
+        
+    }
+    .dashboard i{
+        width: 0;
+        
+    }
+    .users i{
+        width: 0;
+        margin-right:10px;
+      
+    }
+    .audit-trail i{
+        width: 0;
+
+    }
+    .accordion-button i{
+        width: 0;
+        background-color: red;
+        margin-right: 17px;
+    }
+}
+/*for user*/
+.products-cont{
+    background-color: #0C144D;
+    border-radius: 8px;
+    
+    }
+    .products{
+     font-weight: bold;
+     margin-right: 20px;
+     display: flex;
+     align-items: center;
+
+     height: 40px;
+   
+    font-family:sans-serif;
+    }
+
+.user{
+    font-weight: bold;
+    color: #3D3D3D;
+
+    height: 40px;
+    width: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family:sans-serif;
+}
+
+.transactions{
+    font-weight: bold;
+    height: 40px;
+
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #3D3D3D;
+    font-family:sans-serif;
+
+}
+
+.user-audit-trail{
+    font-weight: bold;
+    height: 40px;
+
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #3D3D3D;
+   
+    font-family:sans-serif;
+}

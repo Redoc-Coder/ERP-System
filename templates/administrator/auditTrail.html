@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/admin_css/sidebar.css">
+    <link rel="stylesheet" href="/static/css/admin_css/auditTrail.css">
+    <link rel="stylesheet" href="/static/css/admin_css/mainNav.css">
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Document</title>
+    </head> 
+    <body>
+
+        <div class="main-navbar shadow-sm fixed-top ">
+            <div class="top-navbar">
+              <div class="container-fluid">
+                <div class="row">
+                  <div
+                    class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block"
+                  >
+                    <h5 class="brand-name">XPerience</h5>
+                  </div>
+                  <div class="col-md-5 my-auto">
+                
+                  </div>
+                  <div class="col-md-5 my-auto">
+                    <ul class="nav justify-content-end">
+                     
+                      <li class="nav-item dropdown">
+                        <a
+                          class="nav-link dropdown-toggle"
+                          href="#"
+                          id="navbarDropdown"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa fa-user"></i> Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li>
+                            <a class="dropdown-item" href="#"
+                              ><i class="fa fa-sign-out"></i> Logout</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+
+        <nav class="navbar fixed-top" id="navb"">
+            <div class="container-fluid">
+                <!-- Move the button and offcanvas element to the left -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <!-- Offcanvas element with "offcanvas-start" class -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            
+                          <div class="links-cont" style="width: 100%;">
+                            <div class="dashboard">
+                            <i class="fa fa-bar-chart fa-sm" style=" padding-left: 20px; padding-right: 28px;"></i> <a href="{{ url_for('dashboard')}}" style="text-decoration: none; color: black; font-size: 14px;">Dashboard</a>
+                        </div>
+                        <div class="users">
+                            <i class="fa fa-user fa-lg" style=" margin-right: 5px; padding-left: 20px; padding-right: 23px;"></i> <a href="{{ url_for('users')}}" style="text-decoration: none; color: black;  font-size: 14px">Users</a>
+                        </div>
+                        
+                        <div class="at-cont" style="background-color: #0C144D;border-radius: 8px;">
+                          <div class="audit-trail">
+                            <i class="fa fa-history fa-lg" style=" color: #CDE2FF; margin-right: 5px; padding-left: 20px; padding-right: 23px;"></i> <a href="{{ url_for('auditTrail')}}" style="text-decoration: none; color: #CDE2FF; font-size: 14px">Audit trail</a>
+                        </div>
+                        </div>
+                       
+                        <div class="accordion accordion-flush" id="accordionFlushExample" style=" margin-top: 15px; background-color: black;">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="display: flex; background:#F3F7F9;">
+                                <i class="fa fa-money fa-lg" > </i><span style=" font-size: 14px; margin-left: 15px; color: #3D3D3D;" >Accounting</span>
+                              </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" style="margin-left: 10px;">
+                              <div class="accordion-body "><i class="fa fa-money" style="margin-right: 10px;"></i><a href="{{ url_for('cashoutRequest')}}" style="font-size: 14px; text-decoration: none;">Cashout request</a></div>
+                              <div class="accordion-body "><i class="fa fa-money" style="margin-right: 10px;"></i><a href="{{ url_for('systemBalance')}}" style="font-size: 14px; text-decoration: none;">System balance</a></div>
+                            </div>
+                          </div>
+                      </div> 
+                </div>
+                        </ul>
+  
+                    </div>
+                </div>
+        
+
+            </div>
+        </nav>
+
+        <div class="container-fluid" style="height: 100vh; background-color: #F3F7F9;" >
+            <div class="row">
+                <div class="links col-md-2 col-sm-2 col-lg-2 ">
+                        
+                      <div class="links-cont" style="width: 100%;">
+                        <div class="dashboard">
+                        <i class="fa fa-bar-chart fa-sm" style=" padding-left: 20px; padding-right: 28px;"></i> <a href="{{ url_for('dashboard')}}" style="text-decoration: none; color: black; font-size: 14px;">Dashboard</a>
+                    </div>
+                    <div class="users">
+                        <i class="fa fa-user fa-lg" style=" margin-right: 5px; padding-left: 20px; padding-right: 23px;"></i> <a href="{{ url_for('users')}}" style="text-decoration: none; color: black;  font-size: 14px">Users</a>
+                    </div>
+                    
+                    <div class="at-cont" style="background-color: #0C144D;border-radius: 8px;">
+                      <div class="audit-trail">
+                        <i class="fa fa-history fa-lg" style=" color: #CDE2FF; margin-right: 5px; padding-left: 20px; padding-right: 23px;"></i> <a href="{{ url_for('auditTrail')}}" style="text-decoration: none; color: #CDE2FF; font-size: 14px">Audit trail</a>
+                    </div>
+                    </div>
+                   
+                    <div class="accordion accordion-flush" id="accordionFlushExample" style=" margin-top: 15px; background-color: black;">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="display: flex; background:#F3F7F9;">
+                            <i class="fa fa-money fa-lg" > </i><span style=" font-size: 14px; margin-left: 15px; color: #3D3D3D;" >Accounting</span>
+                          </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" style="margin-left: 10px;">
+                          <div class="accordion-body "><i class="fa fa-money" style="margin-right: 10px;"></i><a href="{{ url_for('cashoutRequest')}}" style="font-size: 14px; text-decoration: none;">Cashout request</a></div>
+                          <div class="accordion-body "><i class="fa fa-money" style="margin-right: 10px;"></i><a href="{{ url_for('systemBalance')}}" style="font-size: 14px; text-decoration: none;">System balance</a></div>
+                        </div>
+                      </div>
+                  </div> 
+            </div>
+                
+            </div>
+            <div class=" the-table col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mt-5 ">
+              <div class="container  mt-5">
+
+                  <div class="date-cont" style="width: 170px;">
+                    <input type="date" class="form-control" id="datepicker" placeholder="Select a date">
+                  </div>
+    
+            
+        
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Event type</th>
+                        <th scope="col">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                
+                      <tr>
+                        <td>0-12-2021 9:47:56</td>
+                        <td>Frenz</td>
+                        <td>Login</td>
+                        <td>User logged in</td>
+
+                      </tr>
+                  
+                      
+                   
+                      </tr>
+           
+                      
+                    </tbody>
+                  </table>
+                  <nav class="pag-con">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </nav>
+                  
+              </div>
+            </div>
+            </div>
+        </div>
+        
+
+        <script src="/static/js/admin_css/auditTrail.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

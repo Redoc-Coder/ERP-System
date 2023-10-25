@@ -195,8 +195,8 @@
             <div class="total" style="display: flex; justify-content: flex-end;">
               <p style="font-weight: bold;" id="total-price">₱{{ total_price }}</p>
           </div>
-            <button style="width: 100%;" type="button" class="btn btn-dark btn-lg">Checkout</button>
-            
+          
+            <a style="width: 100%;" class="btn btn-dark btn-lg" href="{{ url_for('checkout') }}" role="button">Checkout</a>
           </div>
         </div>
         
