@@ -206,7 +206,9 @@ def Cart():
         )
     else:
         # User is not logged in
-        return render_template("cart.html", products=[], cart_count=0, total_price=0)
+        return render_template(
+            "customers/cart.html", products=[], cart_count=0, total_price=0
+        )
 
 
 # CUSTOMERS
@@ -262,7 +264,7 @@ def CampingHikingGear():
 
 
 # SELLERS
-@app.route("/sellers/sellerdashboard")
+@app.route("/sellers/dashboard")
 def Dashboard():
     return render_template("sellers/seller_dashboard.html")
 
