@@ -264,32 +264,32 @@ def CampingHikingGear():
 
 
 # SELLERS
-@app.route("/sellers/dashboard")
-def Dashboard():
+@app.route("/seller/dashboard")
+def SellerDashboard():
     return render_template("sellers/seller_dashboard.html")
 
 
-@app.route("/sellers/courier")
+@app.route("/seller/courier")
 def Courier():
     return render_template("sellers/courier.html")
 
 
-@app.route("/sellers/postingmerchandise")
-def AddMerchandise():
-    return render_template("sellers/posting_merchandise.html")
+@app.route("/seller/addproducts")
+def AddProducts():
+    return render_template("sellers/add_products.html")
 
 
-@app.route("/sellers/viewtransactions")
+@app.route("/seller/viewtransactions")
 def Transactions():
     return render_template("sellers/view_transactions.html")
 
 
-@app.route("/sellers/inventory")
+@app.route("/seller/inventory")
 def Inventory():
     return render_template("sellers/inventory.html")
 
 
-@app.route("/sellers/accounting")
+@app.route("/seller/accounting")
 def Accounting():
     return render_template("sellers/accounting.html")
 
