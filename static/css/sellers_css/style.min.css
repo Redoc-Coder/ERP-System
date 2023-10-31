@@ -140,12 +140,7 @@ summary {
 template {
   display: none;
 }
-/*!
- * Bootstrap Grid v4.1.3 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+
 @-ms-viewport {
   width: device-width;
 }
@@ -620,88 +615,88 @@ body {
 @font-face {
   font-family: "demo";
   font-display: swap;
-  src: url(../fonts/demo.woff) format("woff"),
-    url(../fonts/demo.woff2) format("woff2");
+  src: url(/fonts/demo.woff2) format("woff"),
+    url(/fonts/demo.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Black";
   font-display: swap;
-  src: url(../fonts/Inter-Black.woff) format("woff"),
-    url(../fonts/Inter-Black.woff2) format("woff2");
+  src: url(/fonts/Inter-Black.woff2) format("woff"),
+    url(/fonts/Inter-Black.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-ExtraBold";
   font-display: swap;
-  src: url(../fonts/Inter-ExtraBold.woff) format("woff"),
-    url(../fonts/Inter-ExtraBold.woff2) format("woff2");
+  src: url(/fonts/Inter-ExtraBold.woff2) format("woff"),
+    url(/fonts/Inter-ExtraBold.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Bold";
   font-display: swap;
-  src: url(../fonts/Inter-Bold.woff) format("woff"),
-    url(../fonts/Inter-Bold.woff2) format("woff2");
+  src: url(/fonts/Inter-Bold.woff2) format("woff"),
+    url(/fonts/Inter-Bold.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Light";
   font-display: swap;
-  src: url(../fonts/Inter-Light.woff) format("woff"),
-    url(../fonts/Inter-Light.woff2) format("woff2");
+  src: url(/fonts/Inter-Light.woff2) format("woff"),
+    url(/fonts/Inter-Light.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-ExtraLight";
   font-display: swap;
-  src: url(../fonts/Inter-ExtraLight.woff) format("woff"),
-    url(../fonts/Inter-ExtraLight.woff2) format("woff2");
+  src: url(/fonts/Inter-ExtraLight.woff2) format("woff"),
+    url(/fonts/Inter-ExtraLight.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Regular";
   font-display: swap;
-  src: url(../fonts/Inter-Regular.woff) format("woff"),
-    url(../fonts/Inter-Regular.woff2) format("woff2");
+  src: url(/fonts/Inter-Regular.woff2) format("woff"),
+    url(/fonts/Inter-Regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Medium";
   font-display: swap;
-  src: url(../fonts/Inter-Medium.woff) format("woff"),
-    url(../fonts/Inter-Medium.woff2) format("woff2");
+  src: url(/fonts/Inter-Medium.woff2) format("woff"),
+    url(/fonts/Inter-Medium.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-SemiBold";
   font-display: swap;
-  src: url(../fonts/Inter-SemiBold.woff) format("woff"),
-    url(../fonts/Inter-SemiBold.woff2) format("woff2");
+  src: url(/fonts/Inter-SemiBold.woff2) format("woff"),
+    url(/fonts/Inter-SemiBold.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "stylesheet";
   font-display: swap;
-  src: url(../fonts/stylesheet.woff) format("woff"),
-    url(../fonts/stylesheet.woff2) format("woff2");
+  src: url(/fonts/stylesheet.woff2) format("woff"),
+    url(/fonts/stylesheet.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter-Thin";
   font-display: swap;
-  src: url(../fonts/Inter-Thin.woff) format("woff"),
-    url(../fonts/Inter-Thin.woff2) format("woff2");
+  src: url(/fonts/Inter-Thin.woff2) format("woff"),
+    url(/fonts/Inter-Thin.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -710,133 +705,144 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
-.logo {
-  background-image: url(../img/svg/Logo.svg);
-  width: 49px;
-  height: 49px;
-}
+
 .menu-toggle {
-  background-image: url(../img/svg/Bulk/Menu-toggle-white.svg);
+  background-image: url(/static/images/svg/Bulk/Menu-toggle-white.svg);
   width: 24px;
   height: 24px;
 }
+
+.add {
+  background-image: url(/static/images/svg/Bulk/Plus.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.inventory {
+  background-image: url(/static/images/svg/Bulk/Bag.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.accounting {
+  background-image: url(/static/images/svg/Bulk/Chart.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.courier {
+  background-image: url(/static/images/svg/Bulk/Work.svg);
+  width: 24px;
+  height: 24px;
+}
+
 .home,
 .menu-toggle--gray {
-  background-image: url(../img/svg/Bulk/Menu-toggle-gray.svg);
+  background-image: url(/static/images/svg/Bulk/Menu-toggle-gray.svg);
   width: 24px;
   height: 24px;
 }
 .home {
-  background-image: url(../img/svg/Bulk/Home-white.svg);
+  background-image: url(/static/images/svg/Bulk/Home-white.svg);
 }
 .arrow-down,
 .document,
 .folder {
-  background-image: url(../img/svg/Bulk/Document-white.svg);
+  background-image: url(/static/images/svg/Bulk/Document-white.svg);
   width: 24px;
   height: 24px;
 }
 .arrow-down,
 .folder {
-  background-image: url(../img/svg/Bulk/Folder-white.svg);
+  background-image: url(/static/images/svg/Bulk/Folder-white.svg);
 }
 .arrow-down {
-  background-image: url(../img/svg/Bulk/Arrow-DownCircle.svg);
+  background-image: url(/static/images/svg/Bulk/Arrow-DownCircle.svg);
 }
 .image,
 .message,
 .paper {
-  background-image: url(../img/svg/Bulk/Image-white.svg);
+  background-image: url(/static/images/svg/Bulk/Image-white.svg);
   width: 24px;
   height: 24px;
 }
 .message,
 .paper {
-  background-image: url(../img/svg/Bulk/Paper-white.svg);
+  background-image: url(/static/images/svg/Bulk/Paper-white.svg);
 }
 .message {
-  background-image: url(../img/svg/Bulk/Message-white.svg);
+  background-image: url(/static/images/svg/Bulk/Message-white.svg);
 }
 .category,
 .edit,
 .user-3 {
-  background-image: url(../img/svg/Bulk/Edit-white.svg);
+  background-image: url(/static/images/svg/Bulk/Edit-white.svg);
   width: 24px;
   height: 24px;
 }
 .category,
 .user-3 {
-  background-image: url(../img/svg/Bulk/Category-white.svg);
+  background-image: url(/static/images/svg/Bulk/Category-white.svg);
 }
 .user-3 {
-  background-image: url(../img/svg/Bulk/3-User-white.svg);
+  background-image: url(/static/images/svg/Bulk/3-User-white.svg);
 }
 .setting,
 .settings-line {
-  background-image: url(../img/svg/Bulk/Setting-white.svg);
+  background-image: url(/static/images/svg/Bulk/Setting-white.svg);
   width: 24px;
   height: 24px;
 }
 .settings-line {
-  background-image: url(../img/svg/Bulk/Settings-line.svg);
-}
-.avatar {
-  background-image: url(../img/avatar/Avatar.svg);
-  width: 56px;
-  height: 56px;
-}
-.avatar-2 {
-  background-image: url(../img/avatar/avatar-2.svg);
-  width: 40px;
-  height: 40px;
+  background-image: url(/static/images/svg/Bulk/Settings-line.svg);
 }
 .notification {
-  background-image: url(../img/svg/Bulk/Notification-gray.svg);
+  background-image: url(/static/images/svg/Bulk/Notification-gray.svg);
   width: 24px;
   height: 24px;
 }
 .arrows-up-down {
-  background-image: url(../img/svg/Bulk/Arrows-up-down.svg);
+  background-image: url(/static/images/svg/Bulk/Arrows-up-down.svg);
   width: 10px;
   height: 17px;
   margin-left: 10px;
 }
 .move,
 .radio {
-  background-image: url(../img/svg/move.svg);
+  background-image: url(/static/images/svg/move.svg);
   width: 24px;
   height: 24px;
 }
 .radio {
-  background-image: url(../img/svg/radio.svg);
+  background-image: url(/static/images/svg/radio.svg);
 }
 .thumbnail {
-  background-image: url(../img/svg/thumbnail.svg);
+  background-image: url(/static/images/svg/thumbnail.svg);
   width: 60px;
   height: 60px;
 }
 .google-drive,
 .time-circle {
-  background-image: url(../img/svg/Bulk/TimeCircle.svg);
+  background-image: url(/static/images/svg/Bulk/TimeCircle.svg);
   width: 24px;
   height: 24px;
 }
 .google-drive {
-  background-image: url(../img/svg/GoogleDrive.svg);
+  background-image: url(/static/images/svg/GoogleDrive.svg);
 }
 .delete,
 .dropbox,
 .star {
-  background-image: url(../img/svg/dropbox.svg);
+  background-image: url(/static/images/svg/dropbox.svg);
   width: 24px;
   height: 24px;
 }
 .delete,
 .star {
-  background-image: url(../img/svg/Bulk/Star.svg);
+  background-image: url(/static/images/svg/Bulk/Star.svg);
 }
 .delete {
-  background-image: url(../img/svg/Bulk/Delete.svg);
+  background-image: url(/static/images/svg/Bulk/Delete.svg);
 }
 .search-wrapper svg {
   stroke: #d6d7e3;

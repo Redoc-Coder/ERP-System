@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XPerience | Seller Dashboard</title>
+    <title>XPerience | Accounting</title>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
     <!-- Custom styles -->
@@ -20,7 +20,7 @@
       <aside class="sidebar">
         <div class="sidebar-start">
           <div class="sidebar-head">
-            <a href="/" class="logo-wrapper" title="Home">
+            <a href="{{ url_for('LandingPage') }}" class="logo-wrapper" title="Home">
               <span class="sr-only">Home</span>
 
               <div class="logo-text">
@@ -41,19 +41,29 @@
             <ul class="sidebar-body-menu">
               <li>
                 <a href="{{ url_for('SellerDashboard') }}"
-                  ><span></span>Dashboard</a
+                  ><span class="icon home" aria-hidden="true"></span
+                  >Dashboard</a
                 >
                 <a href="{{ url_for('AddProducts') }}"
-                  ><span></span>Add Products</a
+                  ><span class="icon add" aria-hidden="true"></span>Add
+                  Products</a
                 >
                 <a href="{{ url_for('Transactions') }}"
-                  ><span></span>View Transactions</a
+                  ><span class="icon paper" aria-hidden="true"></span>View
+                  Transactions</a
                 >
-                <a href="{{ url_for('Inventory') }}"><span></span>Inventory</a>
-                <a href="{{ url_for('Accounting') }}"
-                  ><span></span>Accounting</a
+                <a href="{{ url_for('Inventory') }}"
+                  ><span class="icon inventory" aria-hidden="true"></span
+                  >Inventory</a
                 >
-                <a href="{{ url_for('Courier') }}"><span></span>Courier</a>
+                <a class="active" href="{{ url_for('Accounting') }}"
+                  ><span class="icon accounting" aria-hidden="true"></span
+                  >Accounting</a
+                >
+                <a href="{{ url_for('Courier') }}"
+                  ><span class="icon courier" aria-hidden="true"></span
+                  >Courier</a
+                >
               </li>
               <li>
                 <ul class="cat-sub-menu"></ul>

@@ -1,6 +1,10 @@
+@import url(/fonts/stylesheet.css);
 
-.navbar-logo {
-    max-height: 32px; 
-    margin-right: 10px;
+body {
+  font-family: "Inter", sans-serif;
 }
 
+.navbar-logo {
+  max-height: 32px;
+  margin-right: 10px;
+}

@@ -20,9 +20,12 @@
       <aside class="sidebar">
         <div class="sidebar-start">
           <div class="sidebar-head">
-            <a href="/" class="logo-wrapper" title="Home">
+            <a
+              href="{{ url_for('LandingPage') }}"
+              class="logo-wrapper"
+              title="Home"
+            >
               <span class="sr-only">Home</span>
-
               <div class="logo-text">
                 <span class="logo-title">XPerience</span>
                 <span class="logo-subtitle">Seller Dashboard</span>
@@ -40,20 +43,30 @@
           <div class="sidebar-body">
             <ul class="sidebar-body-menu">
               <li>
-                <a href="{{ url_for('SellerDashboard') }}"
-                  ><span></span>Dashboard</a
+                <a class="active" href="{{ url_for('SellerDashboard') }}"
+                  ><span class="icon home" aria-hidden="true"></span
+                  >Dashboard</a
                 >
                 <a href="{{ url_for('AddProducts') }}"
-                  ><span></span>Add Products</a
+                  ><span class="icon add" aria-hidden="true"></span>Add
+                  Products</a
                 >
                 <a href="{{ url_for('Transactions') }}"
-                  ><span></span>View Transactions</a
+                  ><span class="icon paper" aria-hidden="true"></span>View
+                  Transactions</a
                 >
-                <a href="{{ url_for('Inventory') }}"><span></span>Inventory</a>
+                <a href="{{ url_for('Inventory') }}"
+                  ><span class="icon inventory" aria-hidden="true"></span
+                  >Inventory</a
+                >
                 <a href="{{ url_for('Accounting') }}"
-                  ><span></span>Accounting</a
+                  ><span class="icon accounting" aria-hidden="true"></span
+                  >Accounting</a
                 >
-                <a href="{{ url_for('Courier') }}"><span></span>Courier</a>
+                <a href="{{ url_for('Courier') }}"
+                  ><span class="icon courier" aria-hidden="true"></span
+                  >Courier</a
+                >
               </li>
               <li>
                 <ul class="cat-sub-menu"></ul>
@@ -635,8 +648,9 @@
         </main>
       </div>
     </div>
-    <!-- Charts -->
-    <!-- <script src="/plugins/chart.min.js"></script> -->
+    <script>
+      feather.replace();
+    </script>
     <!-- Icons library -->
     <script src="/plugins/feather.min.js"></script>
     <!-- Custom scripts -->
