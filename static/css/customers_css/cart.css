@@ -1,5 +1,9 @@
 @import url(/fonts/stylesheet.css);
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
