@@ -19,6 +19,7 @@ class accounts(db.Model):
     def __repr__(self):
         return f'<Student {self.username}>'
     
+#cart
 class cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer, nullable=False)
@@ -39,3 +40,14 @@ class cart(db.Model):
 
     def __repr__(self):
         return f'<cart {self.product_name}>'
+    
+#audit trail
+class AuditTrail(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, server_default=func.now())
+    user = db.Column(db.String(100), nullable=False)
+    event_type = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f'<AuditTrail {self.id}>'
