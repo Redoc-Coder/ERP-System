@@ -12,7 +12,7 @@ from flask import (
 
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from models import db, accounts, cart
+from models import db, accounts, cart, AuditTrail
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -40,12 +40,16 @@ def Login():
 
         # Query the database for a user with the given username
         user = accounts.query.filter_by(email=username).first()
-
+    
         if user and user.password == password:
+            
             session["user_id"] = user.id
+            audit_record = AuditTrail(user=username, event_type='Login', description='User logged in')
+            db.session.add(audit_record)
+            db.session.commit()
             return redirect(
                 url_for("LandingPage")
-            )  # Redirect to the dashboard or another page
+            )  
 
         else:
             error = "Invalid email or password. Please try again."
@@ -284,13 +288,15 @@ def dashboard():
 
 @app.route('/users')
 def users():
-    return render_template('/administrator/user.html')
+    users = accounts.query.all()
+    return render_template('/administrator/user.html', users=accounts)
 
 
 @app.route('/audit-trail')
 def auditTrail():
+    audit_records = AuditTrail.query.all()
 
-    return render_template('/administrator/auditTrail.html')
+    return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
 
 @app.route('/cashout-request')
