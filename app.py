@@ -12,7 +12,7 @@ from flask import (
 
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from models import db, accounts, cart, AuditTrail
+from models import db, accounts, cart, auditTrail
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -315,11 +315,8 @@ def users():
     return render_template('/administrator/user.html', users=accounts)
 
 
-@app.route('/audit-trail')
-def auditTrail():
-    audit_records = AuditTrail.query.all()
 
-    return render_template('/administrator/auditTrail.html',audit_records=audit_records)
+   
 
 @app.route("/admin/user")
 def User():
@@ -330,11 +327,11 @@ def User():
 def Users():
     return render_template("administrator/user.html")
 
-
-
-@app.route("/admin/audit-trail")
+@app.route('/audit-trail')
 def AuditTrail():
-    return render_template("administrator/auditTrail.html")
+    audit_records = auditTrail.query.all()
+
+    return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
 
 @app.route("/admin/cashout-request")
