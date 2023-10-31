@@ -12,6 +12,7 @@ from flask import (
 
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 from models import db, accounts, cart, auditTrail
 from sqlalchemy.sql import func
 from base64 import b64encode
@@ -44,7 +45,7 @@ def Login():
         if user and user.password == password:
             
             session["user_id"] = user.id
-            audit_record = AuditTrail(user=username, event_type='Login', description='User logged in')
+            audit_record = auditTrail(user=username, event_type='Login', description='User logged in')
             db.session.add(audit_record)
             db.session.commit()
             return redirect(
@@ -309,12 +310,6 @@ def AdminDashboard():
 
 
 
-@app.route('/users')
-def users():
-    users = accounts.query.all()
-    return render_template('/administrator/user.html', users=accounts)
-
-
 
    
 
@@ -322,14 +317,36 @@ def users():
 def User():
     return render_template("administrator/specUser.html")
 
+#for pagination
+def get_paginated_users(page, per_page):
+    users = accounts.query.paginate(page=page, per_page=per_page, error_out=False)
+    return users
 
 @app.route("/admin/users")
 def Users():
-    return render_template("administrator/user.html")
+
+    page = request.args.get('page', default=1, type=int)
+    per_page =5
+    users = get_paginated_users(page, per_page)
+    search_term = request.args.get('search', default='', type=str)
+
+      # Query users matching the search term
+    users = accounts.query.filter(accounts.email.ilike(f"%{search_term}%")).paginate(page=page, per_page=per_page, error_out=False)
+
+    return render_template("administrator/user.html",users=users, searchTerm=search_term)
+
+
+#audit trail pagination
+def get_paginated_audit_trail(page, per_page):
+    activities = auditTrail.query.paginate(page=page, per_page=per_page, error_out=False)
+    return activities
 
 @app.route('/audit-trail')
 def AuditTrail():
-    audit_records = auditTrail.query.all()
+    page = request.args.get('page', default=1, type=int)
+    per_page =5
+    audit_records = get_paginated_audit_trail(page, per_page)
+   
 
     return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
