@@ -147,15 +147,14 @@
                 
             </div>
             <div class=" the-table col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mt-5 ">
-              <div class="container  mt-5">
-
+              <div class="row mt-5">
                   <div class="date-cont" style="width: 170px;">
                     <input type="date" class="form-control" id="datepicker" placeholder="Select a date">
                   </div>
     
-            
-        
+                  <div class="lalagyan">
 
+                 
                 <table class="table">
                     <thead>
                       <tr>
@@ -166,18 +165,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                
-                      <tr>
-                        <td>0-12-2021 9:47:56</td>
-                        <td>Frenz</td>
-                        <td>Login</td>
-                        <td>User logged in</td>
 
+                      {% for record in audit_records %}
+                      <tr>
+                          <td>{{ record.timestamp }}</td>
+                          <td>{{ record.user }}</td>
+                          <td>{{ record.event_type }}</td>
+                          <td>{{ record.description }}</td>
                       </tr>
-                  
-                      
-                   
-                      </tr>
+                  {% endfor %}
+          
            
                       
                     </tbody>
@@ -201,6 +198,7 @@
                       </ul>
                     </nav>
                   </nav>
+                </div>
                   
               </div>
             </div>
