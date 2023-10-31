@@ -144,13 +144,13 @@
               <div class="row mt-4">
                 
             <div class="drop-search mb-2">
-                <form class="d-flex mt-3" role="search">
-                  <div class="input-group">
-                      <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="height: 29px; border-right: none;">                     
-                          <span class="input-group-text" style="border-left: none;" >
-                              <i class="fa fa-search"></i> <!-- Replace with your desired icon -->
-                          </span>
-                  </div>
+              <form class="d-flex mt-3" role="search">
+                <div class="input-group">
+                  <input class="form-control" type="search" id="searchInput" placeholder="Search" aria-label="Search" style="height: 29px; border-right: none;">
+                  <span class="input-group-text" style="border-left: none;">
+                    <i class="fa fa-search"></i> <!-- Replace with your desired icon -->
+                  </span>
+                </div>
               </form>
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="height: 30px; background-color: transparent">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
@@ -169,7 +169,7 @@
                
                 <table class="table table-hover">
                     <thead>
-                      <tr>
+                      <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <th>Profile</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email address</th>
@@ -178,38 +178,45 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      {% for user in users %}
+                      {% if user.email.startswith(searchTerm) %}
+                      <tr data-bs-toggle="modal" data-bs-target="#modal_{{ user.id }}">
                         <td>
                           <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
-                      </td>
-                      
-                        <td>Frenzy</td>
-                        <td >try@gmail.com</td>
-                        <td>Buyer</td>
-                        <td >Active</td>
+                        </td>
+                        <td>{{ user.firstname }}</td>
+
+                        <td>{{ user.email }}</td>
+
+                        <td>Active</td> <!-- You may need to adjust this based on your data -->
                       </tr>
 
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <img src="/static/images/baseball_bat.jpg" alt="Person's Image" width="50" height="50" style="margin-right: 10px;">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">User1</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <h3> <i class="fa fa-user fa-lg" style="margin-right: 10px;"></i>edzell </h3>
-                                <h3> <i class="fa fa-envelope fa-sm" style="margin-right: 10px;"></i>edz@gmail.com </h3>
-                                <h3> <i class="fas fa-store fa-sm" style="margin-right: 5px;"></i> Seller </h3>
-                                <h3>Status: Active </h3>
-                              </div>
-                              <div class="modal-footer">
-                                <button  type="button" class="btn btn-danger" >Suspend User</button>
-                                <button onclick="redirectToUserPage()" type="button" class="btn btn-primary">View more</button>
-                              </div>
+                      <div class="modal fade" id="modal_{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel_{{ user.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <img src="/static/images/baseball_bat.jpg" alt="Person's Image" width="50" height="50" style="margin-right: 10px;">
+                              <h1 class="modal-title fs-5" id="staticBackdropLabel">User1</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <h3> <i class="fa fa-user fa-lg" style="margin-right: 10px;"></i>edzell </h3>
+                              <h3> <i class="fa fa-envelope fa-sm" style="margin-right: 10px;"></i>edz@gmail.com </h3>
+                              <h3> <i class="fas fa-store fa-sm" style="margin-right: 5px;"></i> Seller </h3>
+                              <h3>Status: Active </h3>
+                            </div>
+                            <div class="modal-footer">
+                              <button  type="button" class="btn btn-danger" >Suspend User</button>
+                              <button onclick="redirectToUserPage()" type="button" class="btn btn-primary">View more</button>
                             </div>
                           </div>
                         </div>
+                      </div>
+
+                      {% endif %}
+                    {% endfor %}
+
+            
                       
                     </tbody>
                   </table>
@@ -217,15 +224,17 @@
                     <nav aria-label="Page navigation example">
                       <ul class="pagination">
                         <li class="page-item">
-                          <a class="page-link" href="#" aria-label="Previous">
+                          <a class="page-link" href="{{ url_for('Users', page=users.prev_num) }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                           </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        {% for page_num in users.iter_pages() %}
+                          <li class="page-item {% if page_num == users.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('Users', page=page_num) }}">{{ page_num }}</a>
+                          </li>
+                        {% endfor %}
                         <li class="page-item">
-                          <a class="page-link" href="#" aria-label="Next">
+                          <a class="page-link" href="{{ url_for('Users', page=users.next_num) }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                           </a>
                         </li>
