@@ -30,7 +30,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 db.init_app(app)
 
 
-# functions for login
+# FUNCTIONS FOR LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def Login():
     error = None
@@ -57,7 +57,7 @@ def Login():
     return render_template("login.html", error=error)
 
 
-@app.route("/Customers/landingpage", methods=["GET"])
+@app.route("/landingpage", methods=["GET"])
 def LandingPage():
     if "user_id" in session:
         # User is logged in
@@ -68,10 +68,13 @@ def LandingPage():
         # User is not logged in, or no cart data found
         cart_count = 0
 
-    return render_template("Customers/landingpage.html", cart_count=cart_count)
+    return render_template("customers/landingpage.html", cart_count=cart_count)
 
 
-# functions for cart
+# END OF FUNCTIONS LOGIN
+
+
+# FUNCTIONS FOR CART
 @app.route("/add-to-cart", methods=["POST"])
 def add_to_cart():
     product_name = request.form["product_name"]
@@ -142,6 +145,10 @@ def remove_from_cart(product_id):
         return jsonify({"message": "Error: " + str(e)})
 
 
+# END OF FUNCTIONS FOR CART
+
+
+# REGISTRATION, FORGET PASS, AND LOGIN
 @app.route("/signup", methods=["GET", "POST"])
 def SignUp():
     error = None
@@ -181,7 +188,11 @@ def ResetPassword():
     return render_template("reset_password.html")
 
 
-@app.route("/cart")
+# END OF REGISTRATION, FORGET PASS, AND LOGIN
+
+
+# CHECKOUT
+@app.route("/customers/cart")
 def Cart():
     if "user_id" in session:
         # User is logged in
@@ -192,21 +203,22 @@ def Cart():
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
-            "cart.html",
+            "/customers/cart.html",
             products=user_cart,
             cart_count=cart_count,
             total_price=total_price,
         )
     else:
         # User is not logged in
-        return render_template("cart.html", products=[], cart_count=0, total_price=0)
+        return render_template(
+            "customers/cart.html", products=[], cart_count=0, total_price=0
+        )
 
 
-#CHECKOUT
-
-@app.route("/checkout")
+# CUSTOMERS
+@app.route("/customers/checkout")
 def checkout():
-     if "user_id" in session:
+    if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
@@ -215,75 +227,86 @@ def checkout():
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
-            "/Customers/checkout_page.html",
+            "customers/checkout_page.html",
             products=user_cart,
             cart_count=cart_count,
             total_price=total_price,
         )
-     else:
+    else:
         # User is not logged in
-        return render_template("/Customers/checkout_page.html", products=[], cart_count=0, total_price=0)
+        return render_template(
+            "customers/checkout_page.html", products=[], cart_count=0, total_price=0
+        )
 
-#
 
-@app.route("/myprofile")
+@app.route("/customers/myprofile")
 def MyProfile():
-    return render_template("my_profile.html")
+    return render_template("customers/my_profile.html")
 
 
-@app.route("/sellerdashboard")
-def Dashboard():
-    return render_template("seller_dashboard.html")
-
-
-@app.route("/postingmerchandise")
-def AddMerchandise():
-    return render_template("posting_merchandise.html")
-
-
-@app.route("/viewtransactions")
-def Transactions():
-    return render_template("view_transactions.html")
-
-
-@app.route("/inventory")
-def Inventory():
-    return render_template("inventory.html")
-
-
-@app.route("/accounting")
-def Accounting():
-    return render_template("accounting.html")
-
-
-@app.route("/courier")
-def Courier():
-    return render_template("courier.html")
-
-@app.route("/outdoor-clothing")
+@app.route("/customers/outdoor-clothing")
 def OutdoorClothing():
-    return render_template("/Customers/outdoor_clothing_page.html")
+    return render_template("customers/outdoor_clothing_page.html")
 
-@app.route("/exercise-and-fitness-gear")
+
+@app.route("/customers/exercise-and-fitness-gear")
 def ExerciseFitnessGear():
-    return render_template("/Customers/exercise_and_fitness_gear_page.html")
+    return render_template("customers/exercise_and_fitness_gear_page.html")
 
-@app.route("/sports-equipment")
+
+@app.route("/customers/sports-equipment")
 def SportsEquipment():
-    return render_template("/Customers/sports_equipment_page.html")
+    return render_template("customers/sports_equipment_page.html")
 
-@app.route("/camping-and-hiking-gear")
+
+@app.route("/customers/camping-and-hiking-gear")
 def CampingHikingGear():
-    return render_template("/Customers/camping_and_hiking_gear_page.html")
+    return render_template("customers/camping_and_hiking_gear_page.html")
 
 
-#ADMIN ROUTE
+# END OF CUSTOMERS
 
 
-@app.route('/admin-dashboard')
-def dashboard():
+# SELLERS
+@app.route("/seller/dashboard")
+def SellerDashboard():
+    return render_template("sellers/seller_dashboard.html")
+
+
+@app.route("/seller/courier")
+def Courier():
+    return render_template("sellers/courier.html")
+
+
+@app.route("/seller/addproducts")
+def AddProducts():
+    return render_template("sellers/add_products.html")
+
+
+@app.route("/seller/viewtransactions")
+def Transactions():
+    return render_template("sellers/view_transactions.html")
+
+
+@app.route("/seller/inventory")
+def Inventory():
+    return render_template("sellers/inventory.html")
+
+
+@app.route("/seller/accounting")
+def Accounting():
+    return render_template("sellers/accounting.html")
+
+
+# END OF SELLERS
+
+
+# ADMIN
+@app.route("/admin/admin-dashboard")
+def AdminDashboard():
     total_users = accounts.query.count()
-    return render_template('/administrator/dashboard.html', total_users=total_users)
+    return render_template("administrator/dashboard.html", total_users=total_users)
+
 
 
 @app.route('/users')
@@ -298,30 +321,43 @@ def auditTrail():
 
     return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
-
-@app.route('/cashout-request')
-def cashoutRequest():
-    return render_template('/administrator/cashoutRequest.html')
-
-
-@app.route('/system-balance')
-def systemBalance():
-    return render_template('/administrator/systemBalance.html')
+@app.route("/admin/user")
+def User():
+    return render_template("administrator/specUser.html")
 
 
-@app.route('/specific-user-transaction')
-def specificUserTransaction():
-    return render_template('/administrator/specUserTransaction.html')
+@app.route("/admin/users")
+def Users():
+    return render_template("administrator/user.html")
 
 
-@app.route('/specific-user-audit-trail')
-def specificUserAuditTrail():
-    return render_template('/administrator/userAuditTrail.html')
 
-@app.route('/user')
-def user():
-    return render_template('/administrator/specUser.html')
+@app.route("/admin/audit-trail")
+def AuditTrail():
+    return render_template("administrator/auditTrail.html")
 
+
+@app.route("/admin/cashout-request")
+def CashoutRequest():
+    return render_template("administrator/cashoutRequest.html")
+
+
+@app.route("/admin/system-balance")
+def SystemBalance():
+    return render_template("administrator/systemBalance.html")
+
+
+@app.route("/admin/specific-user-transaction")
+def SpecificUserTransaction():
+    return render_template("administrator/specUserTransaction.html")
+
+
+@app.route("/admin/specific-user-audit-trail")
+def SpecificUserAuditTrail():
+    return render_template("administrator/userAuditTrail.html")
+
+
+# END OF ADMIN
 
 if __name__ == "__main__":
     app.run(debug=True)

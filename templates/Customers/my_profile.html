@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Profile</title>
+    <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
+    <!-- Bootstrap icons-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="/static/css/customers_css/my_profile.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-navbar">
+      <div class="container px-4 px-lg-5">
+        <!-- Logo and Brand -->
+        <div class="d-flex align-items-center">
+          <img
+            src="/static/images/XPerience-LOGO only.png"
+            alt="Logo"
+            class="navbar-logo"
+          />
+          <a class="navbar-brand" href="#!">XPerience</a>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{{ url_for('LandingPage') }}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Shop</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('LandingPage') }}"
+                    >All Products</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('CampingHikingGear') }}"
+                    >Camping and Hiking Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('ExerciseFitnessGear') }}"
+                    >Exercise and Fitness Gear</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('SportsEquipment') }}"
+                    >Sports Equipment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('OutdoorClothing') }}"
+                    >Outdoor Clothing</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <a class="btn btn-outline-dark" href="{{ url_for('Cart') }}">
+              <i class="bi-cart-fill me-1"></i>
+              Cart
+              <span
+                id="cart-badge"
+                class="badge bg-dark text-white ms-1 rounded-pill"
+                >{{ cart_count }}</span
+              >
+            </a>
+          </form>
+
+          <!-- Profile Section -->
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="/static/images/danzel.png"
+                  class="rounded-circle ms-2"
+                  height="32"
+                  width="35"
+                  alt="Avatar"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('MyProfile') }}"
+                    >My profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('Login') }}"
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- End Profile Section -->
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row flex-lg-nowrap container-margin">
+        <div class="col">
+          <div class="row">
+            <div class="col mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="e-profile">
+                    <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="mx-auto" style="width: 140px">
+                          <div
+                            class="d-flex justify-content-center align-items-center rounded"
+                            style="
+                              height: 140px;
+                              background-color: rgb(233, 236, 239);
+                            "
+                          >
+                            <span
+                              style="
+                                color: rgb(166, 168, 170);
+                                font: bold 8pt Arial;
+                              "
+                            >
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="Image"
+                                style="width: 140px; height: 140px"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
+                      >
+                        <div class="text-sm-left mb-2 mb-sm-0">
+                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                            Danzil Firnandiz
+                          </h4>
+                          <p class="mb-0">danzil@gmail.com</p>
+                          <div class="text-muted">
+                            <small>Last seen 2 hours ago</small>
+                          </div>
+                          <div class="mt-2">
+                            <button class="btn btn-primary" type="button">
+                              <i class="fa fa-fw fa-camera"></i>
+                              <span>Change Photo</span>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="text-center text-sm-right">
+                          <span class="badge badge-info text-secondary"
+                            >Customer</span
+                          >
+                          <div class="text-muted">
+                            <small>Joined 01 Nov 2023</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active">
+                        <form class="form" novalidate="">
+                          <div class="row">
+                            <div class="col">
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="name"
+                                      placeholder="Enter Your Full Name"
+                                      value="Danzil Firnandiz"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Username</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="username"
+                                      placeholder="Enter your Username"
+                                      value="danzil"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-4">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Email</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      placeholder="Enter Your Email Address"
+                                      value="danzil@gmail.com"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-4">
+                                <div class="col mb-3">
+                                  <div class="form-group">
+                                    <label>Tell Something About Yourself</label>
+                                    <textarea
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="My Bio"
+                                    ></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                              <div class="mb-2"><b>Change Password</b></div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      placeholder="Enter Current Password"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-2">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>New Password</label>
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      placeholder="Enter New Password"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-2">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label
+                                      >Confirm Password
+                                      <span class="d-none d-xl-inline"
+                                        >Password</span
+                                      ></label
+                                    >
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      placeholder="Confirm Password"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-between">
+                              <button class="btn btn-primary" type="submit">
+                                Save Changes
+                              </button>
+                              <button
+                                class="btn btn-success"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#sellerModal"
+                              >
+                                Become a Seller?
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for "Become a Seller?" -->
+    <div
+      class="modal fade"
+      id="sellerModal"
+      tabindex="-1"
+      aria-labelledby="sellerModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header header--gradient">
+            <h5 class="modal-title" id="sellerModalLabel">Become a Seller?</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>This will notify the Admin and Approve Your Application</p>
+            <form>
+              <div class="mb-3">
+                <label for="sellerEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="sellerEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="confirmSellerEmail" class="form-label"
+                  >Confirm Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="confirmSellerEmail"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer d-flex justify-content-start">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap core JS-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/addtocart.js"></script>
+  </body>
+</html>
