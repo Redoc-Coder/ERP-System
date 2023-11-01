@@ -12,7 +12,8 @@ from flask import (
 
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from models import db, accounts, cart
+from sqlalchemy import or_
+from models import db, accounts, cart, auditTrail
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -40,12 +41,16 @@ def Login():
 
         # Query the database for a user with the given username
         user = accounts.query.filter_by(email=username).first()
-
+    
         if user and user.password == password:
+            
             session["user_id"] = user.id
+            audit_record = auditTrail(user=username, event_type='Login', description='User logged in')
+            db.session.add(audit_record)
+            db.session.commit()
             return redirect(
                 url_for("LandingPage")
-            )  # Redirect to the dashboard or another page
+            )  
 
         else:
             error = "Invalid email or password. Please try again."
@@ -53,7 +58,7 @@ def Login():
     return render_template("login.html", error=error)
 
 
-@app.route("/customers/landingpage", methods=["GET"])
+@app.route("/landingpage", methods=["GET"])
 def LandingPage():
     if "user_id" in session:
         # User is logged in
@@ -304,19 +309,46 @@ def AdminDashboard():
     return render_template("administrator/dashboard.html", total_users=total_users)
 
 
+
+
+   
+
 @app.route("/admin/user")
 def User():
     return render_template("administrator/specUser.html")
 
+#for pagination
+def get_paginated_users(page, per_page):
+    users = accounts.query.paginate(page=page, per_page=per_page, error_out=False)
+    return users
 
 @app.route("/admin/users")
 def Users():
-    return render_template("administrator/user.html")
+
+    page = request.args.get('page', default=1, type=int)
+    per_page =5
+    users = get_paginated_users(page, per_page)
+    search_term = request.args.get('search', default='', type=str)
+
+      # Query users matching the search term
+    users = accounts.query.filter(accounts.email.ilike(f"%{search_term}%")).paginate(page=page, per_page=per_page, error_out=False)
+
+    return render_template("administrator/user.html",users=users, searchTerm=search_term)
 
 
-@app.route("/admin/audit-trail")
+#audit trail pagination
+def get_paginated_audit_trail(page, per_page):
+    activities = auditTrail.query.paginate(page=page, per_page=per_page, error_out=False)
+    return activities
+
+@app.route('/audit-trail')
 def AuditTrail():
-    return render_template("administrator/auditTrail.html")
+    page = request.args.get('page', default=1, type=int)
+    per_page =5
+    audit_records = get_paginated_audit_trail(page, per_page)
+   
+
+    return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
 
 @app.route("/admin/cashout-request")
