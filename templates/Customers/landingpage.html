@@ -9,7 +9,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>XPerience | Shop All you Want</title>
-    <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
+    <link rel="icon" href="/static/images/XPerience-LOGO only.png" /
+    >
+    <!--Animation-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <!-- Bootstrap icons-->
     <link
       rel="stylesheet"
@@ -163,7 +166,7 @@
 
     <!-- Header-->
     <header class="py-5">
-      <div class="container px-4 px-lg-5 my-5">
+     
         <!-- Image Carousel -->
         <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
           <!-- Indicators -->
@@ -271,7 +274,7 @@
           </a>
         </div>
         <!-- End Image Carousel -->
-      </div>
+     
     </header>
 
     <!--Top Products-->
@@ -285,149 +288,156 @@
         </h2>
 
         <div
-          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+          class="row row-cols-2 row-cols-md-3 row-cols-xl-4 "
         >
-          <div class="col mb-5">
-            <div class="card h-100">
+        <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+          <div class="card h-80 clickable-card">
               <!-- Product image-->
-              <img
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
                 class="card-img-top"
-                src="/static/images/insulated_jacket.jpg"
+                src="/static/images/insulated_jacket-removebg-preview.png"
                 alt="..." height="200"
               />
+              </div>
+           
               <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
+              <div class="card-body">
+                <div style="line-height: 1.7;">
                   <!-- Product name-->
-                  <h5 class="fw-bolder">
+                  <span style="font-size: 18px;" class="fw-bolder">
                     Insulated Jacket
-                  </h5>
+                  </span>
+                  <br>
+                  <!--Product description-->
+                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
+                  <br>
                   <!-- Product price-->
-                  ₱14,499.00
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto add-to-cart"
-                    >Add to Cart</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Sale badge-->
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="/static/images/beanie.jpg"
-                alt="..." height="200"
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">Beanie</h5>
-                  <!-- Product reviews-->
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                  </div>
-                  <!-- Product price-->
-                  <span class="text-muted text-decoration-line-through"
-                    >₱1,043.00</span
-                  >
-                  ₱599.00
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto add-to-cart"
-                    >Add to Cart</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Sale badge-->
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="/static/images/convertible pants.jpg"
-                alt="..." height="200"
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class=" product-name fw-bolder">Convertible pants</h5>
-                  <!-- Product price-->
-                  <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                 
-                    <p class="price">₱900</p>
-                    
-                    <p >Color: <span class="color"> Gray</span></p>
-                    <p>Size: <span class="size">XL</span> </p>
+                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
+                  <div class="   mt-2" id="addToCartButton">
+                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
+                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
+                    > 
                   </div>
                 </div>
               </div>
               <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto add-to-cart"
-                    >Add to Cart</a
-                  >
+              <div class="card-footer  border-top-0 bg-transparent">
+               
+              </div>
+            </div>
+          </div>
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+            <div class="card h-80 clickable-card">
+              <!-- Product image-->
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+           
+              <!-- Product details-->
+              <div class="card-body">
+                <div style="line-height: 1.7;">
+                  <!-- Product name-->
+                  <span style="font-size: 18px;" class="fw-bolder">
+                    Insulated Jacket
+                  </span>
+                  <br>
+                  <!--Product description-->
+                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
+                  <br>
+                  <!-- Product price-->
+                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
+                  <div class="   mt-2" id="addToCartButton">
+                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
+                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
+                    >
+                  </div>
                 </div>
               </div>
-            </div>  
+              <!-- Product actions-->
+              <div class="card-footer  border-top-0 bg-transparent">
+               
+              </div>
+            </div>
+          </div>
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+            <div class="card h-80 clickable-card">
+              <!-- Product image-->
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+           
+              <!-- Product details-->
+              <div class="card-body">
+                <div style="line-height: 1.7;">
+                  <!-- Product name-->
+                  <span style="font-size: 18px;" class="fw-bolder">
+                    Insulated Jacket
+                  </span>
+                  <br>
+                  <!--Product description-->
+                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
+                  <br>
+                  <!-- Product price-->
+                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
+                  <div class="   mt-2" id="addToCartButton">
+                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
+                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer  border-top-0 bg-transparent">
+               
+              </div>
+            </div>
           </div>
 
-          <div class="col mb-5">
-            <div class="card h-100">
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+            <div class="card h-80 clickable-card">
                 <!-- Product image -->
-                <img class="product-image" src="/static/images/trail_running_shoes.jpg" alt="Trail running shoes" height="200" />
+                 <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
                 <!-- Product details -->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- Product name -->
-                        <h5 class="product-name fw-bolder">Trail running shoes</h5>
-                        <!-- Product price -->
-                        <div class="product-price">
-                            ₱899
-                        </div>
-                    </div>
+                <div class="card-body">
+                  <div style="line-height: 1.7;">
+                    <!-- Product name-->
+                    <span style="font-size: 18px;" class="fw-bolder">
+                      Insulated Jacket
+                    </span>
+                    <br>
+                    <!--Product description-->
+                    <span style="color: #686665; font-size: 0.875rem;">Product description</span>
+                    <br>
+                    <!-- Product price-->
+                    <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
+                    <div class="   mt-2" id="addToCartButton">
+                      <!-- Hidden input fields for the product data -->
+                      <input type="hidden" class="product-name" value="Trail running shoes">
+                      <input type="hidden" class="product-price" value="899">
+                      <button type="button" class="btn btn-outline-dark mt-auto add-to-cart" 
+                      style="border-radius: 20px; font-weight: 650;">Add to Cart</button>
+                      
+                  </div>
+                </div>
                 </div>
                 <!-- Product actions -->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                        <!-- Hidden input fields for the product data -->
-                        <input type="hidden" class="product-name" value="Trail running shoes">
-                        <input type="hidden" class="product-price" value="899">
-                        <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
-                        
-                    </div>
+                <div class="card-footer border-top-0 bg-transparent">
+                
                 </div>
             
             </div>
@@ -449,21 +459,188 @@
           </h2>
   
           <div
+          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+        >
+        <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+          <div class="card h-80 clickable-card">
+              <!-- Product image-->
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+           
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 style="font-size: 18px;" class="fw-bolder">
+                    Insulated Jacket
+                  </h5>
+                  <!-- Product price-->
+                  ₱14,499.00
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="  text-center" id="addToCartButton">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="200">
+            <div class="card h-80 clickable-card">
+              <!-- Sale badge-->
+              <div
+                class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem"
+              >
+                Sale
+              </div>
+              <!-- Product image-->
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="  text-center" id="addToCartButton">
+                  <!-- Product name-->
+                  <h5 style="font-size: 18px;"class="fw-bolder">Beanie</h5>
+                 
+               
+                  <!-- Product price-->
+                  <span class="text-muted text-decoration-line-through"
+                    >₱1,043.00</span
+                  >
+                  ₱599.00
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="  text-center" id="addToCartButton">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="400">
+            <div class="card h-80 clickable-card">
+              <!-- Sale badge-->
+              <div
+                class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem"
+              >
+                Sale
+              </div>
+              <!-- Product image-->
+              <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="  text-center" id="addToCartButton">
+                  <!-- Product name-->
+                  <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                  <!-- Product price-->
+                  <span> ₱599.00</span>
+              
+              
+                    
+                  
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="  text-center" id="addToCartButton">
+                  <a class="btn btn-outline-dark mt-auto add-to-cart"
+                    >Add to Cart</a
+                  >
+                </div>
+              </div>
+            </div>  
+          </div>
+
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+            <div class="card h-80 clickable-card">
+                <!-- Product image -->
+                 <div class="img-container" style="background-color: #F3F3F3;">
+                <img
+                class="card-img-top"
+                src="/static/images/insulated_jacket-removebg-preview.png"
+                alt="..." height="200"
+              />
+              </div>
+                <!-- Product details -->
+                <div class="card-body p-4">
+                  <div class="  text-center" id="addToCartButton">
+                        <!-- Product name -->
+                        <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                        <!-- Product price -->
+                        <div class="product-price">
+                            ₱899
+                        </div>
+                    </div>
+                </div>
+                <!-- Product actions -->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="  text-center" id="addToCartButton">
+                        <!-- Hidden input fields for the product data -->
+                        <input type="hidden" class="product-name" value="Trail running shoes">
+                        <input type="hidden" class="product-price" value="899">
+                        <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
+                        
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+          </div>
+          </div>
+      </section>
+
+      <!--Exercise and Fitness Gear-->
+      <section class="mt-5">
+
+        <section class="">
+          <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="mb-4 d-flex justify-content-between align-items-center">
+              <span class="mr-2">Exercise and Fitness Gear</span>
+              <a href="{{ url_for('ExerciseFitnessGear') }}" class="fs-5">See All Products</a>
+            </h2>
+            <div
             class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
           >
-            <div class="col mb-5">
-              <div class="card h-100">
+          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+            <div class="card h-80 clickable-card">
                 <!-- Product image-->
-                <img
+                <div class="img-container" style="background-color: #F3F3F3;">
+                  <img
                   class="card-img-top"
-                  src="/static/images/insulated_jacket.jpg"
+                  src="/static/images/insulated_jacket-removebg-preview.png"
                   alt="..." height="200"
                 />
+                </div>
+             
                 <!-- Product details-->
                 <div class="card-body p-4">
-                  <div class="text-center">
+                  <div class="  text-center" id="addToCartButton">
                     <!-- Product name-->
-                    <h5 class="fw-bolder">
+                    <h5 style="font-size: 18px;" class="fw-bolder">
                       Insulated Jacket
                     </h5>
                     <!-- Product price-->
@@ -480,8 +657,8 @@
                 </div>
               </div>
             </div>
-            <div class="col mb-5">
-              <div class="card h-100">
+            <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="200">
+              <div class="card h-80 clickable-card">
                 <!-- Sale badge-->
                 <div
                   class="badge bg-dark text-white position-absolute"
@@ -490,26 +667,20 @@
                   Sale
                 </div>
                 <!-- Product image-->
-                <img
+                <div class="img-container" style="background-color: #F3F3F3;">
+                  <img
                   class="card-img-top"
-                  src="/static/images/beanie.jpg"
+                  src="/static/images/insulated_jacket-removebg-preview.png"
                   alt="..." height="200"
                 />
+                </div>
                 <!-- Product details-->
                 <div class="card-body p-4">
-                  <div class="text-center">
+                  <div class="  text-center" id="addToCartButton">
                     <!-- Product name-->
-                    <h5 class="fw-bolder">Beanie</h5>
-                    <!-- Product reviews-->
-                    <div
-                      class="d-flex justify-content-center small text-warning mb-2"
-                    >
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                    </div>
+                    <h5 style="font-size: 18px;"class="fw-bolder">Beanie</h5>
+                   
+                 
                     <!-- Product price-->
                     <span class="text-muted text-decoration-line-through"
                       >₱1,043.00</span
@@ -527,8 +698,8 @@
                 </div>
               </div>
             </div>
-            <div class="col mb-5">
-              <div class="card h-100">
+            <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="400">
+              <div class="card h-80 clickable-card">
                 <!-- Sale badge-->
                 <div
                   class="badge bg-dark text-white position-absolute"
@@ -537,29 +708,29 @@
                   Sale
                 </div>
                 <!-- Product image-->
-                <img
+                <div class="img-container" style="background-color: #F3F3F3;">
+                  <img
                   class="card-img-top"
-                  src="/static/images/convertible pants.jpg"
+                  src="/static/images/insulated_jacket-removebg-preview.png"
                   alt="..." height="200"
                 />
+                </div>
                 <!-- Product details-->
                 <div class="card-body p-4">
-                  <div class="text-center">
+                  <div class="  text-center" id="addToCartButton">
                     <!-- Product name-->
-                    <h5 class=" product-name fw-bolder">Convertible pants</h5>
+                    <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
                     <!-- Product price-->
-                    <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                   
-                      <p class="price">₱900</p>
+                    <span> ₱599.00</span>
+                
+                
                       
-                      <p >Color: <span class="color"> Gray</span></p>
-                      <p>Size: <span class="size">XL</span> </p>
-                    </div>
+                    
                   </div>
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center">
+                  <div class="  text-center" id="addToCartButton">
                     <a class="btn btn-outline-dark mt-auto add-to-cart"
                       >Add to Cart</a
                     >
@@ -568,15 +739,21 @@
               </div>  
             </div>
   
-            <div class="col mb-5">
-              <div class="card h-100">
+            <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+              <div class="card h-80 clickable-card">
                   <!-- Product image -->
-                  <img class="product-image" src="/static/images/trail_running_shoes.jpg" alt="Trail running shoes" height="200" />
+                   <div class="img-container" style="background-color: #F3F3F3;">
+                  <img
+                  class="card-img-top"
+                  src="/static/images/insulated_jacket-removebg-preview.png"
+                  alt="..." height="200"
+                />
+                </div>
                   <!-- Product details -->
                   <div class="card-body p-4">
                       <div class="text-center">
                           <!-- Product name -->
-                          <h5 class="product-name fw-bolder">Trail running shoes</h5>
+                          <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
                           <!-- Product price -->
                           <div class="product-price">
                               ₱899
@@ -585,7 +762,7 @@
                   </div>
                   <!-- Product actions -->
                   <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">
+                    <div class="  text-center" id="addToCartButton">
                           <!-- Hidden input fields for the product data -->
                           <input type="hidden" class="product-name" value="Trail running shoes">
                           <input type="hidden" class="product-price" value="899">
@@ -597,168 +774,6 @@
               </div>
           </div>
             </div>
-          </div>
-      </section>
-
-      <!--Exercise and Fitness Gear-->
-      <section class="mt-5">
-
-        <section class="">
-          <div class="container px-4 px-lg-5 mt-5">
-            <h2 class="mb-4 d-flex justify-content-between align-items-center">
-              <span class="mr-2">Exercise and Fitness Gear</span>
-              <a href="{{ url_for('ExerciseFitnessGear') }}" class="fs-5">See All Products</a>
-            </h2>
-    
-            <div
-              class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-            >
-              <div class="col mb-5">
-                <div class="card h-100">
-                  <!-- Product image-->
-                  <img
-                    class="card-img-top"
-                    src="/static/images/dumbbell.jpg"
-                    alt="..." height="200"
-                  />
-                  <!-- Product details-->
-                  <div class="card-body p-4">
-                    <div class="text-center">
-                      <!-- Product name-->
-                      <h5 class="fw-bolder">
-                        dumbbell
-                      </h5>
-                      <!-- Product price-->
-                      ₱4,499.00
-                    </div>
-                  </div>
-                  <!-- Product actions-->
-                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                      <a class="btn btn-outline-dark mt-auto add-to-cart"
-                        >Add to Cart</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col mb-5">
-                <div class="card h-100">
-                  <!-- Sale badge-->
-                  <div
-                    class="badge bg-dark text-white position-absolute"
-                    style="top: 0.5rem; right: 0.5rem"
-                  >
-                    Sale
-                  </div>
-                  <!-- Product image-->
-                  <img
-                    class="card-img-top"
-                    src="/static/images/resistance band.jpg"
-                    alt="..." height="200"
-                  />
-                  <!-- Product details-->
-                  <div class="card-body p-4">
-                    <div class="text-center">
-                      <!-- Product name-->
-                      <h5 class="fw-bolder">resistance band</h5>
-                      <!-- Product reviews-->
-                      <div
-                        class="d-flex justify-content-center small text-warning mb-2"
-                      >
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                      </div>
-                      <!-- Product price-->
-                      <span class="text-muted text-decoration-line-through"
-                        >₱1,043.00</span
-                      >
-                      ₱599.00
-                    </div>
-                  </div>
-                  <!-- Product actions-->
-                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                      <a class="btn btn-outline-dark mt-auto add-to-cart"
-                        >Add to Cart</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col mb-5">
-                <div class="card h-100">
-                  <!-- Sale badge-->
-                  <div
-                    class="badge bg-dark text-white position-absolute"
-                    style="top: 0.5rem; right: 0.5rem"
-                  >
-                    Sale
-                  </div>
-                  <!-- Product image-->
-                  <img
-                    class="card-img-top"
-                    src="/static/images/kettlebell.jpg"
-                    alt="..." height="200"
-                  />
-                  <!-- Product details-->
-                  <div class="card-body p-4">
-                    <div class="text-center">
-                      <!-- Product name-->
-                      <h5 class=" product-name fw-bolder">kettlebell</h5>
-                      <!-- Product price-->
-                      <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                     
-                        <p class="price">₱900</p>
-                        
-                        <p >Color: <span class="color"> Gray</span></p>
-                        <p>Size: <span class="size">XL</span> </p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Product actions-->
-                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                      <a class="btn btn-outline-dark mt-auto add-to-cart"
-                        >Add to Cart</a
-                      >
-                    </div>
-                  </div>
-                </div>  
-              </div>
-    
-              <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image -->
-                    <img class="product-image" src="/static/images/pull_up_bar.jpg" alt="Trail running shoes" height="200" />
-                    <!-- Product details -->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name -->
-                            <h5 class="product-name fw-bolder">pull up bar</h5>
-                            <!-- Product price -->
-                            <div class="product-price">
-                                ₱899
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product actions -->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <!-- Hidden input fields for the product data -->
-                            <input type="hidden" class="product-name" value="Trail running shoes">
-                            <input type="hidden" class="product-price" value="899">
-                            <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
-                            
-                        </div>
-                    </div>
-                
-                </div>
-            </div>
-              </div>
             </div>
         </section>
 
@@ -773,155 +788,157 @@
               </h2>
       
               <div
-                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-              >
-                <div class="col mb-5">
-                  <div class="card h-100">
-                    <!-- Product image-->
+              class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+            >
+            <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+              <div class="card h-80 clickable-card">
+                  <!-- Product image-->
+                  <div class="img-container" style="background-color: #F3F3F3;">
                     <img
-                      class="card-img-top"
-                      src="/static/images/baseball_bat.jpg"
-                      alt="..." height="200"
-                    />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                      <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">
-                         baseball bat
-                        </h5>
-                        <!-- Product price-->
-                        ₱14,499.00
-                      </div>
+                    class="card-img-top"
+                    src="/static/images/insulated_jacket-removebg-preview.png"
+                    alt="..." height="200"
+                  />
+                  </div>
+               
+                  <!-- Product details-->
+                  <div class="card-body p-4">
+                    <div class="  text-center" id="addToCartButton">
+                      <!-- Product name-->
+                      <h5 style="font-size: 18px;" class="fw-bolder">
+                        Insulated Jacket
+                      </h5>
+                      <!-- Product price-->
+                      ₱14,499.00
                     </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">
-                        <a class="btn btn-outline-dark mt-auto add-to-cart"
-                          >Add to Cart</a
-                        >
-                      </div>
+                  </div>
+                  <!-- Product actions-->
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="  text-center" id="addToCartButton">
+                      <a class="btn btn-outline-dark mt-auto add-to-cart"
+                        >Add to Cart</a
+                      >
                     </div>
                   </div>
                 </div>
-                <div class="col mb-5">
-                  <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div
-                      class="badge bg-dark text-white position-absolute"
-                      style="top: 0.5rem; right: 0.5rem"
-                    >
-                      Sale
-                    </div>
-                    <!-- Product image-->
-                    <img
-                      class="card-img-top"
-                      src="/static/images/basketball.webp"
-                      alt="..." height="200"
-                    />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                      <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">basketball</h5>
-                        <!-- Product reviews-->
-                        <div
-                          class="d-flex justify-content-center small text-warning mb-2"
-                        >
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                        </div>
-                        <!-- Product price-->
-                        <span class="text-muted text-decoration-line-through"
-                          >₱1,043.00</span
-                        >
-                        ₱599.00
-                      </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">
-                        <a class="btn btn-outline-dark mt-auto add-to-cart"
-                          >Add to Cart</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col mb-5">
-                  <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div
-                      class="badge bg-dark text-white position-absolute"
-                      style="top: 0.5rem; right: 0.5rem"
-                    >
-                      Sale
-                    </div>
-                    <!-- Product image-->
-                    <img
-                      class="card-img-top"
-                      src="/static/images/baseball_gloves.jpg"
-                      alt="..." height="200"
-                    />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                      <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class=" product-name fw-bolder">Convertible pants</h5>
-                        <!-- Product price-->
-                        <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                       
-                          <p class="price">₱900</p>
-                          
-                          <p >Color: <span class="color"> Gray</span></p>
-                          <p>Size: <span class="size">XL</span> </p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">
-                        <a class="btn btn-outline-dark mt-auto add-to-cart"
-                          >Add to Cart</a
-                        >
-                      </div>
-                    </div>
-                  </div>  
-                </div>
-      
-                <div class="col mb-5">
-                  <div class="card h-100">
-                      <!-- Product image -->
-                      <img class="product-image" src="/static/images/trail_running_shoes.jpg" alt="Trail running shoes" height="200" />
-                      <!-- Product details -->
-                      <div class="card-body p-4">
-                          <div class="text-center">
-                              <!-- Product name -->
-                              <h5 class="product-name fw-bolder">Trail running shoes</h5>
-                              <!-- Product price -->
-                              <div class="product-price">
-                                  ₱899
-                              </div>
-                          </div>
-                      </div>
-                      <!-- Product actions -->
-                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                          <div class="text-center">
-                              <!-- Hidden input fields for the product data -->
-                              <input type="hidden" class="product-name" value="Trail running shoes">
-                              <input type="hidden" class="product-price" value="899">
-                              <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
-                              
-                          </div>
-                      </div>
-                  
-                  </div>
               </div>
+              <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="200">
+                <div class="card h-80 clickable-card">
+                  <!-- Sale badge-->
+                  <div
+                    class="badge bg-dark text-white position-absolute"
+                    style="top: 0.5rem; right: 0.5rem"
+                  >
+                    Sale
+                  </div>
+                  <!-- Product image-->
+                  <div class="img-container" style="background-color: #F3F3F3;">
+                    <img
+                    class="card-img-top"
+                    src="/static/images/insulated_jacket-removebg-preview.png"
+                    alt="..." height="200"
+                  />
+                  </div>
+                  <!-- Product details-->
+                  <div class="card-body p-4">
+                    <div class="  text-center" id="addToCartButton">
+                      <!-- Product name-->
+                      <h5 style="font-size: 18px;"class="fw-bolder">Beanie</h5>
+                     
+                   
+                      <!-- Product price-->
+                      <span class="text-muted text-decoration-line-through"
+                        >₱1,043.00</span
+                      >
+                      ₱599.00
+                    </div>
+                  </div>
+                  <!-- Product actions-->
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="  text-center" id="addToCartButton">
+                      <a class="btn btn-outline-dark mt-auto add-to-cart"
+                        >Add to Cart</a
+                      >
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="400">
+                <div class="card h-80 clickable-card">
+                  <!-- Sale badge-->
+                  <div
+                    class="badge bg-dark text-white position-absolute"
+                    style="top: 0.5rem; right: 0.5rem"
+                  >
+                    Sale
+                  </div>
+                  <!-- Product image-->
+                  <div class="img-container" style="background-color: #F3F3F3;">
+                    <img
+                    class="card-img-top"
+                    src="/static/images/insulated_jacket-removebg-preview.png"
+                    alt="..." height="200"
+                  />
+                  </div>
+                  <!-- Product details-->
+                  <div class="card-body p-4">
+                    <div class="  text-center" id="addToCartButton">
+                      <!-- Product name-->
+                      <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                      <!-- Product price-->
+                      <span> ₱599.00</span>
+                  
+                  
+                        
+                      
+                    </div>
+                  </div>
+                  <!-- Product actions-->
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="  text-center" id="addToCartButton">
+                      <a class="btn btn-outline-dark mt-auto add-to-cart"
+                        >Add to Cart</a
+                      >
+                    </div>
+                  </div>
+                </div>  
+              </div>
+    
+              <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+                <div class="card h-80 clickable-card">
+                    <!-- Product image -->
+                     <div class="img-container" style="background-color: #F3F3F3;">
+                    <img
+                    class="card-img-top"
+                    src="/static/images/insulated_jacket-removebg-preview.png"
+                    alt="..." height="200"
+                  />
+                  </div>
+                    <!-- Product details -->
+                    <div class="card-body p-4">
+                      <div class="  text-center" id="addToCartButton">
+                            <!-- Product name -->
+                            <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                            <!-- Product price -->
+                            <div class="product-price">
+                                ₱899
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product actions -->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="  text-center" id="addToCartButton">
+                            <!-- Hidden input fields for the product data -->
+                            <input type="hidden" class="product-name" value="Trail running shoes">
+                            <input type="hidden" class="product-price" value="899">
+                            <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
+                            
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+              </div>
               </div>
           </section>
 
@@ -937,154 +954,157 @@
                 </h2>
         
                 <div
-                  class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-                >
-                  <div class="col mb-5">
-                    <div class="card h-100">
-                      <!-- Product image-->
+                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+              >
+              <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
+                <div class="card h-80 clickable-card">
+                    <!-- Product image-->
+                    <div class="img-container" style="background-color: #F3F3F3;">
                       <img
-                        class="card-img-top"
-                        src="/static/images/insulated_jacket.jpg"
-                        alt="..." height="200"
-                      />
-                      <!-- Product details-->
-                      <div class="card-body p-4">
-                        <div class="text-center">
-                          <!-- Product name-->
-                          <h5 class="fw-bolder">
-                            Insulated Jacket
-                          </h5>
-                          <!-- Product price-->
-                          ₱14,499.00
-                        </div>
+                      class="card-img-top"
+                      src="/static/images/insulated_jacket-removebg-preview.png"
+                      alt="..." height="200"
+                    />
+                    </div>
+                 
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                      <div class="  text-center" id="addToCartButton">
+                        <!-- Product name-->
+                        <h5 style="font-size: 18px;" class="fw-bolder">
+                          Insulated Jacket
+                        </h5>
+                        <!-- Product price-->
+                        ₱14,499.00
                       </div>
-                      <!-- Product actions-->
-                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                          <a class="btn btn-outline-dark mt-auto add-to-cart"
-                            >Add to Cart</a
-                          >
-                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="  text-center" id="addToCartButton">
+                        <a class="btn btn-outline-dark mt-auto add-to-cart"
+                          >Add to Cart</a
+                        >
                       </div>
                     </div>
                   </div>
-                  <div class="col mb-5">
-                    <div class="card h-100">
-                      <!-- Sale badge-->
-                      <div
-                        class="badge bg-dark text-white position-absolute"
-                        style="top: 0.5rem; right: 0.5rem"
-                      >
-                        Sale
-                      </div>
-                      <!-- Product image-->
-                      <img
-                        class="card-img-top"
-                        src="/static/images/beanie.jpg"
-                        alt="..." height="200"
-                      />
-                      <!-- Product details-->
-                      <div class="card-body p-4">
-                        <div class="text-center">
-                          <!-- Product name-->
-                          <h5 class="fw-bolder">Beanie</h5>
-                          <!-- Product reviews-->
-                          <div
-                            class="d-flex justify-content-center small text-warning mb-2"
-                          >
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                          </div>
-                          <!-- Product price-->
-                          <span class="text-muted text-decoration-line-through"
-                            >₱1,043.00</span
-                          >
-                          ₱599.00
-                        </div>
-                      </div>
-                      <!-- Product actions-->
-                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                          <a class="btn btn-outline-dark mt-auto add-to-cart"
-                            >Add to Cart</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col mb-5">
-                    <div class="card h-100">
-                      <!-- Sale badge-->
-                      <div
-                        class="badge bg-dark text-white position-absolute"
-                        style="top: 0.5rem; right: 0.5rem"
-                      >
-                        Sale
-                      </div>
-                      <!-- Product image-->
-                      <img
-                        class="card-img-top"
-                        src="/static/images/convertible pants.jpg"
-                        alt="..." height="200"
-                      />
-                      <!-- Product details-->
-                      <div class="card-body p-4">
-                        <div class="text-center">
-                          <!-- Product name-->
-                          <h5 class=" product-name fw-bolder">Convertible pants</h5>
-                          <!-- Product price-->
-                          <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                         
-                            <p class="price">₱900</p>
-                            
-                            <p >Color: <span class="color"> Gray</span></p>
-                            <p>Size: <span class="size">XL</span> </p>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Product actions-->
-                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                          <a class="btn btn-outline-dark mt-auto add-to-cart"
-                            >Add to Cart</a
-                          >
-                        </div>
-                      </div>
-                    </div>  
-                  </div>
-        
-                  <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image -->
-                        <img class="product-image" src="/static/images/trail_running_shoes.jpg" alt="Trail running shoes" height="200" />
-                        <!-- Product details -->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name -->
-                                <h5 class="product-name fw-bolder">Trail running shoes</h5>
-                                <!-- Product price -->
-                                <div class="product-price">
-                                    ₱899
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product actions -->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center">
-                                <!-- Hidden input fields for the product data -->
-                                <input type="hidden" class="product-name" value="Trail running shoes">
-                                <input type="hidden" class="product-price" value="899">
-                                <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
-                                
-                            </div>
-                        </div>
-                    
-                    </div>
                 </div>
+                <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="200">
+                  <div class="card h-80 clickable-card">
+                    <!-- Sale badge-->
+                    <div
+                      class="badge bg-dark text-white position-absolute"
+                      style="top: 0.5rem; right: 0.5rem"
+                    >
+                      Sale
+                    </div>
+                    <!-- Product image-->
+                    <div class="img-container" style="background-color: #F3F3F3;">
+                      <img
+                      class="card-img-top"
+                      src="/static/images/insulated_jacket-removebg-preview.png"
+                      alt="..." height="200"
+                    />
+                    </div>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                      <div class="  text-center" id="addToCartButton">
+                        <!-- Product name-->
+                        <h5 style="font-size: 18px;"class="fw-bolder">Beanie</h5>
+                       
+                     
+                        <!-- Product price-->
+                        <span class="text-muted text-decoration-line-through"
+                          >₱1,043.00</span
+                        >
+                        ₱599.00
+                      </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="  text-center" id="addToCartButton">
+                        <a class="btn btn-outline-dark mt-auto add-to-cart"
+                          >Add to Cart</a
+                        >
+                      </div>
+                    </div>
                   </div>
+                </div>
+                <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="400">
+                  <div class="card h-80 clickable-card">
+                    <!-- Sale badge-->
+                    <div
+                      class="badge bg-dark text-white position-absolute"
+                      style="top: 0.5rem; right: 0.5rem"
+                    >
+                      Sale
+                    </div>
+                    <!-- Product image-->
+                    <div class="img-container" style="background-color: #F3F3F3;">
+                      <img
+                      class="card-img-top"
+                      src="/static/images/insulated_jacket-removebg-preview.png"
+                      alt="..." height="200"
+                    />
+                    </div>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                      <div class="  text-center" id="addToCartButton">
+                        <!-- Product name-->
+                        <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                        <!-- Product price-->
+                        <span> ₱599.00</span>
+                    
+                    
+                          
+                        
+                      </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="  text-center" id="addToCartButton">
+                        <a class="btn btn-outline-dark mt-auto add-to-cart"
+                          >Add to Cart</a
+                        >
+                      </div>
+                    </div>
+                  </div>  
+                </div>
+      
+                <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+                  <div class="card h-80 clickable-card">
+                      <!-- Product image -->
+                       <div class="img-container" style="background-color: #F3F3F3;">
+                      <img
+                      class="card-img-top"
+                      src="/static/images/insulated_jacket-removebg-preview.png"
+                      alt="..." height="200"
+                    />
+                    </div>
+                      <!-- Product details -->
+                      <div class="card-body p-4">
+                        <div class="  text-center" id="addToCartButton">
+                              <!-- Product name -->
+                              <h5 style="font-size: 18px;" class=" product-name fw-bolder">Convertible pants</h5>
+                              <!-- Product price -->
+                              <div class="product-price">
+                                  ₱899
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Product actions -->
+                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="  text-center" id="addToCartButton">
+                              <!-- Hidden input fields for the product data -->
+                              <input type="hidden" class="product-name" value="Trail running shoes">
+                              <input type="hidden" class="product-price" value="899">
+                              <button type="button" class="btn btn-outline-dark mt-auto add-to-cart">Add to Cart</button>
+                              
+                          </div>
+                      </div>
+                  
+                  </div>
+              </div>
+                </div>
                 </div>
             </section>
 
@@ -1106,6 +1126,12 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <!--ANimation-->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
     <script src="/static/js/addtocart.js"></script>
+    <script src="/static/js/landingpage.js"></script>
   </body>
 </html>
