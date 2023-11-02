@@ -45,6 +45,7 @@ def Login():
         if user and user.password == password:
             
             session["user_id"] = user.id
+            session["user_email"] = user.email
             audit_record = auditTrail(user=username, event_type='Login', description='User logged in')
             db.session.add(audit_record)
             db.session.commit()
@@ -101,8 +102,13 @@ def add_to_cart():
         mime_type="image/jpeg",  # Set the appropriate MIME type
         category="basta",
     )
-
+    
     db.session.add(new_cart_item)
+  
+    #add data to audit trail
+    email = session["user_email"]
+    audit_record = auditTrail(user=email, event_type='Add to cart', description=f'Product: {product_name}')
+    db.session.add(audit_record)
     db.session.commit()
 
     response = {"message": "Product added to cart successfully"}
@@ -130,12 +136,18 @@ def remove_from_cart(product_id):
     try:
         # Find the product in the cart by its ID
         product_to_remove = cart.query.get(product_id)
-
+        product_name = product_to_remove.product_name
         if product_to_remove:
             # Remove the product from the cart
             db.session.delete(product_to_remove)
             db.session.commit()
+             # Add record for audit trail
+            email = session["user_email"]
+            audit_record = auditTrail(user=email, event_type='Remove from cart', description=f'{product_name} removed from cart')
+            db.session.add(audit_record)
+            db.session.commit()
 
+           
             # Return a success message
             return jsonify({"message": "Product removed from cart successfully"})
         else:
@@ -145,9 +157,15 @@ def remove_from_cart(product_id):
         # Handle any potential errors
         return jsonify({"message": "Error: " + str(e)})
 
-
 # END OF FUNCTIONS FOR CART
 
+#get the total price of all items in the cart
+@app.route("/get-total-price", methods=["GET"])
+def get_total_price():
+    user_id = session["user_id"]
+    user_cart = cart.query.filter_by(customer_id=user_id).all()
+    total_price = sum(item.total_price for item in user_cart)
+    return jsonify({"total_price": total_price})
 
 # REGISTRATION, FORGET PASS, AND LOGIN
 @app.route("/signup", methods=["GET", "POST"])
@@ -191,6 +209,11 @@ def ResetPassword():
 
 # END OF REGISTRATION, FORGET PASS, AND LOGIN
 
+# CUSTOMERS
+@app.route("/product-info")
+def ProductInfo():
+    return render_template("customers/product_info_page.html")
+
 
 # CHECKOUT
 @app.route("/customers/cart")
@@ -216,7 +239,7 @@ def Cart():
         )
 
 
-# CUSTOMERS
+
 @app.route("/customers/checkout")
 def checkout():
     if "user_id" in session:
@@ -309,13 +332,26 @@ def AdminDashboard():
     return render_template("administrator/dashboard.html", total_users=total_users)
 
 
-
-
-   
-
-@app.route("/admin/user")
+@app.route("/admin/user", methods=["GET", "POST"])
 def User():
-    return render_template("administrator/specUser.html")
+    if request.method == "POST":
+        user_id_to_suspend = request.form.get("user_id")
+        if user_id_to_suspend:
+            user = accounts.query.get(user_id_to_suspend)
+            if user:
+                # Toggle the suspension status
+                user.is_suspended = not user.is_suspended
+                db.session.commit()
+
+                # Create an audit trail record for the suspension
+                email = session["user_email"]  # Assuming the admin's email is in the session
+                audit_record = auditTrail(user=email, event_type='Suspend User', description=f'Admin suspended the user with ID: {user.id}')
+                db.session.add(audit_record)
+                db.session.commit()
+
+    # Your existing admin page logic
+    return render_template("administrator/specUser.html")  # Include the list of users or user data
+
 
 #for pagination
 def get_paginated_users(page, per_page):
@@ -370,6 +406,29 @@ def SpecificUserTransaction():
 def SpecificUserAuditTrail():
     return render_template("administrator/userAuditTrail.html")
 
+#suspend user
+@app.route("/suspend-user", methods=["POST"])
+def suspend_user():
+
+    user_id_to_suspend = request.form.get("user_id")
+    if user_id_to_suspend:
+        user = accounts.query.get(user_id_to_suspend)
+
+        if user:
+            # Toggle the suspension status
+            user.is_suspended = not user.is_suspended
+            db.session.commit()
+
+            # Create an audit trail record for the suspension
+            email = session["user_email"]  # Assuming the admin's email is in the session
+            audit_record = auditTrail(user=email, event_type='Suspend User', description=f'Suspended user with ID: {user.id}')
+            db.session.add(audit_record)
+            db.session.commit()
+
+            # Redirect back to the admin page or another appropriate destination
+            return redirect(url_for("admin_dashboard"))
+    
+    return "Invalid user or unauthorized access"  # You can customize this message or redirect to an error page
 
 # END OF ADMIN
 
