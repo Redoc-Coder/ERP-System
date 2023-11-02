@@ -9,6 +9,29 @@ function removeFromCart(productId) {
             // If the removal was successful, remove the product element from the page
             const productElement = document.querySelector(`[data-product-id="${productId}"]`);
             productElement.remove();
+      // Fetch the updated total price
+      fetch("/get-total-price")
+      .then(response => response.json())
+      .then(totalPriceData => {
+          // Update the displayed total price
+          const totalPriceElement = document.getElementById("total-price");
+          totalPriceElement.textContent = `₱${totalPriceData.total_price}.00`;
+      })
+      .catch(error => {
+          console.error("Error fetching total price:", error);
+      });
+
+
+            fetch("/get-cart-count")
+            .then(response => response.json())
+            .then(cartData => {
+                // Update the cart badge with the new count
+                const cartBadge = document.getElementById("cart-badge");
+                cartBadge.textContent = cartData.count;
+            })
+            .catch(error => {
+                console.error("Error fetching cart count:", error);
+            });
         }
     })
     .catch(error => {
