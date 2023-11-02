@@ -7,8 +7,15 @@
     <title>XPerience | Add Products</title>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <!-- Custom styles -->
-    <link rel="stylesheet" href="/static/css/sellers_css/style.min.css" />
+    <link rel="stylesheet" href="/static/css/sellers_css/add_products.css" />
   </head>
 
   <body>
@@ -205,34 +212,140 @@
         <main class="main users chart-page" id="skip-target">
           <div class="container">
             <h2 class="main-title">Add Products</h2>
-            <form>
-              <div class="">
-                  <label for="productImage">Upload Image:</label>
-                  <input type="file" id="productImage" name="productImage">
-              </div>
-              <div class="">
+            <div class="container__AddProducts">
+              
+              <form>
+                <div class="form-group">
+                  <label for="productImage">Upload Product Image:</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="productImage"
+                    name="productImage"
+                  />
+                </div>
+                <div class="form-group">
                   <label for="productName">Product Name:</label>
-                  <input type="text" id="productName" name="productName" placeholder="Enter Product Name">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="productName"
+                    name="productName"
+                    placeholder="Enter Product Name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="productDetails">Product Details:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="productDetails"
+                    name="productDetails"
+                    placeholder="Enter Product Details"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="productCategory">Category:</label>
+                  <select
+                    class="form-control category__width"
+                    id="productCategory"
+                    name="productCategory"
+                  >
+                    <option value="Camping & Hiking Gear">Camping & Hiking Gear</option>
+                    <option value="Exercise & Fitness Gear">
+                      Exercise & Fitness Gear
+                    </option>
+                    <option value="Sports Equipment">
+                      Sports Equipment (Basketball, Soccer, etc.)
+                    </option>
+                    <option value="Outdoor Clothing">Outdoor Clothing</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="productQuantity">Quantity:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="productQuantity"
+                      name="productQuantity"
+                      placeholder="Enter Availability"
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="productPrice">Price:</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text peso-sign">₱</span>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="productPrice"
+                        name="productPrice"
+                        placeholder="Enter Price"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Add Product
+                </button>
+              </form>
+            </div>  
+            <!-- Table View ng mga uploaded na products -->
+            <div class="mt-5">
+              <h2 class="main-title">Product Table View</h2>
+                <div class="container table-responsive container__AddProducts">
+                  <div class="row">
+                    <div class="col-12">
+                    <table class="table table-image">
+                      <thead>
+                        <tr>
+                          <th scope="col">Id</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Product Name</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Date Added</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td class="w-25">
+                            <img src="../../static/images/pull_up_bar.jpg" class="img-fluid img-thumbnail" alt="Sheep">
+                          </td>
+                          <td>Insulated Jacket</td>
+                          <td>₱600</td>
+                          <td>3</td>
+                          <td>Dec 1, 2023</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td class="">
+                            <img src="../../static/images/soccer_ball.jpg" alt="Sheep">
+                          </td>
+                          <td>Soccer Ball</td>
+                          <td>₱300</td>
+                          <td>4</td>
+                          <td>Nov 28, 2023</td>
+                        </tr>
+                      </tbody>
+                    </table>   
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="">
-                <label for="productName">Product Details:</label>
-                <input type="text" id="productName" name="productName" placeholder="Enter Product Details">
-              </div>
-              <div class="">
-                <label for="productPrice">Quantity:</label>
-                <input type="number" id="productQuantity" name="productQuantity" placeholder="Enter Availability">
-            </div>
-              <div class="">
-                  <label for="productPrice">Price:</label>
-                  <input type="number" id="productPrice" name="productPrice" placeholder="Enter price">
-              </div>
-              <button type="submit" class="add-button">Add</button>
-          </form>
-          </div>
-          <div style="margin: 200px 0px 0px 120px;">
-            <h1> Dito sa baba👇 yung mga displays ng mga na upload na Products</h1>
-          </div>
+          </div> 
         </main>
+
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     <!-- Icons library -->
     <script src="/plugins/feather.min.js"></script>
     <!-- Custom scripts -->
