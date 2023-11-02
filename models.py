@@ -14,8 +14,7 @@ class accounts(db.Model):
     password = db.Column(db.Text)
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
-    password = db.Column(db.Text)
-
+    is_suspended = db.Column(db.Boolean, default=False)
     def __repr__(self):
         return f'<Student {self.username}>'
     
