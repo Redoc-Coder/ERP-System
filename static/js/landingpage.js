@@ -6,7 +6,9 @@ cards.forEach(function(card) {
         // Check if the click occurred on the "Add to Cart" button
         if (!event.target.closest("#addToCartButton")) {
   
-            window.location.href = "/product-info";
+            const productId = this.dataset.productId;
+            // Redirect to the product details page
+            window.location.href = `/product-info/${productId}`;
         }
     });
 });
