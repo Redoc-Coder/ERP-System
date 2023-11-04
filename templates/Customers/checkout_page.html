@@ -311,9 +311,8 @@
                     >
                       <p style="color: #121212">{{ product.product_name }}</p>
                       <p>{{ product.price }}.00</p>
-                      <p>Type: {{ product.category }}</p>
-                      <p>Color: {{ product.color }}</p>
-                      <p>Size: {{ product.size }}</p>
+                      <p>{{ product.description|truncate_text(20) }}</p>
+                      <p>{{ product.category}}</p>
                     </div>
                   </div>
                 </div>

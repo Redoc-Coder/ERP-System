@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/css/customers_css/landingpage.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
@@ -175,7 +176,7 @@
           <a style="color: black; font-family: sans-serif; font-style: normal; font-weight: 400; font-size: 16px;" href="{{ url_for('LandingPage') }}">Continue shopping</a>
           </div>
           <div class="product-title col-md-6 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
-            <p>PRODUCT</p>
+            <p>PRODUCT DETAILS</p>
           </div>
           <div class="quantity-title col-md-2  mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);" >
             <p>QUANTITY</p>
@@ -184,16 +185,11 @@
             <p>TOTAL</p>
           </div>
           <hr>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label style="font-weight: bold;" class="form-check-label" for="flexCheckDefault">
-              All items
-            </label>
-          </div>
+         
         </div>
 
           {% block content %}
-          <div class="cont">
+          <div class="cont" id="cart-container">
               {% for product in products %}
              
               <div class="row" data-product-id="{{ product.id }}">
@@ -204,29 +200,30 @@
                       <div class="mb-3">
                         <input class="form-check-input" style="margin-right: 110px;" type="checkbox" value="" aria-label="...">
                       </div>
-                      <img src="data:{{ product.mime_type }};base64, {{ product.product_image }}" class="rounded float-start" alt="Product Image" height="120" width="100" style="margin-right: 30px;">
+                      <img src="data:{{ product.mime_type }};base64, {{ product.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
+                      min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
 
                     </div>
-                    <div class="description-cont" style="line-height: 0.8; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
+                    <div class="description-cont" style="line-height: 1; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
                       <p style="color: #121212;">{{ product.product_name }}</p>
                       <p>{{ product.price }}.00</p>
-                      <p>Type: {{ product.category }}</p>
-                      <p>Color: {{ product.color }}</p>
-                      <p>Size: {{ product.size }}</p>
+                      <p>{{ product.description|truncate_text(20) }}</p>
+                    
                     </div>
                 
                 </div>
                 <div class="quantity col-md-2 mt-5 ">
                   <div class="input-group" style="width: 50%;">
-                    <input type="number" class="form-control quantity" value="{{ product.quantity }}" min="1" max="10">
+                    <input type="number" class="form-control quantity" value="1" min="1" max="10">
                   </div>
                 </div>
                 <div class="total col-md-2 d-flex mt-5">
-                  <p>₱{{ product.total_price }}.00</p>
+                
+                  <span id="total-{{ product.id }}">₱{{ product.price }}.00</span>
                 </div>
                 <div class="action col-md-2 mt-5">
                   <button type="button" class="btn btn-outline-secondary remove-from-cart" data-product-id="{{ product.id }}">
-                    <span class="fa fa-trash-o fa-lg"></span>
+                    <span class="fa fa-remove fa-lg"></span>
                 </button>
                 </div>
                  </div>
@@ -242,7 +239,7 @@
           <div class="order-summary col-md-4 mt-3 offset-md-8 mb-3">
             <h1>Subtotal</h1>
             <div class="total" style="display: flex; justify-content: flex-end;">
-              <p style="font-weight: bold;" id="total-price">₱{{ total_price }}</p>
+              <p style="font-weight: bold;"><span id="overall-total">0.00</span></p>
           </div>
           
             <a style="width: 100%;" class="btn btn-dark btn-lg" href="{{ url_for('checkout') }}" role="button">Checkout</a>
@@ -255,6 +252,7 @@
       
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="/static/js/remove_from_cart.js"></script>
+      <script src="/static/js/total.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

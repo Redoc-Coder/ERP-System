@@ -168,15 +168,19 @@
     <header class="py-5">
         <div class="container mt-5">
             <div class="card-cont mb-3" style="min-height: 500px;" >
-                <div class="row g-0">
+                <div class="row g-0 gx-5">
                   <div class="col-md-7">
-                    <img src="/static/images/svg/404.svg" class="img-fluid rounded-start" alt="product" style="min-height: 500px;" >
+                     <!--Product image-->
+                     <img src="data:{{ product.mime_type }};base64, {{ product.product_image }}" class="img-fluid rounded-start" alt="product" style="min-height: 450px; max-height: 450px;">
                   </div>
                   <div class="col-md-5">
                     <div class="card-body">
-                      <h3 class="card-title fw-bold">PRODUCT NAME</h3>
-                      <p class="card-text" style="color: #686665;">Product description</p>
-                      <h4>₱5000</h4>
+                    <!-- Product name -->
+                    <h3 class="card-title fw-bold">{{ product.product_name }}</h3>
+                    <!-- Product description -->
+                    <p class="card-text" style="color: #686665;">{{ product.product_details }}</p>
+                    <!-- Product price -->
+                    <h4>₱{{ product.price }}</h4>
                      <hr  style="color: #686665;">
                    
                   
@@ -193,13 +197,14 @@
                       
                     </div>
                     <div class="btn-cont mt-4">
-                        <button style="width: 45%; margin-right: 15px; border-radius: 20px;" type="button" class="btn btn-dark btn-lg">Buy now</button>
-                        <button style="width: 45%; border-radius: 20px;" type="button" class="btn btn-outline-secondary btn-lg">Add to cart</button>
+                        <button style="width: 45%; margin-right: 15px; border-radius: 50px;" type="button" class="btn btn-dark btn-lg">Buy now</button>
+                        
+                        <button id="addToCartButton"  data-product-id="{{ product.id }}" style="width: 45%; border-radius: 50px;" type="button" class="btn btn-outline-secondary btn-lg add-cart">Add to cart</button>
                     </div>
                     
-                    <hr style="color: #686665;">
+                    <hr style="color: #686665;" class="mb-4">
 
-                    <div class="img-cont">
+                    <div class="img-cont ">
                         <img src="/static/images/svg/store-2017.svg" class="img-fluid" alt="" style="max-height: 100px;">
                         <div class="seller-name-and-rating">
                             <span style="font-size: 1.5rem;"> <a href="" style="text-decoration: none;"> Seller name</a></span>

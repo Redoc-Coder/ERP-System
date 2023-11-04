@@ -13,7 +13,7 @@ from flask import (
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from models import db, accounts, cart, auditTrail
+from models import db, accounts, cart, auditTrail, Product
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -31,6 +31,13 @@ app.config["SESSION_TYPE"] = "filesystem"
 db.init_app(app)
 
 
+# Custom Jinja2 filter to truncate text
+def truncate_text(text, max_length):
+    if len(text) > max_length:
+        return text[:max_length] + "..."
+    return text
+
+app.jinja_env.filters['truncate_text'] = truncate_text
 # FUNCTIONS FOR LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def Login():
@@ -61,6 +68,7 @@ def Login():
 
 @app.route("/landingpage", methods=["GET"])
 def LandingPage():
+    
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
@@ -69,51 +77,60 @@ def LandingPage():
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
+    outdoor_clothing_products = Product.query.filter_by(category="Outdoor Clothing").all()
+    exercise_fitness_gear_products = Product.query.filter_by(category="Exercise & Fitness Gear").all()
+    camping_hiking_gear_products = Product.query.filter_by(category="Camping & Hiking Gear").all()
+    sports_equipment_products = Product.query.filter_by(category="Sports Equipment").all()
+    
+    for product in outdoor_clothing_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+        
+    for product in exercise_fitness_gear_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+        
+    for product in camping_hiking_gear_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
 
-    return render_template("customers/landingpage.html", cart_count=cart_count)
+    for product in sports_equipment_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+
+    return render_template("customers/landingpage.html", cart_count=cart_count, outdoor_clothing=outdoor_clothing_products,
+    exercise_products=exercise_fitness_gear_products,camping_products=camping_hiking_gear_products, sports_products=sports_equipment_products)
 
 
 # END OF FUNCTIONS LOGIN
+@app.route('/add-to-cart/<int:product_id>', methods=['POST'])
+def add_to_cart(product_id):
+    if request.method == 'POST':
+        # Check if the product with the given ID exists in your database
+        product = Product.query.get(product_id)
 
+        if product:
+            # Assuming you have a customer ID, seller ID, and shop name, update these accordingly
+            customer_id = session['user_id']
+            seller_id = 2
+            shop_name = "Your Shop Name"
 
-# FUNCTIONS FOR CART
-@app.route("/add-to-cart", methods=["POST"])
-def add_to_cart():
-    product_name = request.form["product_name"]
-    product_price = request.form["product_price"]
+            new_product = cart(
+                customer_id=customer_id,
+                seller_id=seller_id,
+                shop_name=shop_name,
+                product_name=product.product_name,
+                product_image=product.product_image,
+                mime_type=product.mime_type,
+                category=product.category,  # Update with the actual category
+                description=product.product_details,
+                price=product.price
+            )
 
-    # You can directly read the image file from the server
-    image_file_path = "static/images/trail_running_shoes.jpg"
-    with open(image_file_path, "rb") as image_file:
-        product_image = image_file.read()
+            db.session.add(new_product)
+            db.session.commit()
+            return jsonify({"message": "Product added to cart successfully"})
+        else:
+            
+            return jsonify({'error': 'Product not found'})
 
-    # Get the user ID from the session
-    user_id = session.get("user_id")
-
-    # Insert the product information into the cart table, associating it with the user
-    new_cart_item = cart(
-        customer_id=user_id,
-        seller_id=1,  # Replace with the actual seller ID
-        product_name=product_name,
-        price=product_price,
-        product_image=product_image,
-        quantity=1,
-        total_price=product_price,
-        mime_type="image/jpeg",  # Set the appropriate MIME type
-        category="basta",
-    )
-    
-    db.session.add(new_cart_item)
-  
-    #add data to audit trail
-    email = session["user_email"]
-    audit_record = auditTrail(user=email, event_type='Add to cart', description=f'Product: {product_name}')
-    db.session.add(audit_record)
-    db.session.commit()
-
-    response = {"message": "Product added to cart successfully"}
-    return jsonify(response)
-
+    return jsonify({'error': 'Invalid request'})
 
 @app.route("/get-cart-count", methods=["GET"])
 def get_cart_count():
@@ -210,9 +227,27 @@ def ResetPassword():
 # END OF REGISTRATION, FORGET PASS, AND LOGIN
 
 # CUSTOMERS
-@app.route("/product-info")
-def ProductInfo():
-    return render_template("customers/product_info_page.html")
+@app.route("/product-info/<int:product_id>")
+def ProductInfo(product_id):
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+
+    product = Product.query.get(product_id)
+
+    if product is not None:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product)
+    else:
+        # Handle the case where the product does not exist
+
+        return redirect(url_for("CampingHikingGear"))
+
 
 
 # CHECKOUT
@@ -223,19 +258,19 @@ def Cart():
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
-        total_price = sum(item.total_price for item in user_cart)
+
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
             "/customers/cart.html",
             products=user_cart,
             cart_count=cart_count,
-            total_price=total_price,
+
         )
     else:
         # User is not logged in
         return render_template(
-            "customers/cart.html", products=[], cart_count=0, total_price=0
+            "customers/cart.html", products=[], cart_count=0
         )
 
 
@@ -247,19 +282,18 @@ def checkout():
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
-        total_price = sum(item.total_price for item in user_cart)
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
             "customers/checkout_page.html",
             products=user_cart,
             cart_count=cart_count,
-            total_price=total_price,
+       
         )
     else:
         # User is not logged in
         return render_template(
-            "customers/checkout_page.html", products=[], cart_count=0, total_price=0
+            "customers/checkout_page.html", products=[], cart_count=0
         )
 
 
@@ -270,22 +304,85 @@ def MyProfile():
 
 @app.route("/customers/outdoor-clothing")
 def OutdoorClothing():
-    return render_template("customers/outdoor_clothing_page.html")
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+    outdoor_clothing_products = Product.query.filter_by(category="Outdoor Clothing").all()
+
+    for product in outdoor_clothing_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+
+
+    return render_template("customers/outdoor_clothing_page.html", cart_count=cart_count, outdoor_clothing=outdoor_clothing_products)
+ 
 
 
 @app.route("/customers/exercise-and-fitness-gear")
 def ExerciseFitnessGear():
-    return render_template("customers/exercise_and_fitness_gear_page.html")
+    
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+ 
+    exercise_fitness_gear_products = Product.query.filter_by(category="Exercise & Fitness Gear").all()
+
+    for product in exercise_fitness_gear_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+        
+    return render_template("customers/exercise_and_fitness_gear_page.html", cart_count=cart_count,exercise_products=exercise_fitness_gear_products)
+
+ 
 
 
 @app.route("/customers/sports-equipment")
 def SportsEquipment():
-    return render_template("customers/sports_equipment_page.html")
+
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+
+    sports_equipment_products = Product.query.filter_by(category="Sports Equipment").all()
+    
+    for product in sports_equipment_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+
+    return render_template("customers/sports_equipment_page.html", cart_count=cart_count, sports_products=sports_equipment_products)
+
 
 
 @app.route("/customers/camping-and-hiking-gear")
 def CampingHikingGear():
-    return render_template("customers/camping_and_hiking_gear_page.html")
+     if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+     else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+
+     camping_hiking_gear_products = Product.query.filter_by(category="Camping & Hiking Gear").all()
+     for product in camping_hiking_gear_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+
+
+     return render_template("customers/camping_and_hiking_gear_page.html", cart_count=cart_count,camping_products=camping_hiking_gear_products)
+
 
 
 # END OF CUSTOMERS
@@ -302,9 +399,49 @@ def Courier():
     return render_template("sellers/courier.html")
 
 
-@app.route("/seller/addproducts")
+@app.route("/seller/addproducts", methods=['GET', 'POST'])
 def AddProducts():
-    return render_template("sellers/add_products.html")
+    seller_id = None  # Initialize seller_id to None
+    if "user_id" in session:
+       seller_id = session["user_id"]
+       if request.method == 'POST':
+    
+        product_name = request.form['productName']
+        product_details = request.form['productDetails']
+        
+           # Handle the SVG image data
+        product_image_file = request.files['productImage']
+        product_image = product_image_file.read()
+        mime_type = product_image_file.content_type
+        
+    
+        mime_type = request.files['productImage'].content_type
+        category = request.form['productCategory']
+        price = request.form['productPrice']
+        quantity = request.form['productQuantity']
+
+        new_product = Product(
+            seller_id=seller_id,
+            product_name=product_name,
+            product_details=product_details,
+            product_image=product_image,
+            mime_type=mime_type,
+            category=category,
+            price=price,
+            quantity=quantity
+        )
+      
+        db.session.add(new_product)
+        db.session.commit()
+    if seller_id is not None:
+        # Retrieve and decode the product images
+        products = Product.query.filter_by(seller_id=seller_id).all()
+        for product in products:
+            product.product_image = base64.b64encode(product.product_image).decode("utf-8")
+    else:
+        products = []  
+        
+    return render_template("sellers/add_products.html", seller_products=products)
 
 
 @app.route("/seller/viewtransactions")
