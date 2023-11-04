@@ -214,7 +214,7 @@
             <h2 class="main-title">Add Products</h2>
             <div class="container__AddProducts">
               
-              <form>
+              <form method="POST" action="{{ url_for('AddProducts') }}" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="productImage">Upload Product Image:</label>
                   <input
@@ -222,6 +222,7 @@
                     class="form-control"
                     id="productImage"
                     name="productImage"
+                    accept="image/svg+xml" 
                   />
                 </div>
                 <div class="form-group">
@@ -256,7 +257,7 @@
                       Exercise & Fitness Gear
                     </option>
                     <option value="Sports Equipment">
-                      Sports Equipment (Basketball, Soccer, etc.)
+                      Sports Equipment
                     </option>
                     <option value="Outdoor Clothing">Outdoor Clothing</option>
                   </select>
@@ -299,40 +300,44 @@
                 <div class="container table-responsive container__AddProducts">
                   <div class="row">
                     <div class="col-12">
-                    <table class="table table-image">
-                      <thead>
-                        <tr>
-                          <th scope="col">Id</th>
-                          <th scope="col">Image</th>
-                          <th scope="col">Product Name</th>
-                          <th scope="col">Price</th>
-                          <th scope="col">Quantity</th>
-                          <th scope="col">Date Added</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td class="w-25">
-                            <img src="../../static/images/pull_up_bar.jpg" class="img-fluid img-thumbnail" alt="Sheep">
-                          </td>
-                          <td>Insulated Jacket</td>
-                          <td>₱600</td>
-                          <td>3</td>
-                          <td>Dec 1, 2023</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td class="">
-                            <img src="../../static/images/soccer_ball.jpg" alt="Sheep">
-                          </td>
-                          <td>Soccer Ball</td>
-                          <td>₱300</td>
-                          <td>4</td>
-                          <td>Nov 28, 2023</td>
-                        </tr>
-                      </tbody>
-                    </table>   
+                      <table class="table table-image">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product Name</th>
+                                 <th scope="col">Product Details</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in seller_products %}
+                            <tr>
+                                <th scope="row">{{ product.id }}</th>
+                                <td class="w-25">
+                                  {% if 'svg' in product.mime_type %}
+                                  <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;" >
+                              {% elif 'jpeg' in product.mime_type %}
+                                  <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
+                              {% elif 'png' in product.mime_type %}
+                                  <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
+                              {% else %}
+                                  <p>Unsupported image type</p>
+                              {% endif %}
+                                </td>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.product_details}}</td>
+                                <td>{{ product.category }}</td>
+                                <td>₱{{ product.price }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>{{ product.created_at.strftime('%b %d, %Y') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                     </div>
                   </div>
                 </div>
