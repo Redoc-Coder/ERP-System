@@ -5,10 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XPerience | Inventory</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
     <!-- Custom styles -->
-    <link rel="stylesheet" href="/static/css/sellers_css/style.min.css" />
+    <link rel="stylesheet" href="/static/css/sellers_css/inventory.css" />
   </head>
 
   <body>
@@ -205,7 +209,135 @@
         <main class="main users chart-page" id="skip-target">
           <div class="container">
             <h2 class="main-title">Inventory</h2>
-
+            <!-- Modal! -->
+            <div class="container">
+              <!-- Button to trigger the modal -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-toggle="modal"
+                data-target="#addProductModal"
+              >
+                Add Product
+              </button>
+            </div>
+            <!-- Modal for adding products -->
+            <div
+              class="modal fade"
+              id="addProductModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="addProductModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">
+                      Add New Product
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container__AddProducts">
+                      <form>
+                        <div class="form-group">
+                          <label for="productImage">Upload Product Image:</label>
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="productImage"
+                            name="productImage"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="productName">Product Name:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="productName"
+                            name="productName"
+                            placeholder="Enter Product Name"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="productDetails">Product Details:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="productDetails"
+                            name="productDetails"
+                            placeholder="Enter Product Details"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="productCategory">Category:</label>
+                          <select
+                            class="form-control category__width"
+                            id="productCategory"
+                            name="productCategory"
+                          >
+                            <option value="Camping & Hiking Gear">
+                              Camping & Hiking Gear
+                            </option>
+                            <option value="Exercise & Fitness Gear">
+                              Exercise & Fitness Gear
+                            </option>
+                            <option value="Sports Equipment">
+                              Sports Equipment (Basketball, Soccer, etc.)
+                            </option>
+                            <option value="Outdoor Clothing">Outdoor Clothing</option>
+                          </select>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="productQuantity">Quantity:</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="productQuantity"
+                              name="productQuantity"
+                              placeholder="Enter Availability"
+                            />
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="productPrice">Price:</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text peso-sign">₱</span>
+                              </div>
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="productPrice"
+                                name="productPrice"
+                                placeholder="Enter Price"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                          Add Product
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+ <!-- Bootstrap JS and jQuery -->
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Icons library -->
     <script src="/plugins/feather.min.js"></script>
     <!-- Custom scripts -->

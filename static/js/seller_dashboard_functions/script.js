@@ -238,7 +238,6 @@ document.addEventListener("DOMContentLoaded", function () {
   })();
 
   (function () {
-    Chart.defaults.backgroundColor = "#000";
     var darkMode = localStorage.getItem("darkMode");
     var darkModeToggle = document.querySelector(".theme-switcher");
 
