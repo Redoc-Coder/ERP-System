@@ -23,15 +23,14 @@ class cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer, nullable=False)
     seller_id = db.Column(db.Integer, nullable=False)
+    shop_name = db.Column(db.Integer, nullable=False)
     product_name = db.Column(db.String(100), nullable=False)
     product_image = db.Column(db.LargeBinary, nullable=False)
     mime_type = db.Column(db.String(50), nullable=False)
     category = db.Column(db.String(100), nullable=False)
-    color = db.Column(db.String(100), )
-    size = db.Column(db.String(100), )
+    description = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    total_price = db.Column(db.Integer, nullable=False)
+
 
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
@@ -48,3 +47,20 @@ class auditTrail(db.Model):
     event_type = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255), nullable=False)
 
+#seller's product
+#cart
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    seller_id = db.Column(db.Integer, nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    product_details = db.Column(db.String(100), nullable=False)
+    product_image = db.Column(db.LargeBinary, nullable=False)
+    mime_type = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True),
+                           server_default=func.now())
+
+    def __repr__(self):
+        return f'<product {self.product_name}>'
