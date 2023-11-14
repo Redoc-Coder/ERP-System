@@ -163,6 +163,11 @@
                   >
                 </li>
                 <li>
+                  <a class="dropdown-item" href="{{ url_for('MyOrder') }}"
+                    >My orders</a
+                  >
+                </li>
+                <li>
                   <a class="dropdown-item" href="{{ url_for('Login') }}"
                     >Logout</a
                   >
@@ -312,16 +317,27 @@
                 <!-- Product details -->
                 <div class="card-body">
                   <div style="line-height: 1.7;">
+                    <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
                     <!-- Product name-->
                     <span style="font-size: 18px;" class="fw-bolder">
                       {{ product.product_name }}
                     </span>
+              
                     <br>
                     <!-- Product description-->
                     <span style="color: #686665; font-size: 0.875rem;">{{ product.product_details|truncate_text(20) }}</span>
                     <br>
                     <!-- Product price-->
                     <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                    <div
+                    class="small text-warning mb-2" style="display: flex;"
+                  >
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                  </div>
                     <div class="mt-2" id="addToCartButton">
                       <!-- Add to Cart button -->
                       <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">
@@ -369,6 +385,7 @@
                   <!-- Product details -->
                   <div class="card-body">
                     <div style="line-height: 1.7;">
+                      <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
                       <!-- Product name-->
                       <span style="font-size: 18px;" class="fw-bolder">
                         {{ product.product_name }}
@@ -379,6 +396,15 @@
                       <br>
                       <!-- Product price-->
                       <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                      <div
+                      class="small text-warning mb-2" style="display: flex;"
+                    >
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                    </div>
                       <div class="mt-2" id="addToCartButton">
                         <!-- Add to Cart button -->
                         <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">
@@ -423,6 +449,7 @@
                   <!-- Product details -->
                   <div class="card-body">
                     <div style="line-height: 1.7;">
+                      <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
                       <!-- Product name-->
                       <span style="font-size: 18px;" class="fw-bolder">
                         {{ product.product_name }}
@@ -433,6 +460,15 @@
                       <br>
                       <!-- Product price-->
                       <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                      <div
+                      class="small text-warning mb-2" style="display: flex;"
+                    >
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                    </div>
                       <div class="mt-2" id="addToCartButton">
                         <!-- Add to Cart button -->
                         <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">
@@ -474,6 +510,7 @@
                     <!-- Product details -->
                     <div class="card-body">
                       <div style="line-height: 1.7;">
+                        <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
                         <!-- Product name-->
                         <span style="font-size: 18px;" class="fw-bolder">
                           {{ product.product_name }}
@@ -484,6 +521,15 @@
                         <br>
                         <!-- Product price-->
                         <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                        <div
+                        class="small text-warning mb-2" style="display: flex;"
+                      >
+                        <div class="bi-star-fill"></div>
+                        <div class="bi-star-fill"></div>
+                        <div class="bi-star-fill"></div>
+                        <div class="bi-star-fill"></div>
+                        <div class="bi-star-fill"></div>
+                      </div>
                         <div class="mt-2" id="addToCartButton">
                           <!-- Add to Cart button -->
                           <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">
@@ -528,6 +574,7 @@
                       <!-- Product details -->
                       <div class="card-body">
                         <div style="line-height: 1.7;">
+                          <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
                           <!-- Product name-->
                           <span style="font-size: 18px;" class="fw-bolder">
                             {{ product.product_name }}
@@ -538,6 +585,15 @@
                           <br>
                           <!-- Product price-->
                           <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                          <div
+                          class="small text-warning mb-2" style="display: flex;"
+                        >
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                          <div class="bi-star-fill"></div>
+                        </div>
                           <div class="mt-2" id="addToCartButton">
                             <!-- Add to Cart button -->
                             <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">

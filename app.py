@@ -13,7 +13,7 @@ from flask import (
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from models import db, accounts, cart, auditTrail, Product
+from models import db, accounts, cart, auditTrail, Product, Orders
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -249,7 +249,69 @@ def ProductInfo(product_id):
         return redirect(url_for("CampingHikingGear"))
 
 
+@app.route("/track-order")
+def trackorder():
+    return render_template("Customers/order_tracking.html")
 
+    
+@app.route("/my-orders")
+def MyOrder():
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_order = Orders.query.filter_by(customer_id=user_id).all()
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+
+        for order in user_order:
+            order.product_image = b64encode(order.product_image).decode("utf-8")
+        return render_template(
+            "/customers/my_orders_page.html",
+            orders=user_order,   cart_count=cart_count
+            
+
+        )
+    else:
+        # User is not logged in
+        return render_template(
+            "customers/cart.html", products=[], cart_count=0
+        )
+
+
+#place order
+
+@app.route("/place_order", methods=['POST'])
+def place_order():
+    if request.method == 'POST':
+        product_ids = request.json.get('productIds', [])
+        customer_id = session['user_id']
+
+        for product_id in product_ids:
+            # Retrieve product details from the database based on product_id
+            product = cart.query.get(product_id)
+
+            # Create a new order record
+            new_order = Orders(
+                customer_id=customer_id,
+                seller_name="Seller Name",  # Replace with actual seller name
+                product_name=product.product_name,
+                product_details=product.description,
+                product_image=product.product_image,
+                mime_type=product.mime_type,
+                category=product.category,
+                price=product.price,
+                quantity=1,  # Assuming a quantity of 1 for simplicity
+                total=product.price,  # Assuming total is the same as price for simplicity
+            )
+
+            # Add the new order to the database
+            db.session.add(new_order)
+
+        db.session.commit()
+
+        return jsonify({'message': 'Order placed successfully'})
+    else:
+        return jsonify({'message': 'Invalid request method'})
 # CHECKOUT
 @app.route("/customers/cart")
 def Cart():
@@ -273,6 +335,28 @@ def Cart():
             "customers/cart.html", products=[], cart_count=0
         )
 
+
+@app.route("/checkout/<int:product_id>")
+def buyNow(product_id):
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+
+    # Fetch the selected product
+    product = Product.query.get(product_id)
+
+    if product is not None:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
+        return render_template("customers/checkout_page.html", cart_count=cart_count, products=[product])
+    else:
+        # Handle the case where the product does not exist
+   
+        return redirect(url_for("CampingHikingGear"))
 
 
 @app.route("/customers/checkout")
