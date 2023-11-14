@@ -64,3 +64,41 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'<product {self.product_name}>'
+
+
+class allOrders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, nullable=False)
+    seller_name = db.Column(db.String(100), nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    product_details = db.Column(db.String(100), nullable=False)
+    product_image = db.Column(db.LargeBinary, nullable=False)
+    mime_type = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True),
+                           server_default=func.now())
+
+    def __repr__(self):
+        return f'<allOrders {self.product_name}>'
+    
+
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, nullable=False)
+    seller_name = db.Column(db.String(100), nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    product_details = db.Column(db.String(100), nullable=False)
+    product_image = db.Column(db.LargeBinary, nullable=False)
+    mime_type = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True),
+                           server_default=func.now())
+
+    def __repr__(self):
+        return f'<allOrders {self.product_name}>'

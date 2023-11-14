@@ -186,7 +186,10 @@
                   
                      
                     <!--Quantity button-->
-                    <div class="input-group  mt-4" style="max-width: 200px; border-radius: 20px; background-color: #EFF0F0;">
+                    <div class="basta " style="display: flex;  align-items: center;">
+                      
+              
+                    <div class="input-group  mt-4" style=" margin-right: 15px; max-width: 200px; border-radius: 20px; background-color: #EFF0F0;">
                         <span class="input-group-btn">
                             <button  type="button" class="btn " id="decrement">-</button>
                         </span>
@@ -196,13 +199,18 @@
                         </span>
                       
                     </div>
+                    <span class="mt-4" style="color: #686665; font-size: 0.9rem;">Hurry, only <span style="color: black; font-weight: bold;">12</span>  left in stock! </span>
+                  </div>
+                   
+                   
                     <div class="btn-cont mt-4">
-                        <button style="width: 45%; margin-right: 15px; border-radius: 50px;" type="button" class="btn btn-dark btn-lg">Buy now</button>
-                        
+                      <button style="width: 45%; margin-right: 15px; border-radius: 50px;" 
+                      type="button" class="btn btn-dark btn-lg" 
+                      onclick="buyNow('{{ product.id }}')">Buy now</button>
                         <button id="addToCartButton"  data-product-id="{{ product.id }}" style="width: 45%; border-radius: 50px;" type="button" class="btn btn-outline-secondary btn-lg add-cart">Add to cart</button>
                     </div>
                     
-                    <hr style="color: #686665;" class="mb-4">
+                    <hr style="color: #686665 ;" class="mb-4">
 
                     <div class="img-cont ">
                         <img src="/static/images/svg/store-2017.svg" class="img-fluid" alt="" style="max-height: 100px;">
@@ -427,5 +435,6 @@
     </script>
     <script src="/static/js/addtocart.js"></script>
     <script src="/static/js/landingpage.js"></script>
+    <script src="/static/js/buynow.js"></script>
   </body>
 </html>
