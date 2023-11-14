@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Store Profile</title>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
+    <link rel="stylesheet" href="/static/css/customers_css/profile.css">
     <!-- Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-wsxDvYSu5qW1HWu8ATbH9s/Fb3QiHiZ17eTtJIpcaTQl6oH5IVOMIIEbpMbYQGQ4" crossorigin="anonymous">
     <link
+    
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
     />
@@ -155,198 +158,150 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div class="row flex-lg-nowrap container-margin">
-        <div class="col">
-          <div class="row">
-            <div class="col mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="e-profile">
-                    <div class="row">
-                      <div class="col-12 col-sm-auto mb-3">
-                        <div class="mx-auto" style="width: 140px">
-                          <div
-                            class="d-flex justify-content-center align-items-center rounded"
-                            style="
-                              height: 140px;
-                              background-color: rgb(233, 236, 239);
-                            "
-                          >
-                            <span
-                              style="
-                                color: rgb(166, 168, 170);
-                                font: bold 8pt Arial;
-                              "
-                            >
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="Image"
-                                style="width: 140px; height: 140px"
-                              />
-                            </span>
-                          </div>
-                        </div>
+    <div class="container mt-5 mb-3">
+      <div class="row">
+          <div class="col-12">
+            <!-- Page title -->
+            <div class="my-5">
+              <h3>My Profile</h3>
+              <hr>
+            </div>
+            <!-- Form START -->
+            <form class="file-upload">
+              <div class="row mb-5 gx-5">
+                <!-- Contact detail -->
+                <div class="col-xxl-8 mb-5 mb-xxl-0">
+                  <div class="bg-secondary-soft px-4 py-5 rounded">
+                    <div class="row g-3">
+                      <h4 class="mb-4 mt-0">Contact detail</h4>
+                      <!-- First Name -->
+                      <div class="col-md-6">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet">
                       </div>
-                      <div
-                        class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
-                      >
-                        <div class="text-sm-left mb-2 mb-sm-0">
-                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
-                            Danzil Firnandiz
-                          </h4>
-                          <p class="mb-0">danzil@gmail.com</p>
-                          <div class="text-muted">
-                            <small>Last seen 2 hours ago</small>
-                          </div>
-                          <div class="mt-2">
-                            <button class="btn btn-primary" type="button">
-                              <i class="fa fa-fw fa-camera"></i>
-                              <span>Change Photo</span>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="text-center text-sm-right">
-                          <span class="badge badge-info text-secondary"
-                            >Customer</span
-                          >
-                          <div class="text-muted">
-                            <small>Joined 01 Nov 2023</small>
-                          </div>
-                        </div>
+                      <!-- Last name -->
+                      <div class="col-md-6">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe">
                       </div>
-                    </div>
-
-                    <div class="tab-content pt-3">
-                      <div class="tab-pane active">
-                        <form class="form" novalidate="">
-                          <div class="row">
-                            <div class="col">
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input
-                                      class="form-control"
-                                      type="text"
-                                      name="name"
-                                      placeholder="Enter Your Full Name"
-                                      value="Danzil Firnandiz"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Username</label>
-                                    <input
-                                      class="form-control"
-                                      type="text"
-                                      name="username"
-                                      placeholder="Enter your Username"
-                                      value="danzil"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row mt-4">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Email</label>
-                                    <input
-                                      class="form-control"
-                                      type="text"
-                                      placeholder="Enter Your Email Address"
-                                      value="danzil@gmail.com"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row mt-4">
-                                <div class="col mb-3">
-                                  <div class="form-group">
-                                    <label>Tell Something About Yourself</label>
-                                    <textarea
-                                      class="form-control"
-                                      rows="5"
-                                      placeholder="My Bio"
-                                    ></textarea>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-12 col-sm-6 mb-3">
-                              <div class="mb-2"><b>Change Password</b></div>
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Current Password</label>
-                                    <input
-                                      class="form-control"
-                                      type="password"
-                                      placeholder="Enter Current Password"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row mt-2">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>New Password</label>
-                                    <input
-                                      class="form-control"
-                                      type="password"
-                                      placeholder="Enter New Password"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row mt-2">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label
-                                      >Confirm Password
-                                      <span class="d-none d-xl-inline"
-                                        >Password</span
-                                      ></label
-                                    >
-                                    <input
-                                      class="form-control"
-                                      type="password"
-                                      placeholder="Confirm Password"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col d-flex justify-content-between">
-                              <button class="btn btn-primary" type="submit">
-                                Save Changes
-                              </button>
-                              <button
-                                class="btn btn-success"
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#sellerModal"
-                              >
-                                Become a Seller?
-                              </button>
-                            </div>
-                          </div>
-                        </form>
+                      <!-- Phone number -->
+                      <div class="col-md-6">
+                        <label class="form-label">Phone number *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555">
+                      </div>
+                      <!-- Mobile number -->
+                      <div class="col-md-6">
+                        <label class="form-label">Mobile number *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Phone number" value="+91 9852 8855 252">
+                      </div>
+                      <!-- Email -->
+                      <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com">
+                      </div>
+                      <!-- Skype -->
+                      <div class="col-md-6">
+                        <label class="form-label">Skype *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D">
+                      </div>
+                    </div> <!-- Row END -->
+                  </div>
+                </div>
+                <!-- Upload profile -->
+                <div class="col-xxl-4">
+                  <div class="bg-secondary-soft px-4 py-5 rounded">
+                    <div class="row g-3">
+                      <h4 class="mb-4 mt-0">Upload your profile photo</h4>
+                      <div class="text-center">
+                        <!-- Image upload -->
+                        <div class="square position-relative display-2 mb-3">
+                          <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                        </div>
+                        <!-- Button -->
+                        <input type="file" id="customFile" name="file" hidden="">
+                        <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
+                        <button type="button" class="btn btn-danger-soft">Remove</button>
+                        <!-- Content -->
+                        <p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div> <!-- Row END -->
+      
+              <!-- Social media detail -->
+              <div class="row mb-5 gx-5">
+                <div class="col-xxl-6 mb-5 mb-xxl-0">
+                  <div class="bg-secondary-soft px-4 py-5 rounded">
+                    <div class="row g-3">
+                      <h4 class="mb-4 mt-0">Social media detail</h4>
+                      <!-- Facebook -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fab fa-fw fa-facebook me-2 text-facebook"></i>Facebook *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Facebook" value="http://www.facebook.com">
+                      </div>
+                      <!-- Twitter -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fab fa-fw fa-twitter text-twitter me-2"></i>Twitter *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Twitter" value="http://www.twitter.com">
+                      </div>
+                      <!-- Linkedin -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fab fa-fw fa-linkedin-in text-linkedin me-2"></i>Linkedin *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Linkedin" value="http://www.linkedin.com">
+                      </div>
+                      <!-- Instragram -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Instragram" value="http://www.instragram.com">
+                      </div>
+                      <!-- Dribble -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fas fa-fw fa-basketball-ball text-dribbble me-2"></i>Dribble *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Dribble" value="http://www.dribble.com">
+                      </div>
+                      <!-- Pinterest -->
+                      <div class="col-md-6">
+                        <label class="form-label"><i class="fab fa-fw fa-pinterest text-pinterest"></i>Pinterest *</label>
+                        <input type="text" class="form-control" placeholder="" aria-label="Pinterest" value="http://www.pinterest.com">
+                      </div>
+                    </div> <!-- Row END -->
+                  </div>
+                </div>
+      
+                <!-- change password -->
+                <div class="col-xxl-6">
+                  <div class="bg-secondary-soft px-4 py-5 rounded">
+                    <div class="row g-3">
+                      <h4 class="my-4">Change Password</h4>
+                      <!-- Old password -->
+                      <div class="col-md-6">
+                        <label for="exampleInputPassword1" class="form-label">Old password *</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                      </div>
+                      <!-- New password -->
+                      <div class="col-md-6">
+                        <label for="exampleInputPassword2" class="form-label">New password *</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2">
+                      </div>
+                      <!-- Confirm password -->
+                      <div class="col-md-12">
+                        <label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
+                        <input type="password" class="form-control" id="exampleInputPassword3">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- Row END -->
+              <!-- button -->
+              <div class="gap-3 d-md-flex justify-content-md-end text-center">
+                <button type="button" class="btn btn-danger btn-lg">Delete profile</button>
+                <button type="button" class="btn btn-primary btn-lg">Update profile</button>
               </div>
-            </div>
+            </form> <!-- Form END -->
           </div>
         </div>
-      </div>
-    </div>
+        </div>
 
     <!-- Modal for "Become a Seller?" -->
     <div
