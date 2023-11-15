@@ -108,7 +108,7 @@ def add_to_cart(product_id):
         if product:
             # Assuming you have a customer ID, seller ID, and shop name, update these accordingly
             customer_id = session['user_id']
-            seller_id = 2
+            seller_id = product.seller_id
             shop_name = "Your Shop Name"
 
             new_product = cart(
@@ -237,12 +237,14 @@ def ProductInfo(product_id):
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
-
+   
     product = Product.query.get(product_id)
 
+    seller_id = product.seller_id
+    seller = accounts.query.get(seller_id)
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product)
+        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller)
     else:
         # Handle the case where the product does not exist
 
@@ -279,21 +281,54 @@ def MyOrder():
 
 
 #place order
+@app.route("/one_place_order", methods=['POST'])
+def one_place_order():
+   if request.method == 'POST':
+        product_id = request.json.get('productId')
+        customer_id = session.get('user_id')
+
+        # Retrieve product details from the database based on product_id
+        product = Product.query.get(product_id)
+        seller_id = product.seller_id
+        seller = accounts.query.get(seller_id)
+        # Create a new order record
+        new_order = Orders(
+            customer_id=customer_id,
+            seller_name=seller.username,  # Replace with actual seller name
+            product_name=product.product_name,
+            product_details=product.product_details,
+            product_image=product.product_image,
+            mime_type=product.mime_type,
+            category=product.category,
+            price=product.price,
+            quantity=1,  # Assuming a quantity of 1 for simplicity
+            total=product.price,  # Assuming total is the same as price for simplicity
+        )
+
+        # Add the new order to the database
+        db.session.add(new_order)
+        db.session.commit()
+
+        return jsonify({'message': 'Order placed successfully'})
+   else:
+        return jsonify({'message': 'Invalid request method'})
 
 @app.route("/place_order", methods=['POST'])
 def place_order():
     if request.method == 'POST':
         product_ids = request.json.get('productIds', [])
         customer_id = session['user_id']
-
+    
         for product_id in product_ids:
             # Retrieve product details from the database based on product_id
             product = cart.query.get(product_id)
+            seller_id = product.seller_id
+            seller = accounts.query.get(seller_id)
 
             # Create a new order record
             new_order = Orders(
                 customer_id=customer_id,
-                seller_name="Seller Name",  # Replace with actual seller name
+                seller_name=seller.username,  # Replace with actual seller name
                 product_name=product.product_name,
                 product_details=product.description,
                 product_image=product.product_image,
@@ -352,7 +387,7 @@ def buyNow(product_id):
 
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/checkout_page.html", cart_count=cart_count, products=[product])
+        return render_template("customers/one_checkout_page.html", cart_count=cart_count, products=[product])
     else:
         # Handle the case where the product does not exist
    
