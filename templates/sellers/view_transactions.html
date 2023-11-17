@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XPerience | View Transactions</title>
-    
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
     <!-- Custom styles -->
@@ -89,8 +93,8 @@
         </div>
       </aside>
 
+      <!-- ! Main nav -->
       <div class="main-wrapper">
-        <!-- ! Main nav -->
         <nav class="main-nav--bg">
           <div class="container main-nav">
             <div class="main-nav-start">
@@ -205,11 +209,444 @@
         <!-- ! Main -->
         <main class="main users chart-page" id="skip-target">
           <div class="container">
-            <h2 class="main-title">Transactions</h2>
-            
+            <h2>Orders</h2>
+            <!-- Delete the <p> after magawa yung Todo -->
+            <p>TODO: Yung mga "Active" ay need muna i approve.</p><br>
+            <p>TODO: Then yung "Pending" ay pag ni click yung Manage Order may mag pop-up na modal(Dun nakalagay yung Parcel Status. Seller is preparing your order 👉 Your parcel has been picked up by courier, etc).</p><br>
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="users-table table-wrapper">
+                  <table class="posts-table">
+                    <thead>
+                      <tr class="users-table-info">
+                        <th>
+                          <label class="users-table__checkbox ms-20">
+                            <input type="checkbox" class="check-all" />Select
+                            All
+                          </label>
+                        </th>
+                        <th>Item Name</th>
+                        <th>Customers</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-pending">Pending</span></td>
+                        <td>17.04.2023</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Manage Order</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-pending">Pending</span></td>
+                        <td>23.04.2023</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Manage Order</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-active">Active</span></td>
+                        <td>17.04.2023</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Approve</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-active">Active</span></td>
+                        <td>17.04.2023</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Approve</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-active">Active</span></td>
+                        <td>17.04.2023</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Approve</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label class="users-table__checkbox">
+                            <input type="checkbox" class="check" />
+                            <div class="categories-table-img">
+                              <picture>
+                                <img
+                                  src="/static/images/dumbbell.jpg"
+                                  alt="category"
+                              /></picture>
+                            </div>
+                          </label>
+                        </td>
+                        <td>Dumbbell</td>
+                        <td>
+                          <div class="pages-table-img">
+                            <picture>
+                              <img
+                                src="/static/images/danzel.png"
+                                alt="User Name"
+                            /></picture>
+                            Danzel Fernandez
+                          </div>
+                        </td>
+                        <td><span class="badge-active">Active</span></td>
+                        <td>17.04.2021</td>
+                        <td>
+                          <span class="p-relative">
+                            <button
+                              class="dropdown-btn transparent-btn"
+                              type="button"
+                              title="More info"
+                            >
+                              <div class="sr-only">More info</div>
+                              <i
+                                data-feather="more-horizontal"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                            <ul class="users-item-dropdown dropdown">
+                              <li>
+                                <a href="{{ url_for('Transactions') }}"
+                                  >Approve</a
+                                >
+                              </li>
+
+                              <li><a href="##">Trash</a></li>
+                            </ul>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Return and Refund -->
+              <div class="col-lg-3">
+                <article class="white-block">
+                  <div class="top-cat-title">
+                    <h3>Return Refund</h3>
+                  </div>
+                  <ul class="top-cat-list">
+                    <li>
+                      <a href="##" data-toggle="modal" data-target="#returnRefundModal">
+                        <div class="top-cat-list__title">
+                          Frenz Ricafort <span>₱600</span>
+                        </div>
+                        <div class="top-cat-list__subtitle">
+                          Convertible Pants<span class="blue">Dec 12, 2023</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="##">
+                        <div class="top-cat-list__title">
+                          Danzel Fernandez <span>₱1,400</span>
+                        </div>
+                        <div class="top-cat-list__subtitle">
+                          Beanie <span class="blue">Dec 18, 2023</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="##">
+                        <div class="top-cat-list__title">
+                          Aeron Red Lope <span>₱349</span>
+                        </div>
+                        <div class="top-cat-list__subtitle">
+                          Pull-up Bar <span class="blue">Dec 21, 2023</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="##">
+                        <div class="top-cat-list__title">
+                          Allan Dave Gelilio <span>₱856</span>
+                        </div>
+                        <div class="top-cat-list__subtitle">
+                          Baseball Bat <span class="blue">Dec 23, 2023</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+
+              <!-- Return Refund Modal -->
+              <div class="modal fade" id="returnRefundModal" tabindex="-1" role="dialog" aria-labelledby="returnRefundModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="returnRefundModalLabel">Return and Refund Details</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Add your return and refund details here -->
+                      <div class="top-cat-list__title">
+                        Bulok Hindi nagana Sira item nyo <span>₱600</span>
+                      </div>
+                      <div class="top-cat-list__subtitle">
+                        Convertible Pants<span class="blue">Dec 12, 2023</span>
+                      </div>
+                      <!-- You can add more details as needed -->
+                    </div>
+                    <div class="modal-footer">
+                      <!-- You can add buttons or additional information in the footer -->
+                      <button type="button" class="btn btn-primary">Approve</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Archived</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <!-- Archived History -->
+              <div class="col-lg-3">
+                <article class="white-block">
+                  <div class="top-cat-title">
+                    <h3>Order History</h3>
+                    <!-- Delete the <p> after magawa yung Todo -->
+                    <!-- TODO: -->
+                    <p>Dito nakalagay yung mga Tapos ng Transactions ni Seller</p></br>
+                    <p>Both Refund and Success na Orders</p>
+                  </div>
+                </article>
+              </div>
+            </div>
           </div>
         </main>
 
+        
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Icons library -->
     <script src="/plugins/feather.min.js"></script>
     <!-- Custom scripts -->

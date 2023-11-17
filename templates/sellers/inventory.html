@@ -209,18 +209,69 @@
         <main class="main users chart-page" id="skip-target">
           <div class="container">
             <h2 class="main-title">Inventory</h2>
+            <!-- Delete the <p> after magawa yung Todo -->
+            <p>TODO: Sa table ay may nakalagay na archived button & Edit Product(pic, item details pedeng baguhin)</p>
+            <!-- Table View ng mga uploaded na products -->
+            <div class="mt-5">
+                <div class="container table-responsive container__AddProducts">
+                  <div class="row">
+                    <div class="col-12">
+                      <table class="table table-image">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product Name</th>
+                                 <th scope="col">Product Details</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in seller_products %}
+                            <tr>
+                                <th scope="row">{{ product.id }}</th>
+                                <td class="w-25">
+                                  {% if 'svg' in product.mime_type %}
+                                  <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;" >
+                              {% elif 'jpeg' in product.mime_type %}
+                                  <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
+                              {% elif 'png' in product.mime_type %}
+                                  <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
+                              {% else %}
+                                  <p>Unsupported image type</p>
+                              {% endif %}
+                                </td>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.product_details}}</td>
+                                <td>{{ product.category }}</td>
+                                <td>₱{{ product.price }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>{{ product.created_at.strftime('%b %d, %Y') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             <!-- Modal! -->
             <div class="container">
               <!-- Button to trigger the modal -->
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn btn-success mt-5"
                 data-toggle="modal"
                 data-target="#addProductModal"
               >
                 Add Product
               </button>
             </div>
+            
             <!-- Modal for adding products -->
             <div
               class="modal fade"
@@ -246,7 +297,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="container__AddProducts">
+                    <div>
                       <form>
                         <div class="form-group">
                           <label for="productImage">Upload Product Image:</label>
