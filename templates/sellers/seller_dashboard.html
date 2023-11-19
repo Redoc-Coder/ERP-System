@@ -306,295 +306,55 @@
                           </label>
                         </th>
                         <th>Item Name</th>
-                        <th>Customers</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
                         <th>Status</th>
-                        <th>Date</th>
+                        <th>Order Date</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for order in orders %}
                       <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-pending">Pending</span></td>
-                        <td>17.04.2023</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
+                          <td>
+                              <label class="users-table__checkbox">
+                                  <input type="checkbox" class="check" />
+                                  <div class="categories-table-img">
+                                      <picture>
+                                        <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" alt="product" />
+                                      </picture>
+                                  </div>
+                              </label>
+                          </td>
+                          <td>{{ order.product_name }}</td>
+                          <td>
+                              <div class="pages-table-img">
+                                  <picture>
+                                      <img src="{{ url_for('static', filename='images/danzel.png') }}" alt="{{ order.customer_name }}" />
+                                  </picture>
+                                  {{ order.customer_name }}
+                              </div>
+                          </td>
+                          <td>{{ order.quantity }}</td>
+                          <td>{{ order.total }}</td>
+                          <td><span class="badge-pending">{{ order.status }}</span></td>
+                          <td>{{ order.orderdate.strftime('%d.%m.%Y') }}</td>
+                          <td>
+                              <span class="p-relative">
+                                  <button class="dropdown-btn transparent-btn" type="button" title="More info">
+                                      <div class="sr-only">More info</div>
+                                      <i data-feather="more-horizontal" aria-hidden="true"></i>
+                                  </button>
+                                  <ul class="users-item-dropdown dropdown">
+                                      <li><a href="">Transactions</a></li>
+                                      <li><a href="">Trash</a></li>
+                                  </ul>
+                              </span>
+                          </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-pending">Pending</span></td>
-                        <td>23.04.2023</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>17.04.2023</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>17.04.2023</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>17.04.2023</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <label class="users-table__checkbox">
-                            <input type="checkbox" class="check" />
-                            <div class="categories-table-img">
-                              <picture>
-                                <img
-                                  src="/static/images/dumbbell.jpg"
-                                  alt="category"
-                              /></picture>
-                            </div>
-                          </label>
-                        </td>
-                        <td>Dumbbell</td>
-                        <td>
-                          <div class="pages-table-img">
-                            <picture>
-                              <img
-                                src="/static/images/danzel.png"
-                                alt="User Name"
-                            /></picture>
-                            Danzel Fernandez
-                          </div>
-                        </td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>17.04.2021</td>
-                        <td>
-                          <span class="p-relative">
-                            <button
-                              class="dropdown-btn transparent-btn"
-                              type="button"
-                              title="More info"
-                            >
-                              <div class="sr-only">More info</div>
-                              <i
-                                data-feather="more-horizontal"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <ul class="users-item-dropdown dropdown">
-                              <li><a href="##">Transactions</a></li>
-
-                              <li><a href="##">Trash</a></li>
-                            </ul>
-                          </span>
-                        </td>
-                      </tr>
+                      {% endfor %}
+          
                     </tbody>
                   </table>
                 </div>

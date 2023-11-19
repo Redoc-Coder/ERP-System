@@ -9,11 +9,11 @@ from flask import (
     request,
     jsonify,
 )
-
+from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from models import db, accounts, cart, auditTrail, Product, Orders
+from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -307,6 +307,27 @@ def one_place_order():
 
         # Add the new order to the database
         db.session.add(new_order)
+               
+
+        customer = db.session.query(accounts).get(customer_id)
+        customer_username = customer.username if customer else "Unknown"
+        # Create a new order record
+        customer_order = customerOrders(
+            product_image=product.product_image,
+            mime_type=product.mime_type,
+            seller_id=seller.id, 
+            customer_id=customer_id,
+            customer_name=customer_username, 
+            product_name=product.product_name,
+            status='preparing', 
+            product_details=product.product_details,
+            orderdate=datetime.utcnow(),
+            price=product.price,
+            quantity=1, 
+            total=product.price,  
+            category=product.category,
+        )
+        db.session.add(customer_order)
         db.session.commit()
 
         return jsonify({'message': 'Order placed successfully'})
@@ -510,7 +531,19 @@ def CampingHikingGear():
 # SELLERS
 @app.route("/seller/dashboard")
 def SellerDashboard():
-    return render_template("sellers/seller_dashboard.html")
+    seller_id = session.get('user_id')
+
+    if seller_id is not None:
+        # Fetch orders based on the seller_id
+        orders = customerOrders.query.filter_by(seller_id=seller_id).all()
+
+
+    
+    
+        for product in orders:
+            product.product_image = b64encode(product.product_image).decode("utf-8")
+        
+    return render_template("sellers/seller_dashboard.html",orders=orders)
 
 
 @app.route("/seller/courier")

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
+from datetime import datetime
 db = SQLAlchemy()
 
 # ...
@@ -102,3 +103,25 @@ class Orders(db.Model):
 
     def __repr__(self):
         return f'<allOrders {self.product_name}>'
+
+class customerOrders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, nullable=False)
+    seller_id = db.Column(db.Integer, nullable=False)
+    product_image = db.Column(db.LargeBinary, nullable=False)
+    mime_type = db.Column(db.String(50), nullable=False)
+    customer_name= db.Column(db.Integer, nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(100), nullable=False, default='preparing')
+    product_details = db.Column(db.String(100), nullable=False)
+    orderdate = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+
+
+
+    def __repr__(self):
+        return f'<customerOrders {self.product_name}>'
+
