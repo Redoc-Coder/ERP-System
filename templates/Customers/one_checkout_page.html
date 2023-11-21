@@ -320,9 +320,9 @@
                     <button class="btn btn-primary place-order-button" data-product-id="{{ product.id }}" 
                     data-bs-toggle="modal" data-bs-target="#staticBackdrop">Place Order</button>
                   </div>
-                {% endfor %}
+              
               </div>
-              {% endblock %}
+          
             </div>
           </div>
         
@@ -345,9 +345,12 @@
           </div>
           <div class="total">
             <div class="container">
-              <h2>Total: ₱899</h2>
+              <h2>Total: {{product.price}} </h2>
             </div>
           </div>
+          {% endfor %}
+          {% endblock %}
+
         </div>
       </div>
     </div>

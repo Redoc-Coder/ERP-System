@@ -197,6 +197,9 @@
                   <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
                     <p>ORDER DATE</p>
                   </div>
+                  <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                    <p>STATUS</p>
+                  </div>
                   
          
           
@@ -227,10 +230,13 @@
                             </div>
                         
                         </div>
-                        <div class="col-md-3" style="display: flex; align-items: center;">
+                        <div class="col-md-2" style="display: flex; align-items: center;">
                           <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
                         </div>
-                        <div class="col-md-3 " style="display: flex; align-items: center; justify-content: flex-end;">
+                        <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
+                          <p>{{order.status}}</p>
+                        </div>
+                        <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
                           <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
                         </div>
                     
@@ -244,12 +250,121 @@
           
             </div>
             <div class="tab-pane fade" id="toReceive">
+              
+              <div class="row py-2 ">
+
+                <div class="product-title col-md-6 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>PRODUCT DETAILS</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>ORDER DATE</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>STATUS</p>
+                </div>
+                
+       
+        
+               
+              </div>
+              {% block toReceiveContent %}
+              <div class="cont" id="to-receive-container">
+                  {% for order in orders if order.status == 'out for delivery' %}
+                     
+                  <div class="row" data-product-id="{{ order.id }}">
+                      
+                    <div class="product  col-md-6 mt-3" >
+                     
+                          <div class="img-cont">
+                           
+                            <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
+                            min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
+        
+                          </div>
+                          <div class="description-cont" style="line-height: 0.5; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
+                            <p style="color: #121212;">{{ order.seller_name }} </p>
+                            <p style="color: #121212;">{{ order.product_name }} ({{order.quantity}})</p>
+                            <p>{{ order.product_details|truncate_text(20)}}</p>
+                            <p>{{ order.price }}.00</p>
+                            
+                          
+                          </div>
+                      
+                      </div>
+                      <div class="col-md-2" style="display: flex; align-items: center;">
+                        <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
+                      </div>
+                      <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
+                        <p>{{order.status}}</p>
+                      </div>
+                      <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
+                        <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
+                      </div>
+                  
+                    
+                       </div>
+                  {% endfor %}
+                  <hr>
+              </div>
+              {% endblock %}
     
             </div>
             <div class="tab-pane fade" id="delivered">
-                <!-- Content for Delivered -->
-                <h2>Delivered</h2>
-                <!-- Your table content for delivered orders goes here -->
+              <div class="row py-2 ">
+
+                <div class="product-title col-md-6 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>PRODUCT DETAILS</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>ORDER DATE</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>STATUS</p>
+                </div>
+                
+       
+        
+               
+              </div>
+              {% block deliveredContent %}
+              <div class="cont" id="delivered-container">
+                  {% for order in orders if order.status == 'delivered' %}
+                  <div class="row" data-product-id="{{ order.id }}">
+                      
+                    <div class="product  col-md-6 mt-3" >
+                     
+                          <div class="img-cont">
+                           
+                            <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
+                            min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
+        
+                          </div>
+                          <div class="description-cont" style="line-height: 0.5; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
+                            <p style="color: #121212;">{{ order.seller_name }} </p>
+                            <p style="color: #121212;">{{ order.product_name }} ({{order.quantity}})</p>
+                            <p>{{ order.product_details|truncate_text(20)}}</p>
+                            <p>{{ order.price }}.00</p>
+                            
+                          
+                          </div>
+                      
+                      </div>
+                      <div class="col-md-2" style="display: flex; align-items: center;">
+                        <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
+                      </div>
+                      <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
+                        <p>{{order.status}}</p>
+                      </div>
+                      <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
+                        <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
+                      </div>
+                  
+                    
+                       </div>
+                  {% endfor %}
+                  <hr>
+              </div>
+              {% endblock %}
             </div>
         </div>
     </div>

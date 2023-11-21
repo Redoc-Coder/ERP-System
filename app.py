@@ -158,6 +158,9 @@ def remove_from_cart(product_id):
             # Remove the product from the cart
             db.session.delete(product_to_remove)
             db.session.commit()
+
+            updated_total_price = get_cart_total()
+            
              # Add record for audit trail
             email = session["user_email"]
             audit_record = auditTrail(user=email, event_type='Remove from cart', description=f'{product_name} removed from cart')
@@ -166,13 +169,18 @@ def remove_from_cart(product_id):
 
            
             # Return a success message
-            return jsonify({"message": "Product removed from cart successfully"})
+            return jsonify({"message": "Product removed from cart successfully","totalPrice": updated_total_price})
         else:
             # Product not found
             return jsonify({"message": "Product not found in cart"})
     except Exception as e:
         # Handle any potential errors
         return jsonify({"message": "Error: " + str(e)})
+    
+def get_cart_total():
+    
+    total_price = db.session.query(func.sum(cart.price)).scalar()
+    return total_price if total_price else 0.0
 
 # END OF FUNCTIONS FOR CART
 
@@ -261,7 +269,7 @@ def MyOrder():
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
-        user_order = Orders.query.filter_by(customer_id=user_id).all()
+        user_order = customerOrders.query.filter_by(customer_id=user_id).all()
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
 
@@ -343,7 +351,8 @@ def place_order():
         for product_id in product_ids:
             # Retrieve product details from the database based on product_id
             product = cart.query.get(product_id)
-            seller_id = product.seller_id
+            p_id = Product.query.get(product_id)
+            seller_id = p_id.seller_id
             seller = accounts.query.get(seller_id)
 
             # Create a new order record
@@ -363,7 +372,28 @@ def place_order():
             # Add the new order to the database
             db.session.add(new_order)
 
-        db.session.commit()
+            
+            customer = db.session.query(accounts).get(customer_id)
+            customer_username = customer.username if customer else "Unknown"
+        # Create a new order record
+            customer_order = customerOrders(
+                product_image=product.product_image,
+                mime_type=product.mime_type,
+                seller_id=seller.id, 
+                customer_id=customer_id,
+                customer_name=customer_username, 
+                product_name=product.product_name,
+                status='preparing', 
+                product_details=product.description,
+                orderdate=datetime.utcnow(),
+                price=product.price,
+                quantity=1, 
+                total=product.price,  
+                category=product.category,
+        )
+            db.session.add(customer_order)
+            db.session.commit()
+            
 
         return jsonify({'message': 'Order placed successfully'})
     else:
@@ -422,12 +452,13 @@ def checkout():
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        total_price = sum(product.price for product in user_cart)
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
             "customers/checkout_page.html",
             products=user_cart,
-            cart_count=cart_count,
+            cart_count=cart_count, total_price=total_price
        
         )
     else:
@@ -529,6 +560,17 @@ def CampingHikingGear():
 
 
 # SELLERS
+
+@app.route('/update_order_status/<int:order_id>/<new_status>', methods=['POST'])
+def update_order_status(order_id, new_status):
+    order = customerOrders.query.get_or_404(order_id)
+    order.status = new_status
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+
+
 @app.route("/seller/dashboard")
 def SellerDashboard():
     seller_id = session.get('user_id')
@@ -580,7 +622,8 @@ def AddProducts():
             mime_type=mime_type,
             category=category,
             price=price,
-            quantity=quantity
+            quantity=quantity,
+           
         )
       
         db.session.add(new_product)
@@ -620,32 +663,26 @@ def AdminDashboard():
     total_users = accounts.query.count()
     return render_template("administrator/dashboard.html", total_users=total_users)
 
+def get_paginated_user_products(page, per_page, user_id):
+    product = Product.query.filter_by(seller_id=user_id).paginate(page=page, per_page=per_page, error_out=False)
+    return product
 
-@app.route("/admin/user", methods=["GET", "POST"])
-def User():
-    if request.method == "POST":
-        user_id_to_suspend = request.form.get("user_id")
-        if user_id_to_suspend:
-            user = accounts.query.get(user_id_to_suspend)
-            if user:
-                # Toggle the suspension status
-                user.is_suspended = not user.is_suspended
-                db.session.commit()
+@app.route('/user/<int:user_id>')
+def User(user_id):
+    page = request.args.get('page', default=1, type=int)
+    per_page = 5
+    user_products = get_paginated_user_products(page, per_page, user_id)
+    user = accounts.query.get_or_404(user_id)
+    
+   
 
-                # Create an audit trail record for the suspension
-                email = session["user_email"]  # Assuming the admin's email is in the session
-                audit_record = auditTrail(user=email, event_type='Suspend User', description=f'Admin suspended the user with ID: {user.id}')
-                db.session.add(audit_record)
-                db.session.commit()
-
-    # Your existing admin page logic
-    return render_template("administrator/specUser.html")  # Include the list of users or user data
+    return render_template('administrator/specUser.html', user=user, user_products=user_products, user_id=user_id)
 
 
 #for pagination
 def get_paginated_users(page, per_page):
-    users = accounts.query.paginate(page=page, per_page=per_page, error_out=False)
-    return users
+    products = Product.query.paginate(page=page, per_page=per_page, error_out=False)
+    return products
 
 @app.route("/admin/users")
 def Users():

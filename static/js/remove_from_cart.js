@@ -10,6 +10,9 @@ function removeFromCart(productId) {
             const productElement = document.querySelector(`[data-product-id="${productId}"]`);
             productElement.remove();
 
+            const totalPriceElement = document.getElementById("overall-total");
+            totalPriceElement.textContent = `₱${data.totalPrice.toFixed(2)}`;
+
             fetch("/get-cart-count")
             .then(response => response.json())
             .then(cartData => {

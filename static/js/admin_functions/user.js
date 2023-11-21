@@ -1,6 +1,6 @@
-function redirectToUserPage() {
+function redirectToUserPage(userId) {
 
-  window.location.href = "/admin/user";
+  window.location.href = '/user/' + userId;
 }
 //search users
 document.getElementById("searchInput").addEventListener("input", function () {

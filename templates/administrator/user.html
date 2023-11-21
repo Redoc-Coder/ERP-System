@@ -180,38 +180,17 @@
                     <tbody>
                       {% for user in users %}
                       {% if user.email.startswith(searchTerm) %}
-                      <tr data-bs-toggle="modal" data-bs-target="#modal_{{ user.id }}">
+                      <tr onclick="redirectToUserPage('{{ user.id }}')">
                         <td>
                           <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
                         </td>
-                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.username }}</td>
 
                         <td>{{ user.email }}</td>
 
                         <td>Active</td> <!-- You may need to adjust this based on your data -->
                       </tr>
-
-                      <div class="modal fade" id="modal_{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel_{{ user.id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <img src="/static/images/baseball_bat.jpg" alt="Person's Image" width="50" height="50" style="margin-right: 10px;">
-                              <h1 class="modal-title fs-5" id="staticBackdropLabel">User1</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <h3> <i class="fa fa-user fa-lg" style="margin-right: 10px;"></i>edzell </h3>
-                              <h3> <i class="fa fa-envelope fa-sm" style="margin-right: 10px;"></i>edz@gmail.com </h3>
-                              <h3> <i class="fas fa-store fa-sm" style="margin-right: 5px;"></i> Seller </h3>
-                              <h3>Status: Active </h3>
-                            </div>
-                            <div class="modal-footer">
-                              <button  type="button" class="btn btn-danger" >Suspend User</button>
-                              <button onclick="redirectToUserPage('{{ user.id }}')" type="button" class="btn btn-primary">View more</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      
 
                       {% endif %}
                     {% endfor %}
@@ -220,6 +199,7 @@
                       
                     </tbody>
                   </table>
+                  
                   <nav class="pag-con d-flex">
                     <nav aria-label="Page navigation example">
                       <ul class="pagination">
@@ -241,6 +221,8 @@
                       </ul>
                     </nav>
                   </nav>
+
+
                 </div>
               </div>
             </div>
