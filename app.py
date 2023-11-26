@@ -7,8 +7,19 @@ from flask import (
     redirect,
     session,
     request,
-    jsonify,
+    jsonify, flash
 )
+
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from dotenv import load_dotenv
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Email
+from flask_mail import Mail, Message
+from wtforms.validators import Email as EmailValidator
+import secrets
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
@@ -21,14 +32,27 @@ import base64
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.secret_key = "my_key"
+app.secret_key = os.urandom(24)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
     basedir, "db.sqlite3"
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+load_dotenv()
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] ='jinrishira@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ywgt zmbr mfvc cfbe'
+
 
 db.init_app(app)
+mail = Mail(app)
+
+class ForgotPasswordForm(FlaskForm):
+      email = StringField('Email', validators=[DataRequired(), EmailValidator()])
+      submit = SubmitField('Send Reset Instructions')
+
 
 
 # Custom Jinja2 filter to truncate text
@@ -48,17 +72,15 @@ def Login():
 
         # Query the database for a user with the given username
         user = accounts.query.filter_by(email=username).first()
-    
-        if user and user.password == password:
-            
+
+        if user and check_password_hash(user.password, password):
+            # Password verification using check_password_hash
             session["user_id"] = user.id
             session["user_email"] = user.email
             audit_record = auditTrail(user=username, event_type='Login', description='User logged in')
             db.session.add(audit_record)
             db.session.commit()
-            return redirect(
-                url_for("LandingPage")
-            )  
+            return redirect(url_for("LandingPage"))
 
         else:
             error = "Invalid email or password. Please try again."
@@ -207,14 +229,17 @@ def SignUp():
         if accounts.query.filter_by(email=email).first():
             error = "Email already exists. Please choose another email."
         else:
-            # Create a new Account object and insert it into the database
+            # Hash the password before saving it
+            hashed_password = generate_password_hash(password, method="pbkdf2:sha256")
+
+            # Create a new Account object with the hashed password and insert it into the database
             new_account = accounts(
                 firstname=firstname,
                 lastname=lastname,
                 username=username,
                 email=email,
                 account_type=account_type,
-                password=password,
+                password=hashed_password,  # Use the hashed password
             )
             db.session.add(new_account)
             db.session.commit()
@@ -222,14 +247,73 @@ def SignUp():
     return render_template("signup.html", error=error)
 
 
-@app.route("/forgot-password")
+
+def send_reset_email(email):
+    user = accounts.query.filter_by(email=email).first()
+
+    if user:
+        token = user.get_reset_token()
+        user.reset_token = token
+        db.session.commit()
+
+        # Update the URL to use the correct endpoint and token value
+        reset_url = url_for('ResetPassword', token=token, email=email, _external=True)
+
+        msg = Message('Password Reset Request',
+                      sender=user.email,
+                      recipients=[user.email])
+        msg.body = f'''To reset your password, visit the following link:
+    {reset_url}
+
+    If you did not make this request then simply ignore this email and no changes will be made.
+    '''
+        mail.send(msg)
+
+
+@app.route("/forgot-password", methods=['GET', 'POST'])
 def ForgotPassword():
-    return render_template("forgot_password.html")
+    form = ForgotPasswordForm()
+
+    if form.validate_on_submit():
+            send_reset_email(form.email.data)
+            flash('Reset instructions sent to your email.', 'success')
+    
+
+    return render_template('forgot_password.html', form=form)
 
 
-@app.route("/reset-password")
-def ResetPassword():
-    return render_template("reset_password.html")
+
+    
+
+
+@app.route("/reset-password/<token>", methods=['GET', 'POST'])
+def ResetPassword(token):
+    # Rest of the code...
+    user = accounts.query.filter_by(reset_token=token).first()
+
+    if not user:
+        flash('Invalid or expired token', 'warning')
+        return redirect(url_for('ForgotPassword'))
+
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if new_password != confirm_password:
+            flash('Passwords do not match', 'danger')
+            return redirect(url_for('ResetPassword', token=token))
+
+        # Set the new password in the user object
+        user.password = generate_password_hash(new_password)
+        user.reset_token = None  # Reset the reset_token field after password change
+        db.session.commit()
+
+        flash('Your password has been updated! You can now log in with your new password.', 'success')
+        return redirect(url_for('Login'))
+
+    return render_template('reset_password.html', title='Reset Password', token=token)
+
+    
 
 
 # END OF REGISTRATION, FORGET PASS, AND LOGIN

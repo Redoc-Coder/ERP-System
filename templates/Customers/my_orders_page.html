@@ -12,6 +12,7 @@
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/customers_css/track_order.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <!-- Bootstrap icons-->
     <link
       rel="stylesheet"
@@ -210,7 +211,8 @@
                   <div class="cont" id="cart-container">
                       {% for order in orders %}
                      
-                      <div class="row" data-product-id="{{ order.id }}">
+                      <div class="row" data-product-id="{{ order.id }}" style="cursor: pointer;"
+                      data-bs-toggle="modal" data-bs-target="#exampleModal{{ order.id }}">
                       
                       <div class="product  col-md-6 mt-3" >
                        
@@ -242,9 +244,49 @@
                     
                       
                          </div>
+                            <!-- Modal -->
+      <div class="modal fade" id="exampleModal{{ order.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+          <div class="modal-content">
+            <div class="modal-header">
+         
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+          <div class="card card-timeline px-2 border-none">
+  <ul class="bs4-order-tracking">
+    {% if order.status == 'preparing' %}
+      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+      <li class="step"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+      <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+    {% elif order.status == 'out for delivery' %}
+      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+      <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+      <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+    {% elif order.status == 'delivered' %}
+      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+      <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+      <li class="step active"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+
+    {% endif %}
+  </ul>
+  <h5 class="text-center"><b>{{ order.status }}</b>. {% if order.status == 'In transit' %} The order has been shipped! {% endif %}</h5>
+</div>
+            </div>
+            </div>
+            <div class="modal-footer">
+          
+            </div>
+          </div>
+        </div>
                       {% endfor %}
                       <hr>
                     </div>
+
+                    
                     
                   {% endblock %}
           
@@ -366,26 +408,24 @@
               </div>
               {% endblock %}
             </div>
+   
+      
+   
+      </div>
         </div>
     </div>
     <script>
-      const stepButtons = document.querySelectorAll('.step-button');
-      const progress = document.querySelector('#progress');
-      
-      Array.from(stepButtons).forEach((button,index) => {
-          button.addEventListener('click', () => {
-              progress.setAttribute('value', index * 100 /(stepButtons.length - 1) );//there are 3 buttons. 2 spaces.
-      
-              stepButtons.forEach((item, secindex)=>{
-                  if(index > secindex){
-                      item.classList.add('done');
-                  }
-                  if(index < secindex){
-                      item.classList.remove('done');
-                  }
-              })
-          })
-      })
+    document.addEventListener('DOMContentLoaded', function () {
+    var rows = document.querySelectorAll('.row');
+    rows.forEach(function (row) {
+      row.addEventListener('click', function () {
+        var targetModalId = row.getAttribute('data-bs-target');
+        var targetModal = new bootstrap.Modal(document.getElementById(targetModalId));
+        targetModal.show();
+      });
+    });
+  });
+
       </script>
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

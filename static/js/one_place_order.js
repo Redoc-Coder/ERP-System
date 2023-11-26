@@ -10,7 +10,7 @@
         // Send an AJAX request to the server
         fetch('/one_place_order', {
             method: 'POST',
-            headers: {
+            headers: {  
             'Content-Type': 'application/json',
             },
             body: JSON.stringify({
