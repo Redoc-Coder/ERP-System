@@ -50,8 +50,8 @@ db.init_app(app)
 mail = Mail(app)
 
 class ForgotPasswordForm(FlaskForm):
-      email = StringField('Email', validators=[DataRequired(), EmailValidator()])
-      submit = SubmitField('Send Reset Instructions')
+    email = StringField('Email', validators=[DataRequired(), EmailValidator()], render_kw={"placeholder": "Enter your email"})
+    submit = SubmitField('Send Reset Instructions', render_kw={"class": "btn btn-primary mb-3"})
 
 
 
@@ -127,6 +127,7 @@ def add_to_cart(product_id):
         # Check if the product with the given ID exists in your database
         product = Product.query.get(product_id)
 
+        product_name = product.product_name
         if product:
             # Assuming you have a customer ID, seller ID, and shop name, update these accordingly
             customer_id = session['user_id']
@@ -146,6 +147,9 @@ def add_to_cart(product_id):
             )
 
             db.session.add(new_product)
+            email = session["user_email"]
+            audit_record = auditTrail(user=email, event_type='Add to cart', description=f'{product_name} added to cart')
+            db.session.add(audit_record)
             db.session.commit()
             return jsonify({"message": "Product added to cart successfully"})
         else:
@@ -273,13 +277,17 @@ def send_reset_email(email):
 @app.route("/forgot-password", methods=['GET', 'POST'])
 def ForgotPassword():
     form = ForgotPasswordForm()
+    error = None
 
     if form.validate_on_submit():
+        user = accounts.query.filter_by(email=form.email.data).first()
+        if user:
             send_reset_email(form.email.data)
             flash('Reset instructions sent to your email.', 'success')
+        else:
+            error = "Invalid email. Please check and try again."
     
-
-    return render_template('forgot_password.html', form=form)
+    return render_template('forgot_password.html', form=form, error=error)
 
 
 

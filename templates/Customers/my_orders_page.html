@@ -207,88 +207,91 @@
                  
                 </div>
           
-                  {% block content %}
-                  <div class="cont" id="cart-container">
-                      {% for order in orders %}
-                     
-                      <div class="row" data-product-id="{{ order.id }}" style="cursor: pointer;"
-                      data-bs-toggle="modal" data-bs-target="#exampleModal{{ order.id }}">
-                      
-                      <div class="product  col-md-6 mt-3" >
-                       
-                            <div class="img-cont">
-                             
-                              <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
-                              min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
-          
-                            </div>
-                            <div class="description-cont" style="line-height: 0.5; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
-                              <p style="color: #121212;">{{ order.seller_name }} </p>
-                              <p style="color: #121212;">{{ order.product_name }} ({{order.quantity}})</p>
-                              <p>{{ order.product_details|truncate_text(20)}}</p>
-                              <p>{{ order.price }}.00</p>
-                              
-                            
-                            </div>
+                    {% block content %}
+                    <div class="cont" id="cart-container">
+                        {% for order in orders %}
+                        {% if order.status != 'delivered' %}
+                        <div class="row" data-product-id="{{ order.id }}" style="cursor: pointer;"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal{{ order.id }}">
                         
-                        </div>
-                        <div class="col-md-2" style="display: flex; align-items: center;">
-                          <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
-                        </div>
-                        <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
-                          <p>{{order.status}}</p>
-                        </div>
-                        <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
-                          <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
-                        </div>
-                    
+                        <div class="product  col-md-6 mt-3" >
+                        
+                              <div class="img-cont">
+                              
+                                <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
+                                min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
+            
+                              </div>
+                              <div class="description-cont" style="line-height: 0.5; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
+                                <p style="color: #121212;">{{ order.seller_name }} </p>
+                                <p style="color: #121212;">{{ order.product_name }} ({{order.quantity}})</p>
+                                <p>{{ order.product_details|truncate_text(20)}}</p>
+                                <p>{{ order.price }}.00</p>
+                                
+                              
+                              </div>
+                          
+                          </div>
+                          <div class="col-md-2" style="display: flex; align-items: center;">
+                            <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
+                          </div>
+                          <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
+                            <p>{{order.status}}</p>
+                          </div>
+                          <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
+                            <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
+                          </div>
                       
-                         </div>
-                            <!-- Modal -->
-      <div class="modal fade" id="exampleModal{{ order.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-          <div class="modal-content">
-            <div class="modal-header">
-         
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-          <div class="card card-timeline px-2 border-none">
-  <ul class="bs4-order-tracking">
-    {% if order.status == 'preparing' %}
-      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
-      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
-      <li class="step"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
-      <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
-    {% elif order.status == 'out for delivery' %}
-      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
-      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
-      <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
-      <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
-    {% elif order.status == 'delivered' %}
-      <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
-      <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
-      <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
-      <li class="step active"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
-
-    {% endif %}
-  </ul>
-  <h5 class="text-center"><b>{{ order.status }}</b>. {% if order.status == 'In transit' %} The order has been shipped! {% endif %}</h5>
-</div>
-            </div>
-            </div>
-            <div class="modal-footer">
+                        
+                          </div>
+                              <!-- Modal -->
+        <div class="modal fade" id="exampleModal{{ order.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog ">
+            <div class="modal-content">
+              <div class="modal-header">
           
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+            <div class="card card-timeline px-2 border-none">
+    <ul class="bs4-order-tracking">
+      {% if order.status == 'preparing' %}
+        <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+        <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+        <li class="step"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+        <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+      {% elif order.status == 'out for delivery' %}
+        <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+        <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+        <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+        <li class="step"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+      {% elif order.status == 'delivered' %}
+        <li class="step active"> <div><i class="fas fa-user"></i></div> Order Placed </li>
+        <li class="step active"> <div><i class="fas fa-bread-slice"></i></div> In transit </li>
+        <li class="step active"> <div><i class="fas fa-truck"></i></div> Out for delivery </li>
+        <li class="step active"> <div><i class="fas fa-birthday-cake"></i></div> Delivered </li>
+
+      {% endif %}
+    </ul>
+    <h5 class="text-center"><b>{{ order.status }}</b>. 
+      
+    </h5>
+  </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+            
+              </div>
             </div>
           </div>
-        </div>
-                      {% endfor %}
-                      <hr>
-                    </div>
+          {% endif %}
+                        {% endfor %}
+                        <hr>
+                      </div>
 
-                    
-                    
-                  {% endblock %}
+                      
+                      
+                    {% endblock %}
           
             </div>
             <div class="tab-pane fade" id="toReceive">
@@ -357,12 +360,11 @@
                 <div class="product-title col-md-6 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
                   <p>PRODUCT DETAILS</p>
                 </div>
-                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+              
+                <div class="product-title col-md-6 mt-3" style="  text-align: end; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
                   <p>ORDER DATE</p>
                 </div>
-                <div class="product-title col-md-3 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
-                  <p>STATUS</p>
-                </div>
+          
                 
        
         
@@ -391,15 +393,11 @@
                           </div>
                       
                       </div>
-                      <div class="col-md-2" style="display: flex; align-items: center;">
+                      <div class="col-md-6" style=" text-align: end; display: flex; align-items: center; justify-content: end;">
                         <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
                       </div>
-                      <div class="col-md-2" style="display: flex; align-items: center; justify-content: flex-end;">
-                        <p>{{order.status}}</p>
-                      </div>
-                      <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
-                        <button type="button" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
-                      </div>
+                     
+                     
                   
                     
                        </div>
