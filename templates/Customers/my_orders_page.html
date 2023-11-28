@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/customers_css/track_order.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-rREt3D2T2eVaCYq9Fkt+8X/dFb+aVVrTkTfbr77bTFFFxyVxUmjhUn5HhV8uN9r6" crossorigin="anonymous">
     <!-- Bootstrap icons-->
     <link
       rel="stylesheet"
@@ -176,13 +177,13 @@
                 <a class="nav-link active" id="allOrdersTab" data-toggle="tab" href="#allOrders">All orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="toReceiveTab" data-toggle="tab" href="#toReceive">Processing</a>
+                <a class="nav-link" id="toReceiveTab" data-toggle="tab" href="#toReceive">Cancelled</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="deliveredTab" data-toggle="tab" href="#delivered">Received</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="deliveredTab" data-toggle="tab" href="#delivered">To review</a>
+              <a class="nav-link" id="toReviewTab" data-toggle="tab" href="#toReview">Rate orders</a>
           </li>
         </ul>
     
@@ -361,8 +362,11 @@
                   <p>PRODUCT DETAILS</p>
                 </div>
               
-                <div class="product-title col-md-6 mt-3" style="  text-align: end; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                <div class="product-title col-md-3 mt-3" style="  text-align: center; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
                   <p>ORDER DATE</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="  text-align: center; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>RATE</p>
                 </div>
           
                 
@@ -393,9 +397,85 @@
                           </div>
                       
                       </div>
-                      <div class="col-md-6" style=" text-align: end; display: flex; align-items: center; justify-content: end;">
+                      <div class="col-md-3" style=" text-align: center; display: flex; align-items: center; justify-content: center;">
                         <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
                       </div>
+
+                      <div class="col-md-3" style="text-align: end; display: flex; align-items: center; justify-content: center;">
+                        <div class="rating">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                     
+                     
+                  
+                    
+                       </div>
+                  {% endfor %}
+                  <hr>
+              </div>
+              {% endblock %}
+            </div>
+
+            <div class="tab-pane fade" id="toReview">
+              <div class="row py-2 ">
+
+                <div class="product-title col-md-6 mt-3" style="font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>PRODUCT DETAILS</p>
+                </div>
+              
+                <div class="product-title col-md-3 mt-3" style="  text-align: center; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>ORDER DATE</p>
+                </div>
+                <div class="product-title col-md-3 mt-3" style="  text-align: center; font-family: assistant, sans-serif; font-size: 14px;font-weight: 400; font-style: normal; color: rgba(18,18,18,0.75);">
+                  <p>RATE</p>
+                </div>
+          
+                
+       
+        
+               
+              </div>
+              {% block toReviewContent %}
+              <div class="cont" id="toReview-container">
+                  {% for order in orders if order.status == 'delivered' %}
+                  <div class="row" data-product-id="{{ order.id }}">
+                      
+                    <div class="product  col-md-6 mt-3" >
+                     
+                          <div class="img-cont">
+                           
+                            <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
+                            min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
+        
+                          </div>
+                          <div class="description-cont" style="line-height: 0.5; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
+                            <p style="color: #121212;">{{ order.seller_name }} </p>
+                            <p style="color: #121212;">{{ order.product_name }} ({{order.quantity}})</p>
+                            <p>{{ order.product_details|truncate_text(20)}}</p>
+                            <p>{{ order.price }}.00</p>
+                            
+                          
+                          </div>
+                      
+                      </div>
+                      <div class="col-md-3" style=" text-align: center; display: flex; align-items: center; justify-content: center;">
+                        <p>{{ order.created_at.strftime('%d-%m-%Y %H:%M') }}</p>
+                      </div>
+
+                      <div class="col-md-3" style="text-align: end; display: flex; align-items: center; justify-content: center;">
+                        <div class="rating" data-order-id="{{ order.id }}" data-initial-rating="{{ order.rating }}">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
                      
                      
                   
@@ -424,6 +504,67 @@
     });
   });
 
+
+    //stars
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get all rating containers
+    const ratingContainers = document.querySelectorAll('.rating');
+
+    // Iterate over each container
+    ratingContainers.forEach(container => {
+        // Get all stars within the container
+        const stars = container.querySelectorAll('i');
+        const orderId = container.dataset.orderId;
+        const initialRating = container.dataset.initialRating;
+
+        // Highlight stars based on the initial rating from the database
+        stars.forEach(star => {
+            const starRating = star.dataset.rating;
+            if (starRating <= initialRating) {
+                star.classList.add('fas', 'text-warning');
+            }
+        });
+
+        // Attach click event listener to each star
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const clickedRating = this.dataset.rating;
+
+                // Set the clicked stars to yellow, and the rest to gray
+                stars.forEach(star => {
+                    const starRating = star.dataset.rating;
+                    if (starRating <= clickedRating) {
+                        star.classList.add('fas', 'text-warning');
+                        star.classList.remove('far', 'text-gray');
+                    } else {
+                        star.classList.remove('fas', 'text-warning');
+                        star.classList.add('far', 'text-gray');
+                    }
+                });
+
+                // Send the orderId and rating to the server using fetch
+                fetch('/store_rating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        rating: clickedRating,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                        // Optionally, update the UI or perform other actions
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    });
+});
       </script>
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

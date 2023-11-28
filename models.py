@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import Flask
 from flask import current_app
-
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -24,7 +24,7 @@ class accounts(db.Model):
                            server_default=func.now())
     is_suspended = db.Column(db.Boolean, default=False)
     reset_token = db.Column(db.String(100), nullable=True)
-
+    
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
@@ -82,11 +82,19 @@ class Product(db.Model):
     price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     sold = db.Column(db.Integer, nullable=False, default = 0)
+   
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
-
+    ratings = relationship('Rating', backref='product', lazy=True)
     def __repr__(self):
         return f'<product {self.product_name}>'
+    
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)  # You may want to link this to a user in your system
+    rating = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
 
     

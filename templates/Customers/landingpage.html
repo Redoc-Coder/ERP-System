@@ -323,7 +323,7 @@
                 <!-- Product details -->
                 <div class="card-body">
                   <div style="line-height: 1.7;">
-                    <span style="color: #686665; font-size: 0.875rem;float: right;">76 sold</span>
+                    <span style="color: #686665; font-size: 0.875rem;float: right;">{{product.sold}} sold</span>
                     <!-- Product name-->
                     <span style="font-size: 18px;" class="fw-bolder">
                       {{ product.product_name }}
@@ -338,11 +338,13 @@
                     <div
                     class="small text-warning mb-2" style="display: flex;"
                   >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+                  {% for _ in range(5) %}
+                  {% if loop.index <= product.average_rating %}
+                      <div class="bi-star-fill"></div>
+                  {% else %}
+                      <div class="bi-star"></div>
+                  {% endif %}
+              {% endfor %}
                   </div>
                     <div class="mt-2" id="addToCartButton">
                       <!-- Add to Cart button -->
@@ -405,11 +407,13 @@
                       <div
                       class="small text-warning mb-2" style="display: flex;"
                     >
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
+                    {% for _ in range(5) %}
+                    {% if loop.index <= product.average_rating %}
+                        <div class="bi-star-fill"></div>
+                    {% else %}
+                        <div class="bi-star"></div>
+                    {% endif %}
+                {% endfor %}
                     </div>
                       <div class="mt-2" id="addToCartButton">
                         <!-- Add to Cart button -->
@@ -469,11 +473,13 @@
                       <div
                       class="small text-warning mb-2" style="display: flex;"
                     >
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
+                    {% for _ in range(5) %}
+                    {% if loop.index <= product.average_rating %}
+                        <div class="bi-star-fill"></div>
+                    {% else %}
+                        <div class="bi-star"></div>
+                    {% endif %}
+                {% endfor %}
                     </div>
                       <div class="mt-2" id="addToCartButton">
                         <!-- Add to Cart button -->
@@ -530,11 +536,13 @@
                         <div
                         class="small text-warning mb-2" style="display: flex;"
                       >
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
+                      {% for _ in range(5) %}
+        {% if loop.index <= product.average_rating %}
+            <div class="bi-star-fill"></div>
+        {% else %}
+            <div class="bi-star"></div>
+        {% endif %}
+    {% endfor %}
                       </div>
                         <div class="mt-2" id="addToCartButton">
                           <!-- Add to Cart button -->
@@ -594,11 +602,13 @@
                           <div
                           class="small text-warning mb-2" style="display: flex;"
                         >
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
-                          <div class="bi-star-fill"></div>
+                        {% for _ in range(5) %}
+        {% if loop.index <= product.average_rating %}
+            <div class="bi-star-fill"></div>
+        {% else %}
+            <div class="bi-star"></div>
+        {% endif %}
+    {% endfor %}
                         </div>
                           <div class="mt-2" id="addToCartButton">
                             <!-- Add to Cart button -->

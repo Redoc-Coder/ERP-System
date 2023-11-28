@@ -24,7 +24,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders
+from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -87,6 +87,13 @@ def Login():
 
     return render_template("login.html", error=error)
 
+#Product rating
+def calculate_average_rating(product):
+    if product.ratings:
+        total_rating = sum(rating.rating for rating in product.ratings)
+        average_rating = total_rating / len(product.ratings)
+        return average_rating
+    return 0  # Return 0 if there are no ratings
 
 @app.route("/landingpage", methods=["GET"])
 def LandingPage():
@@ -104,6 +111,12 @@ def LandingPage():
     camping_hiking_gear_products = Product.query.filter_by(category="Camping & Hiking Gear").all()
     sports_equipment_products = Product.query.filter_by(category="Sports Equipment").all()
     
+      # Query products and their ratings using lazy loading
+    products = Product.query.all()
+    for product in products:
+        
+        product.average_rating = calculate_average_rating(product)
+
     for product in outdoor_clothing_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
         
@@ -117,7 +130,8 @@ def LandingPage():
         product.product_image = b64encode(product.product_image).decode("utf-8")
 
     return render_template("customers/landingpage.html", cart_count=cart_count, outdoor_clothing=outdoor_clothing_products,
-    exercise_products=exercise_fitness_gear_products,camping_products=camping_hiking_gear_products, sports_products=sports_equipment_products)
+    exercise_products=exercise_fitness_gear_products,camping_products=camping_hiking_gear_products, sports_products=sports_equipment_products
+    ,calculate_average_rating=calculate_average_rating)
 
 
 # END OF FUNCTIONS LOGIN
@@ -443,8 +457,8 @@ def place_order():
         for product_id in product_ids:
             # Retrieve product details from the database based on product_id
             product = cart.query.get(product_id)
-            p_id = Product.query.get(product_id)
-            seller_id = p_id.seller_id
+            
+            seller_id = product.seller_id
             seller = accounts.query.get(seller_id)
 
             # Create a new order record
@@ -463,7 +477,7 @@ def place_order():
 
             # Add the new order to the database
             db.session.add(new_order)
-
+            db.session.delete(product)
             
             customer = db.session.query(accounts).get(customer_id)
             customer_username = customer.username if customer else "Unknown"
@@ -729,6 +743,44 @@ def AddProducts():
         products = []  
         
     return render_template("sellers/add_products.html", seller_products=products)
+
+
+#Rating
+@app.route('/store_rating', methods=['POST'])
+def store_rating():
+    data = request.get_json()
+    order_id = data.get('orderId')
+    rating_value = data.get('rating')
+
+    try:
+        # Find the product based on the order_id
+        product = Product.query.filter_by(id=order_id).first()
+
+        if product:
+            # Check if the user has already rated this product (you might want to add more logic here)
+            # For simplicity, let's assume a user can rate a product only once
+            # You might want to link this to a user in your system      
+            user_id = session["user_id"]  # Replace with the actual user ID
+
+            existing_rating = Rating.query.filter_by(product_id=order_id, user_id=user_id).first()
+
+            if existing_rating:
+                return jsonify({'error': 'You have already rated this product'})
+
+            # Create a new rating
+            new_rating = Rating(product_id=order_id, user_id=user_id, rating=rating_value)
+
+            # Save the new rating to the database
+            db.session.add(new_rating)
+            db.session.commit()
+
+            return jsonify({'message': 'Rating stored successfully'})
+        else:
+            return jsonify({'error': 'Product not found'})
+
+    except Exception as e:
+        # Handle exceptions based on your specific requirements
+        return jsonify({'error': str(e)})
 
 
 @app.route("/seller/viewtransactions")
