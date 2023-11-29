@@ -309,7 +309,7 @@
                         color: rgba(18, 18, 18, 0.75);
                       "
                     >
-                      <p style="color: #121212">{{ product.product_name }}</p>
+                      <p style="color: #121212">{{ product.product_name }}({{product.order_quantity}})</p>
                       <p>{{ product.price }}.00</p>
                       <p>{{ product.description|truncate_text(20) }}</p>
                       <p>{{ product.category}}</p>
@@ -354,6 +354,9 @@
         </div>
       </div>
     </div>
+
+
+
     <script src="/static/js/one_place_order.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap core JS-->

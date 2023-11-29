@@ -152,6 +152,7 @@ def add_to_cart(product_id):
                 customer_id=customer_id,
                 seller_id=seller_id,
                 shop_name=shop_name,
+                product_id = product.id,
                 product_name=product.product_name,
                 product_image=product.product_image,
                 mime_type=product.mime_type,
@@ -356,9 +357,10 @@ def ProductInfo(product_id):
 
     seller_id = product.seller_id
     seller = accounts.query.get(seller_id)
+    num_ratings = Rating.query.filter_by(product_id=product_id).count()
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller)
+        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller, num_ratings=num_ratings)
     else:
         # Handle the case where the product does not exist
 
@@ -432,6 +434,7 @@ def one_place_order():
             seller_id=seller.id, 
             customer_id=customer_id,
             customer_name=customer_username, 
+            product_id =product.id,
             product_name=product.product_name,
             status='preparing', 
             product_details=product.product_details,
@@ -488,6 +491,7 @@ def place_order():
                 seller_id=seller.id, 
                 customer_id=customer_id,
                 customer_name=customer_username, 
+                product_id = product.product_id,
                 product_name=product.product_name,
                 status='preparing', 
                 product_details=product.description,
@@ -527,6 +531,33 @@ def Cart():
             "customers/cart.html", products=[], cart_count=0
         )
 
+#Update quantity
+@app.route('/update_quantity', methods=['POST'])
+def update_quantity():
+    data = request.get_json()
+    product_id = data['productId']
+    new_quantity = data['newQuantity']
+
+    # Update the quantity in the database
+    product = cart.query.get(product_id)
+    product.quantity = new_quantity
+    db.session.commit()
+
+    return jsonify({'message': 'Quantity updated successfully'})
+
+#solo product update
+@app.route('/update_order_quantity', methods=['POST'])
+def update_order_quantity():
+    data = request.get_json()
+    product_id = data['productId']
+    new_order_quantity = data['newOrderQuantity']
+
+    # Update the order_quantity in the Product table
+    product = Product.query.get(product_id)
+    product.order_quantity = new_order_quantity
+    db.session.commit()
+
+    return jsonify({'message': 'Order quantity updated successfully'}) 
 
 @app.route("/checkout/<int:product_id>")
 def buyNow(product_id):
@@ -558,7 +589,7 @@ def checkout():
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
-        total_price = sum(product.price for product in user_cart)
+        total_price = sum(product.price * product.quantity for product in user_cart)
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
         return render_template(
@@ -745,9 +776,13 @@ def AddProducts():
     return render_template("sellers/add_products.html", seller_products=products)
 
 
-#Rating
 @app.route('/store_rating', methods=['POST'])
 def store_rating():
+    # Check if the user is authenticated
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({'error': 'User not authenticated'})
+
     data = request.get_json()
     order_id = data.get('orderId')
     rating_value = data.get('rating')
@@ -757,11 +792,6 @@ def store_rating():
         product = Product.query.filter_by(id=order_id).first()
 
         if product:
-            # Check if the user has already rated this product (you might want to add more logic here)
-            # For simplicity, let's assume a user can rate a product only once
-            # You might want to link this to a user in your system      
-            user_id = session["user_id"]  # Replace with the actual user ID
-
             existing_rating = Rating.query.filter_by(product_id=order_id, user_id=user_id).first()
 
             if existing_rating:
@@ -781,7 +811,6 @@ def store_rating():
     except Exception as e:
         # Handle exceptions based on your specific requirements
         return jsonify({'error': str(e)})
-
 
 @app.route("/seller/viewtransactions")
 def Transactions():

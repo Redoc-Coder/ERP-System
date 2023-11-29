@@ -468,7 +468,7 @@
                       </div>
 
                       <div class="col-md-3" style="text-align: end; display: flex; align-items: center; justify-content: center;">
-                        <div class="rating" data-order-id="{{ order.id }}" data-initial-rating="{{ order.rating }}">
+                        <div class="rating" data-order-id="{{ order.product_id }}" data-initial-rating="{{ order.rating }}">
                             <i class="fas fa-star" data-rating="1"></i>
                             <i class="fas fa-star" data-rating="2"></i>
                             <i class="fas fa-star" data-rating="3"></i>
@@ -507,63 +507,68 @@
 
     //stars
     document.addEventListener('DOMContentLoaded', function () {
-    // Get all rating containers
-    const ratingContainers = document.querySelectorAll('.rating');
+  // Get all rating containers
+  const ratingContainers = document.querySelectorAll('.rating');
 
-    // Iterate over each container
-    ratingContainers.forEach(container => {
-        // Get all stars within the container
-        const stars = container.querySelectorAll('i');
-        const orderId = container.dataset.orderId;
-        const initialRating = container.dataset.initialRating;
+  // Iterate over each container
+  ratingContainers.forEach(container => {
+    // Get all stars within the container
+    const stars = container.querySelectorAll('i');
+    const orderId = container.dataset.orderId;
+    const initialRating = container.dataset.initialRating;
 
-        // Highlight stars based on the initial rating from the database
-        stars.forEach(star => {
-            const starRating = star.dataset.rating;
-            if (starRating <= initialRating) {
-                star.classList.add('fas', 'text-warning');
-            }
-        });
+    console.log('orderId:', orderId);
+    console.log('initialRating:', initialRating);
 
-        // Attach click event listener to each star
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                const clickedRating = this.dataset.rating;
-
-                // Set the clicked stars to yellow, and the rest to gray
-                stars.forEach(star => {
-                    const starRating = star.dataset.rating;
-                    if (starRating <= clickedRating) {
-                        star.classList.add('fas', 'text-warning');
-                        star.classList.remove('far', 'text-gray');
-                    } else {
-                        star.classList.remove('fas', 'text-warning');
-                        star.classList.add('far', 'text-gray');
-                    }
-                });
-
-                // Send the orderId and rating to the server using fetch
-                fetch('/store_rating', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        orderId: orderId,
-                        rating: clickedRating,
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data.message);
-                        // Optionally, update the UI or perform other actions
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
-        });
+    // Highlight stars based on the initial rating from the database
+    stars.forEach(star => {
+      const starRating = star.dataset.rating;
+      if (starRating <= initialRating) {
+        star.classList.add('fas', 'text-warning');
+      }
     });
+
+    // Attach click event listener to each star
+    stars.forEach(star => {
+      star.addEventListener('click', function () {
+        const clickedRating = this.dataset.rating;
+
+        console.log('clickedRating:', clickedRating);
+
+        // Set the clicked stars to yellow, and the rest to gray
+        stars.forEach(star => {
+          const starRating = star.dataset.rating;
+          if (starRating <= clickedRating) {
+            star.classList.add('fas', 'text-warning');
+            star.classList.remove('far', 'text-gray');
+          } else {
+            star.classList.remove('fas', 'text-warning');
+            star.classList.add('far', 'text-gray');
+          }
+        });
+
+        // Send the orderId and rating to the server using fetch
+        fetch('/store_rating', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderId: orderId,
+            rating: clickedRating,
+          }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data.message);
+            // Optionally, update the UI or perform other actions
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      });
+    });
+  });
 });
       </script>
     

@@ -178,7 +178,18 @@
                     <!-- Product name -->
                     <h3 class="card-title fw-bold">{{ product.product_name }}</h3>
                     <!-- Product description -->
-                    <p class="card-text" style="color: #686665;">{{ product.product_details }}</p>
+                    <div class="card-text" style="color: #686665;">{{ product.product_details }}</div>
+                    <div
+                    class="small text-warning mb-2" style="display: flex;"
+                  >
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star"></div>
+                    <div class="bi-star"></div>
+                    <p style="color: #686665;">({{ num_ratings }})</p>
+                  </div> 
+                    
                     <!-- Product price -->
                     <h4>₱{{ product.price }}</h4>
                      <hr  style="color: #686665;">
@@ -189,16 +200,15 @@
                     <div class="basta " style="display: flex;  align-items: center;">
                       
               
-                    <div class="input-group  mt-4" style=" margin-right: 15px; max-width: 200px; border-radius: 20px; background-color: #EFF0F0;">
+                      <div class="input-group mt-4" style="margin-right: 15px; max-width: 200px; border-radius: 20px; background-color: #EFF0F0;">
                         <span class="input-group-btn">
-                            <button  type="button" class="btn " id="decrement">-</button>
+                          <button type="button" class="btn" id="decrement">-</button>
                         </span>
                         <input type="text" class="form-control text-center" id="quantity" value="1" min="1" style="border: none; background-color: #EFF0F0;">
                         <span class="input-group-btn">
-                            <button  type="button" class="btn " id="increment">+</button>
+                          <button type="button" class="btn" id="increment">+</button>
                         </span>
-                      
-                    </div>
+                      </div>
                     <span class="mt-4" style="color: #686665; font-size: 0.9rem;">Hurry, only <span style="color: black; font-weight: bold;">{{product.quantity}}</span>  left in stock! </span>
                   </div>
                    
@@ -217,15 +227,7 @@
                         <div class="seller-name-and-rating">
                             <span style="font-size: 1.5rem;"> <a href="" style="text-decoration: none;"> {{ seller.username }}</a></span>
                              
-                        <div
-                        class="small text-warning mb-2" style="display: flex;"
-                      >
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star-fill"></div>
-                        <div class="bi-star"></div>
-                        <div class="bi-star"></div>
-                      </div>
+                      
                         </div>
                     
                     </div>
@@ -420,6 +422,52 @@
         </p>
       </div>
     </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const quantityInput = document.getElementById('quantity');
+      const incrementButton = document.getElementById('increment');
+      const decrementButton = document.getElementById('decrement');
+
+      incrementButton.addEventListener('click', function () {
+        // Increment the quantity
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+
+        // Make an AJAX request to update the order_quantity in the backend
+        updateOrderQuantity(quantityInput.value);
+      });
+
+      decrementButton.addEventListener('click', function () {
+        // Ensure the quantity doesn't go below 1
+        if (parseInt(quantityInput.value) > 1) {
+          // Decrement the quantity
+          quantityInput.value = parseInt(quantityInput.value) - 1;
+
+          // Make an AJAX request to update the order_quantity in the backend
+          updateOrderQuantity(quantityInput.value);
+        }
+      });
+
+      function updateOrderQuantity(newQuantity) {
+        // Make an AJAX request to update the order_quantity in the backend
+        fetch('/update_order_quantity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            productId: 1, // Replace with the actual product ID
+            newOrderQuantity: newQuantity,
+          }),
+        });
+      }
+    });
+
+
+    </script>
+
+
+
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap core JS-->

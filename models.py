@@ -47,11 +47,13 @@ class cart(db.Model):
     seller_id = db.Column(db.Integer, nullable=False)
     shop_name = db.Column(db.Integer, nullable=False)
     product_name = db.Column(db.String(100), nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)
     product_image = db.Column(db.LargeBinary, nullable=False)
     mime_type = db.Column(db.String(50), nullable=False)
     category = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default = 1)
     
 
     created_at = db.Column(db.DateTime(timezone=True),
@@ -82,10 +84,15 @@ class Product(db.Model):
     price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     sold = db.Column(db.Integer, nullable=False, default = 0)
-   
+    order_quantity = db.Column(db.Integer, nullable=False, default = 1)
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
     ratings = relationship('Rating', backref='product', lazy=True)
+    
+    #count the number of users who rated the product
+    def num_ratings(self):
+        return Rating.query.filter_by(product_id=self.id).count()
+
     def __repr__(self):
         return f'<product {self.product_name}>'
     
@@ -125,6 +132,7 @@ class customerOrders(db.Model):
     product_image = db.Column(db.LargeBinary, nullable=False)
     mime_type = db.Column(db.String(50), nullable=False)
     customer_name= db.Column(db.Integer, nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)
     product_name = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False, default='preparing')
     product_details = db.Column(db.String(100), nullable=False)
