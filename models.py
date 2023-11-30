@@ -13,12 +13,20 @@ db = SQLAlchemy()
 # ...
 
 class accounts(db.Model):
+
+    with open('static/images/defulat_image.jpg', 'rb') as image_file:
+        default_image = image_file.read()
+    
+
     id = db.Column(db.Integer, primary_key=True)
+    profile = db.Column(db.LargeBinary, nullable=False, default=default_image)
+    mime_type = db.Column(db.String(50), nullable=False)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     account_type = db.Column(db.String(80), nullable=False)
+    address = db.Column(db.String(80), nullable=False, default='address')
     password = db.Column(db.Text)
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())

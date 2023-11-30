@@ -9,7 +9,8 @@ from flask import (
     request,
     jsonify, flash
 )
-
+from flask import send_file
+import io
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -97,41 +98,56 @@ def calculate_average_rating(product):
 
 @app.route("/landingpage", methods=["GET"])
 def LandingPage():
-    
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
+        user = accounts.query.all()  
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
+
     outdoor_clothing_products = Product.query.filter_by(category="Outdoor Clothing").all()
     exercise_fitness_gear_products = Product.query.filter_by(category="Exercise & Fitness Gear").all()
     camping_hiking_gear_products = Product.query.filter_by(category="Camping & Hiking Gear").all()
     sports_equipment_products = Product.query.filter_by(category="Sports Equipment").all()
-    
-      # Query products and their ratings using lazy loading
+
+
+
+
+    # Query products and their ratings using lazy loading
     products = Product.query.all()
     for product in products:
-        
         product.average_rating = calculate_average_rating(product)
 
     for product in outdoor_clothing_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        
+
     for product in exercise_fitness_gear_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        
+
     for product in camping_hiking_gear_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
 
     for product in sports_equipment_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
 
-    return render_template("customers/landingpage.html", cart_count=cart_count, outdoor_clothing=outdoor_clothing_products,
-    exercise_products=exercise_fitness_gear_products,camping_products=camping_hiking_gear_products, sports_products=sports_equipment_products
-    ,calculate_average_rating=calculate_average_rating)
+    if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
+
+    return render_template(
+        "customers/landingpage.html",
+        cart_count=cart_count,
+        outdoor_clothing=outdoor_clothing_products,
+        exercise_products=exercise_fitness_gear_products,
+        camping_products=camping_hiking_gear_products,
+        sports_products=sports_equipment_products,
+        calculate_average_rating=calculate_average_rating,
+        user_image=user_image,
+    )
+
 
 
 # END OF FUNCTIONS LOGIN
@@ -148,11 +164,16 @@ def add_to_cart(product_id):
             seller_id = product.seller_id
             shop_name = "Your Shop Name"
 
+            # Check if the product is already in the cart
+            existing_cart_item = cart.query.filter_by(customer_id=customer_id, product_id=product.id).first()
+            if existing_cart_item:
+                return jsonify({'error': 'Product already in cart'})
+
             new_product = cart(
                 customer_id=customer_id,
                 seller_id=seller_id,
                 shop_name=shop_name,
-                product_id = product.id,
+                product_id=product.id,
                 product_name=product.product_name,
                 product_image=product.product_image,
                 mime_type=product.mime_type,
@@ -168,7 +189,6 @@ def add_to_cart(product_id):
             db.session.commit()
             return jsonify({"message": "Product added to cart successfully"})
         else:
-            
             return jsonify({'error': 'Product not found'})
 
     return jsonify({'error': 'Invalid request'})
@@ -248,6 +268,9 @@ def SignUp():
         if accounts.query.filter_by(email=email).first():
             error = "Email already exists. Please choose another email."
         else:
+
+            with open('static/images/defulat_image.jpg', 'rb') as image_file:
+                default_image = image_file.read()
             # Hash the password before saving it
             hashed_password = generate_password_hash(password, method="pbkdf2:sha256")
 
@@ -258,7 +281,8 @@ def SignUp():
                 username=username,
                 email=email,
                 account_type=account_type,
-                password=hashed_password,  # Use the hashed password
+                password=hashed_password,
+                mime_type='image/jpeg'  # Use the hashed password
             )
             db.session.add(new_account)
             db.session.commit()
@@ -514,13 +538,19 @@ def Cart():
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
+        user = accounts.query.all() 
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
 
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
+
+        
+        for user_image in user:
+            user_image.profile = b64encode(user_image.profile).decode("utf-8")
         return render_template(
-            "/customers/cart.html",
+            "/customers/cart.html",user_image=user_image,
             products=user_cart,
             cart_count=cart_count,
 
@@ -607,14 +637,60 @@ def checkout():
 
 @app.route("/customers/myprofile")
 def MyProfile():
-    return render_template("customers/my_profile.html")
+    if "user_id" in session:
+        # User is logged in
+        user_id = session["user_id"]
+        user_cart = cart.query.filter_by(customer_id=user_id).all()
+        all_user = accounts.query.all()
+        user = accounts.query.get(user_id)
+        user_image = accounts.query.get(user_id)
+        cart_count = len(user_cart)
+    else:
+        # User is not logged in, or no cart data found
+        cart_count = 0
+        user = None
+    if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
+    return render_template("customers/my_profile.html",cart_count=cart_count, user=user,user_image=user_image)
 
+# Update profile
+@app.route("/update_profile", methods=["POST"])
+def update_profile():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        user = accounts.query.get(user_id)
+
+        # Update user details
+        user.firstname = request.form.get("firstname")
+        user.lastname = request.form.get("lastname")
+        user.email = request.form.get("email")
+        user.address = request.form.get("address")
+
+        # Handle file upload
+        profile_image = request.files.get("profile_image")
+        if profile_image:
+            user.profile = profile_image.read()
+            user.mime_type = profile_image.mimetype
+
+        # Update password if provided
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if new_password == confirm_password:
+            user.password = generate_password_hash(new_password)
+            db.session.commit()
+        else:
+            flash("Passwords do not match", "error")  # You can use Flask's flash to display error messages
+
+    return redirect(url_for("MyProfile"))
 
 @app.route("/customers/outdoor-clothing")
 def OutdoorClothing():
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
+        user = accounts.query.all() 
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
     else:
@@ -624,9 +700,10 @@ def OutdoorClothing():
 
     for product in outdoor_clothing_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
+    if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
 
-
-    return render_template("customers/outdoor_clothing_page.html", cart_count=cart_count, outdoor_clothing=outdoor_clothing_products)
+    return render_template("customers/outdoor_clothing_page.html",user_image=user_image, cart_count=cart_count, outdoor_clothing=outdoor_clothing_products)
  
 
 
@@ -636,6 +713,8 @@ def ExerciseFitnessGear():
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
+        user = accounts.query.all() 
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
     else:
@@ -646,8 +725,12 @@ def ExerciseFitnessGear():
 
     for product in exercise_fitness_gear_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
+
+    if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
+
         
-    return render_template("customers/exercise_and_fitness_gear_page.html", cart_count=cart_count,exercise_products=exercise_fitness_gear_products)
+    return render_template("customers/exercise_and_fitness_gear_page.html",user_image=user_image, cart_count=cart_count,exercise_products=exercise_fitness_gear_products)
 
  
 
@@ -658,6 +741,8 @@ def SportsEquipment():
     if "user_id" in session:
         # User is logged in
         user_id = session["user_id"]
+        user = accounts.query.all() 
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
     else:
@@ -668,8 +753,11 @@ def SportsEquipment():
     
     for product in sports_equipment_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
+    if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
 
-    return render_template("customers/sports_equipment_page.html", cart_count=cart_count, sports_products=sports_equipment_products)
+
+    return render_template("customers/sports_equipment_page.html", user_image=user_image,cart_count=cart_count, sports_products=sports_equipment_products)
 
 
 
@@ -677,7 +765,9 @@ def SportsEquipment():
 def CampingHikingGear():
      if "user_id" in session:
         # User is logged in
+        user = accounts.query.all() 
         user_id = session["user_id"]
+        user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
      else:
@@ -688,8 +778,12 @@ def CampingHikingGear():
      for product in camping_hiking_gear_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
 
+     if user_image:
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
 
-     return render_template("customers/camping_and_hiking_gear_page.html", cart_count=cart_count,camping_products=camping_hiking_gear_products)
+
+
+     return render_template("customers/camping_and_hiking_gear_page.html", user_image=user_image,cart_count=cart_count,camping_products=camping_hiking_gear_products)
 
 
 
