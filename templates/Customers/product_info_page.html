@@ -143,14 +143,14 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="/static/images/danzel.png"
-                  class="rounded-circle ms-2"
-                  height="32"
-                  width="35"
-                  alt="Avatar"
-                  loading="lazy"
-                />
+              <img
+              src="{% if user_image and user_image.profile %}data:image/{{ user_image.mime_type }};base64,{{ user_image.profile }}{% else %}/static/images/default_image.jpg{% endif %}"
+              class="rounded-circle ms-2"
+              height="32"
+              width="35"
+              alt="Avatar"
+              loading="lazy"
+          />
               </a>
               <ul
                 class="dropdown-menu"
@@ -253,172 +253,49 @@
 
     </header>
 
-    <!--Top Products-->
+ 
     <section class="mt-5">
-
-    <section class="">
-      <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="mb-4 d-flex justify-content-between align-items-center">
-          <span class="mr-2">You may also like</span>
-        
-        </h2>
-
-        <div
-          class="row row-cols-2 row-cols-md-3 row-cols-xl-4 "
-        >
-        <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
-            <div class="card h-80">
-              <!-- Product image-->
-              <div class="img-container" style="background-color: #F3F3F3;">
-                <img
-                class="card-img-top"
-                src="/static/images/insulated_jacket-removebg-preview.png"
-                alt="..." height="200"
-              />
-              </div>
-           
-              <!-- Product details-->
-              <div class="card-body">
-                <div style="line-height: 1.7;">
-                  <!-- Product name-->
-                  <span style="font-size: 18px;" class="fw-bolder">
-                    Insulated Jacket
-                  </span>
-                  <br>
-                  <!--Product description-->
-                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
-                  <br>
-                  <!-- Product price-->
-                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
-                  <div class="   mt-2">
-                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
-                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer  border-top-0 bg-transparent">
-               
-              </div>
+      <section class="">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="mb-4 d-flex justify-content-between align-items-center">
+                <span class="mr-2">You may also like</span>
+            </h2>
+    
+            <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4">
+              {% for related_product in related_products %}
+                    
+                        <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
+                            <div class="card h-80">
+                                <!-- Product image -->
+                                <div class="img-container" style="background-color: #F3F3F3;">
+                                    <img class="card-img-top" src="data:{{ related_product.mime_type }};base64, {{ related_product.product_image }}" alt="..." height="200">
+                                </div>
+                                <!-- Product details -->
+                                <div class="card-body">
+                                    <div style="line-height: 1.7;">
+                                        <!-- Product name-->
+                                        <span style="font-size: 18px;" class="fw-bolder">{{ related_product.product_name }}</span>
+                                        <br>
+                                        <!-- Product description-->
+                                        <span style="color: #686665; font-size: 0.875rem;">{{ related_product.product_details }}</span>
+                                        <br>
+                                        <!-- Product price-->
+                                        <span style="font-size: 16px;" class="fw-bold">₱{{ related_product.price }}</span>
+                                        <div class="mt-2">
+                                            <!-- Hidden input fields for the product data -->
+                                            <input type="hidden" class="product-name" value="{{ related_product.product_name }}">
+                                            <input type="hidden" class="product-price" value="{{ related_product.price }}">
+                                            <button type="button" class="btn btn-outline-dark mt-auto add-to-cart" style="border-radius: 20px; font-weight: 650;">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product actions -->
+                                <div class="card-footer border-top-0 bg-transparent"></div>
+                            </div>
+                        </div>
+                  
+                {% endfor %}
             </div>
-          </div>
-          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
-            <div class="card h-80">
-              <!-- Product image-->
-              <div class="img-container" style="background-color: #F3F3F3;">
-                <img
-                class="card-img-top"
-                src="/static/images/insulated_jacket-removebg-preview.png"
-                alt="..." height="200"
-              />
-              </div>
-           
-              <!-- Product details-->
-              <div class="card-body">
-                <div style="line-height: 1.7;">
-                  <!-- Product name-->
-                  <span style="font-size: 18px;" class="fw-bolder">
-                    Insulated Jacket
-                  </span>
-                  <br>
-                  <!--Product description-->
-                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
-                  <br>
-                  <!-- Product price-->
-                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
-                  <div class="   mt-2">
-                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
-                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer  border-top-0 bg-transparent">
-               
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="0">
-            <div class="card h-80">
-              <!-- Product image-->
-              <div class="img-container" style="background-color: #F3F3F3;">
-                <img
-                class="card-img-top"
-                src="/static/images/insulated_jacket-removebg-preview.png"
-                alt="..." height="200"
-              />
-              </div>
-           
-              <!-- Product details-->
-              <div class="card-body">
-                <div style="line-height: 1.7;">
-                  <!-- Product name-->
-                  <span style="font-size: 18px;" class="fw-bolder">
-                    Insulated Jacket
-                  </span>
-                  <br>
-                  <!--Product description-->
-                  <span style="color: #686665; font-size: 0.875rem;">Product description</span>
-                  <br>
-                  <!-- Product price-->
-                  <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
-                  <div class="  mt-2">
-                    <a class="btn btn-outline-dark  mt-auto add-to-cart"
-                      style="border-radius: 20px; font-weight: 650;" >Add to Cart</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer  border-top-0 bg-transparent">
-               
-              </div>
-            </div>
-          </div>
-
-          <div class="col mb-5" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
-            <div class="card h-80">
-                <!-- Product image -->
-                 <div class="img-container" style="background-color: #F3F3F3;">
-                <img
-                class="card-img-top"
-                src="/static/images/insulated_jacket-removebg-preview.png"
-                alt="..." height="200"
-              />
-              </div>
-                <!-- Product details -->
-                <div class="card-body">
-                  <div style="line-height: 1.7;">
-                    <!-- Product name-->
-                    <span style="font-size: 18px;" class="fw-bolder">
-                      Insulated Jacket
-                    </span>
-                    <br>
-                    <!--Product description-->
-                    <span style="color: #686665; font-size: 0.875rem;">Product description</span>
-                    <br>
-                    <!-- Product price-->
-                    <span style="font-size: 16px;" class="fw-bold ">₱14,499.00</span>
-                    <div class="mt-2">
-                      <!-- Hidden input fields for the product data -->
-                      <input type="hidden" class="product-name" value="Trail running shoes">
-                      <input type="hidden" class="product-price" value="899">
-                      <button type="button" class="btn btn-outline-dark mt-auto add-to-cart" 
-                      style="border-radius: 20px; font-weight: 650;">Add to Cart</button>
-                      
-                  </div>
-                </div>
-                </div>
-                <!-- Product actions -->
-                <div class="card-footer border-top-0 bg-transparent">
-                
-                </div>
-            
-            </div>
-        </div>
-          </div>
         </div>
     </section>
 

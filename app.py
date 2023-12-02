@@ -373,18 +373,33 @@ def ProductInfo(product_id):
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+         
+        user_image = accounts.query.get(user_id)
+        
+
+
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
    
     product = Product.query.get(product_id)
+    product_category = product.category
+    related_products = Product.query.filter(Product.category == product_category).all()
+    
+       
 
+    
+    
+        
     seller_id = product.seller_id
     seller = accounts.query.get(seller_id)
     num_ratings = Rating.query.filter_by(product_id=product_id).count()
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller, num_ratings=num_ratings)
+        user_image.profile = b64encode(user_image.profile).decode("utf-8")
+    
+        return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller, num_ratings=num_ratings, 
+                               related_products=related_products, user_image=user_image,)
     else:
         # Handle the case where the product does not exist
 
@@ -396,29 +411,44 @@ def trackorder():
     return render_template("Customers/order_tracking.html")
 
     
-@app.route("/my-orders")
+@app.route("/my-orders", methods=['GET', 'POST'])
 def MyOrder():
     if "user_id" in session:
-        # User is logged in
         user_id = session["user_id"]
         user_order = customerOrders.query.filter_by(customer_id=user_id).all()
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        user = accounts.query.all() 
+        user_image = accounts.query.get(user_id)
+        
+        
+
 
         for order in user_order:
             order.product_image = b64encode(order.product_image).decode("utf-8")
+        if user_image:
+            user_image.profile = b64encode(user_image.profile).decode("utf-8")
+
+        if request.method == 'POST':
+             return redirect(url_for('MyOrder'))
+
+   
+
         return render_template(
             "/customers/my_orders_page.html",
-            orders=user_order,   cart_count=cart_count
-            
-
+            orders=user_order, cart_count=cart_count,user_image=user_image
         )
     else:
-        # User is not logged in
-        return render_template(
-            "customers/cart.html", products=[], cart_count=0
-        )
+        return render_template("customers/cart.html", products=[], cart_count=0,user_image=user_image,)
 
+@app.route("/cancel_order/<int:order_id>", methods=['POST'])
+def cancel_order(order_id):
+    order = customerOrders.query.get(order_id)
+    if order:
+        # Update the order status to 'cancelled'
+        order.status = 'cancelled'
+        db.session.commit()
+    return redirect(url_for('MyOrder'))
 
 #place order
 @app.route("/one_place_order", methods=['POST'])
@@ -460,7 +490,7 @@ def one_place_order():
             customer_name=customer_username, 
             product_id =product.id,
             product_name=product.product_name,
-            status='preparing', 
+            status='placed', 
             product_details=product.product_details,
             orderdate=datetime.utcnow(),
             price=product.price,
@@ -517,7 +547,7 @@ def place_order():
                 customer_name=customer_username, 
                 product_id = product.product_id,
                 product_name=product.product_name,
-                status='preparing', 
+                status='placed', 
                 product_details=product.description,
                 orderdate=datetime.utcnow(),
                 price=product.price,
