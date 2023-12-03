@@ -24,7 +24,7 @@ import secrets
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating
 from sqlalchemy.sql import func
 from base64 import b64encode
@@ -114,6 +114,7 @@ def LandingPage():
     camping_hiking_gear_products = Product.query.filter_by(category="Camping & Hiking Gear").all()
     sports_equipment_products = Product.query.filter_by(category="Sports Equipment").all()
 
+    top_products = Product.query.order_by(desc(Product.sold)).limit(4).all()
 
 
 
@@ -383,8 +384,8 @@ def ProductInfo(product_id):
         cart_count = 0
    
     product = Product.query.get(product_id)
-    product_category = product.category
-    related_products = Product.query.filter(Product.category == product_category).all()
+    
+    related_products = Product.query.filter(Product.category == product.category, Product.id != product_id).all()
     
        
 
@@ -394,9 +395,15 @@ def ProductInfo(product_id):
     seller_id = product.seller_id
     seller = accounts.query.get(seller_id)
     num_ratings = Rating.query.filter_by(product_id=product_id).count()
+
+    for r_product in related_products:
+        r_product.product_image = b64encode(r_product.product_image).decode("utf-8")
+        
+
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
         user_image.profile = b64encode(user_image.profile).decode("utf-8")
+        
     
         return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller, num_ratings=num_ratings, 
                                related_products=related_products, user_image=user_image,)
@@ -471,8 +478,8 @@ def one_place_order():
             mime_type=product.mime_type,
             category=product.category,
             price=product.price,
-            quantity=1,  # Assuming a quantity of 1 for simplicity
-            total=product.price,  # Assuming total is the same as price for simplicity
+            quantity=product.order_quantity,  
+            total=product.price*product.order_quantity,  
         )
 
         # Add the new order to the database
@@ -494,8 +501,8 @@ def one_place_order():
             product_details=product.product_details,
             orderdate=datetime.utcnow(),
             price=product.price,
-            quantity=1, 
-            total=product.price,  
+            quantity=product.order_quantity, 
+            total=product.price*product.order_quantity,  
             category=product.category,
         )
         db.session.add(customer_order)
@@ -521,15 +528,15 @@ def place_order():
             # Create a new order record
             new_order = Orders(
                 customer_id=customer_id,
-                seller_name=seller.username,  # Replace with actual seller name
+                seller_name=seller.username,
                 product_name=product.product_name,
                 product_details=product.description,
                 product_image=product.product_image,
                 mime_type=product.mime_type,
                 category=product.category,
                 price=product.price,
-                quantity=1,  # Assuming a quantity of 1 for simplicity
-                total=product.price,  # Assuming total is the same as price for simplicity
+                quantity=product.order_quantity,  
+                total=product.price*product.order_quantity,  
             )
 
             # Add the new order to the database
@@ -551,7 +558,7 @@ def place_order():
                 product_details=product.description,
                 orderdate=datetime.utcnow(),
                 price=product.price,
-                quantity=1, 
+                quantity=product.order_quantity, 
                 total=product.price,  
                 category=product.category,
         )
@@ -825,8 +832,20 @@ def CampingHikingGear():
 @app.route('/update_order_status/<int:order_id>/<new_status>', methods=['POST'])
 def update_order_status(order_id, new_status):
     order = customerOrders.query.get_or_404(order_id)
+
+    # Check if the status is being updated to 'delivered'
+    if new_status.lower() == 'delivered':
+        # Increment the 'sold' column in the associated product
+        product = Product.query.join(customerOrders, Product.id == customerOrders.product_id).filter(customerOrders.id == order_id).first()
+
+        if product:
+            product.sold += order.quantity
+            product.quantity-=order.quantity
+            db.session.commit()
+
     order.status = new_status
     db.session.commit()
+
     return jsonify({'success': True})
 
 
@@ -985,7 +1004,7 @@ def get_paginated_users(page, per_page):
 def Users():
 
     page = request.args.get('page', default=1, type=int)
-    per_page =5
+    per_page =7
     users = get_paginated_users(page, per_page)
     search_term = request.args.get('search', default='', type=str)
 
@@ -1003,9 +1022,9 @@ def get_paginated_audit_trail(page, per_page):
 @app.route('/audit-trail')
 def AuditTrail():
     page = request.args.get('page', default=1, type=int)
-    per_page =5
+    per_page =10
     audit_records = get_paginated_audit_trail(page, per_page)
-   
+
 
     return render_template('/administrator/auditTrail.html',audit_records=audit_records)
 
