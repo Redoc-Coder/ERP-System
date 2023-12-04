@@ -222,8 +222,8 @@
                     <i data-feather="bar-chart-2" aria-hidden="true"></i>
                   </div>
                   <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">3000</p>
-                    <p class="stat-cards-info__title">Total sales</p>
+                    <p class="stat-cards-info__num"></p>
+                    <p class="stat-cards-info__title">Total sales: ₱{{ total_sales }}</p>
                     <p class="stat-cards-info__progress">
                       <span class="stat-cards-info__profit success">
                         <i data-feather="trending-up" aria-hidden="true"></i
@@ -240,7 +240,7 @@
                     <i data-feather="file" aria-hidden="true"></i>
                   </div>
                   <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">49</p>
+                    <p class="stat-cards-info__num">{{ total_products }}</p>
                     <p class="stat-cards-info__title">Total products</p>
                     <p class="stat-cards-info__progress">
                       <span class="stat-cards-info__profit success">
@@ -330,9 +330,7 @@
                           <td>{{ order.product_name }}</td>
                           <td>
                               <div class="pages-table-img">
-                                  <picture>
-                                      <img src="{{ url_for('static', filename='images/danzel.png') }}" alt="{{ order.customer_name }}" />
-                                  </picture>
+                                
                                   {{ order.customer_name }}
                               </div>
                           </td>

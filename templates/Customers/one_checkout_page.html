@@ -126,14 +126,8 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="/static/images/danzel.png"
-                  class="rounded-circle ms-2"
-                  height="32"
-                  width="35"
-                  alt="Avatar"
-                  loading="lazy"
-                />
+              <img src="{% if user_image and user_image.profile %}data:image/{{ user_image.mime_type }};base64,{{ user_image.profile }}{% else %}/static/images/default_image.jpg{% endif %}"
+              class="rounded-circle ms-2" height="32" width="35" alt="Avatar" loading="lazy" />
               </a>
               <ul
                 class="dropdown-menu"
@@ -142,6 +136,16 @@
                 <li>
                   <a class="dropdown-item" href="{{ url_for('MyProfile') }}"
                     >My profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('MyOrder') }}"
+                    >My orders</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('SellerDashboard') }}"
+                    >My shop</a
                   >
                 </li>
                 <li>

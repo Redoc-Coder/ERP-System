@@ -71,6 +71,10 @@ def Login():
         username = request.form["username"]
         password = request.form["password"]
 
+        if username == 'admin@gmail.com' and password == 'admin':
+            
+            return redirect(url_for("AdminDashboard"))
+
         # Query the database for a user with the given username
         user = accounts.query.filter_by(email=username).first()
 
@@ -106,7 +110,7 @@ def LandingPage():
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
     else:
-        # User is not logged in, or no cart data found
+        
         cart_count = 0
 
     outdoor_clothing_products = Product.query.filter_by(category="Outdoor Clothing").all()
@@ -535,8 +539,8 @@ def place_order():
                 mime_type=product.mime_type,
                 category=product.category,
                 price=product.price,
-                quantity=product.order_quantity,  
-                total=product.price*product.order_quantity,  
+                quantity=product.quantity,  
+                total=product.price*product.quantity,  
             )
 
             # Add the new order to the database
@@ -558,7 +562,7 @@ def place_order():
                 product_details=product.description,
                 orderdate=datetime.utcnow(),
                 price=product.price,
-                quantity=product.order_quantity, 
+                quantity=product.quantity, 
                 total=product.price,  
                 category=product.category,
         )
@@ -633,16 +637,20 @@ def buyNow(product_id):
         user_id = session["user_id"]
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        user_image = accounts.query.get(user_id)
+        
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
 
     # Fetch the selected product
     product = Product.query.get(product_id)
+    if user_image:
+            user_image.profile = b64encode(user_image.profile).decode("utf-8")
 
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/one_checkout_page.html", cart_count=cart_count, products=[product])
+        return render_template("customers/one_checkout_page.html", cart_count=cart_count, products=[product], user_image = user_image)
     else:
         # Handle the case where the product does not exist
    
@@ -657,12 +665,17 @@ def checkout():
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
         total_price = sum(product.price * product.quantity for product in user_cart)
+        user_image = accounts.query.get(user_id)
+
+        if user_image:
+            user_image.profile = b64encode(user_image.profile).decode("utf-8")
         for product in user_cart:
             product.product_image = b64encode(product.product_image).decode("utf-8")
+        
         return render_template(
             "customers/checkout_page.html",
             products=user_cart,
-            cart_count=cart_count, total_price=total_price
+            cart_count=cart_count, total_price=total_price,user_image=user_image
        
         )
     else:
@@ -843,6 +856,11 @@ def update_order_status(order_id, new_status):
             product.quantity-=order.quantity
             db.session.commit()
 
+                        
+            seller_account = accounts.query.get_or_404(product.seller_id)
+            seller_account.sales += (order.quantity * product.price)
+            db.session.commit()
+
     order.status = new_status
     db.session.commit()
 
@@ -858,14 +876,20 @@ def SellerDashboard():
     if seller_id is not None:
         # Fetch orders based on the seller_id
         orders = customerOrders.query.filter_by(seller_id=seller_id).all()
-
+        seller = accounts.query.get_or_404(seller_id)
+        total_sales = seller.sales
+        total_products = Product.query.filter_by(seller_id=seller_id).count()
+        
 
     
     
         for product in orders:
             product.product_image = b64encode(product.product_image).decode("utf-8")
+
         
-    return render_template("sellers/seller_dashboard.html",orders=orders)
+        
+    return render_template("sellers/seller_dashboard.html",orders=orders, total_sales=total_sales,
+    total_products=total_products)
 
 
 @app.route("/seller/courier")

@@ -162,6 +162,16 @@
                   >
                 </li>
                 <li>
+                  <a class="dropdown-item" href="{{ url_for('MyOrder') }}"
+                    >My orders</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ url_for('SellerDashboard') }}"
+                    >My shop</a
+                  >
+                </li>
+                <li>
                   <a class="dropdown-item" href="{{ url_for('Login') }}"
                     >Logout</a
                   >
@@ -226,7 +236,11 @@
                     <div class="btn-cont mt-4">
                       <button style="width: 45%; margin-right: 15px; border-radius: 50px;" 
                       type="button" class="btn btn-dark btn-lg" 
-                      onclick="buyNow('{{ product.id }}')">Buy now</button>
+                      onclick="buyNow('{{ product.id }}')"
+                      {% if product.quantity == 0 %}
+                          disabled
+                      {% endif %}
+              >Buy now</button>
                         <button id="addToCartButton"  data-product-id="{{ product.id }}" style="width: 45%; border-radius: 50px;" type="button" class="btn btn-outline-secondary btn-lg add-cart">Add to cart</button>
                     </div>
                     
