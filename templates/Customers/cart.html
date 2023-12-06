@@ -201,16 +201,14 @@
               <div class="product  col-md-6 mt-3" >
                
                     <div class="img-cont">
-                      <div class="mb-3">
-                        <input class="form-check-input" style="margin-right: 110px;" type="checkbox" value="" aria-label="...">
-                      </div>
+                     
                       <img src="data:{{ product.mime_type }};base64, {{ product.product_image }}" class="rounded float-start" alt="Product Image" style="margin-right: 30px; 
                       min-height: 70px; max-height: 70px; max-width: 120px; min-width: 120px;">
 
                     </div>
                     <div class="description-cont" style="line-height: 1; font-family: assistant, sans-serif; font-style: normal; font-weight: 400; font-size: 14px; color: rgba(18, 18, 18, 0.75);">
                       <p style="color: #121212;">{{ product.product_name }}</p>
-                      <p>{{ product.price }}.00</p>
+                      <p>{{ product.price}}</p>
                       <p>{{ product.description|truncate_text(20) }}</p>
                       
                     </div>
@@ -224,7 +222,7 @@
                 
                 <div class="total col-md-2 d-flex mt-5">
                 
-                  <span id="total-{{ product.id }}">₱{{ product.price }}.00</span>
+                  <span id="total-{{ product.id }}">₱{{ product.price }}</span>
                 </div>
                 <div class="action col-md-2 mt-5">
                   <button type="button" class="btn btn-outline-secondary remove-from-cart" data-product-id="{{ product.id }}">

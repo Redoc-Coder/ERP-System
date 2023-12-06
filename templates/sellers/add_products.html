@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="icon" href="/static/images/XPerience-LOGO only.png" />
     <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -59,18 +60,10 @@
                   ><span class="icon paper" aria-hidden="true"></span>View
                   Transactions</a
                 >
-                <a href="{{ url_for('Inventory') }}"
-                  ><span class="icon inventory" aria-hidden="true"></span
-                  >Inventory</a
-                >
-                <a href="{{ url_for('Accounting') }}"
-                  ><span class="icon accounting" aria-hidden="true"></span
-                  >Accounting</a
-                >
-                <a href="{{ url_for('Courier') }}"
-                  ><span class="icon courier" aria-hidden="true"></span
-                  >Courier</a
-                >
+                <a href="{{ url_for('Transactions') }}"
+                ><span class="icon paper" aria-hidden="true"></span>
+                Inventory</a
+
               </li>
               <li>
                 <ul class="cat-sub-menu"></ul>
@@ -80,19 +73,7 @@
         </div>
 
         <!--! Profile Section -->
-        <div class="sidebar-footer">
-          <a href="##" class="sidebar-user">
-            <span class="sidebar-user-img">
-              <picture>
-                <img src="/static/images/danzel.png" alt="User name"
-              /></picture>
-            </span>
-            <div class="sidebar-user-info">
-              <span class="sidebar-user__title">Danzel Fernandez</span>
-              <span class="sidebar-user__subtitle">Seller</span>
-            </div>
-          </a>
-        </div>
+
       </aside>
 
       <div class="main-wrapper">
@@ -182,11 +163,7 @@
                   type="button"
                 >
                   <span class="sr-only">My profile</span>
-                  <span class="nav-user-img">
-                    <picture>
-                      <img src="/static/images/danzel.png" alt="User name"
-                    /></picture>
-                  </span>
+              
                 </button>
                 <ul class="users-item-dropdown nav-user-dropdown dropdown">
                   <li>
@@ -306,7 +283,7 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Image</th>
                                 <th scope="col">Product Name</th>
-                                 <th scope="col">Product Details</th>
+                                <th scope="col">Product Details</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
@@ -314,28 +291,132 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for product in seller_products %}
-                            <tr>
-                                <th scope="row">{{ product.id }}</th>
-                                <td class="w-25">
+                          {% for product in seller_products %}
+                          <tr>
+                              <th scope="row">{{ product.id }}</th>
+                              <td class="w-25">
                                   {% if 'svg' in product.mime_type %}
-                                  <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;" >
-                              {% elif 'jpeg' in product.mime_type %}
-                                  <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
-                              {% elif 'png' in product.mime_type %}
-                                  <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image"  style="height: 100px; width: 100px;" >
-                              {% else %}
+                                  <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                  {% elif 'jpeg' in product.mime_type %}
+                                  <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                  {% elif 'png' in product.mime_type %}
+                                  <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                  {% else %}
                                   <p>Unsupported image type</p>
-                              {% endif %}
-                                </td>
-                                <td>{{ product.product_name }}</td>
-                                <td>{{ product.product_details}}</td>
-                                <td>{{ product.category }}</td>
-                                <td>₱{{ product.price }}</td>
-                                <td>{{ product.quantity }}</td>
-                                <td>{{ product.created_at.strftime('%b %d, %Y') }}</td>
-                            </tr>
-                            {% endfor %}
+                                  {% endif %}
+                              </td>
+                              <td>{{ product.product_name }}</td>
+                              <td>{{ product.product_details }}</td>
+                              <td>{{ product.category }}</td>
+                              <td>₱{{ product.price }}</td>
+                              <td>{{ product.quantity }}</td>
+                              <td>{{ product.created_at.strftime('%b %d, %Y') }}</td>
+                              <td>
+                                <div  style="min-width: 100px;  display: flex; justify-content: space-around;">
+
+                                  <button type="button" class="btn btn-secondary " 
+                                  data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.id }}">
+                                    <i class="fa fa-trash-o"></i> 
+                                </button>
+
+                                <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1" 
+                                aria-labelledby="exampleModalLabel{{ product.id }}" aria-hidden="true">
+                               <div class="modal-dialog">
+                                   <div class="modal-content">
+                                       <div class="modal-header">
+                                           <h1 class="modal-title fs-5" id="exampleModalLabel{{ product.id }}">Modal title</h1>
+                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                       </div>
+                                       <div class="modal-body">
+                                           Are you sure you want to disable this product?
+                                       </div>
+                                       <div class="modal-footer">
+                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                           <button data-product-id="{{ product.id }}" type="button" class="btn btn-primary delete-product">Disable</button>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+       
+                           <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal{{ product.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editModal{{ product.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ product.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editModalLabel{{ product.id }}">Edit Product</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Add form fields for editing product attributes -->
+                                        <form action="{{ url_for('update_product', product_id=product.id) }}" method="post" enctype="multipart/form-data">
+                                          <!-- Product Name -->
+                                          <div class="mb-3">
+                                              <label for="editProductName" class="form-label">Product Name</label>
+                                              <input type="text" class="form-control" id="editProductName" name="product_name" value="{{ product.product_name }}">
+                                          </div>
+                                      
+                                          <!-- Image -->
+                                          <div class="mb-3">
+                                              <label for="editProductImage" class="form-label">Product Image</label>
+                                              <!-- Add an input for image upload or display the current image -->
+                                              <input type="file" class="form-control" name="product_image" id="editProductImage" accept="image/*">
+                                              <!-- Display the current image (adjust the source accordingly) -->
+                                              {% if 'svg' in product.mime_type %}
+                                              <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                              {% elif 'jpeg' in product.mime_type %}
+                                              <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                              {% elif 'png' in product.mime_type %}
+                                              <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                              {% else %}
+                                              <p>Unsupported image type</p>
+                                              {% endif %}
+                                          </div>
+                                      
+                                          <!-- Product Details -->
+                                          <div class="mb-3">
+                                              <label for="editProductDetails"  class="form-label">Product Details</label>
+                                              <textarea class="form-control" name="product_details" id="editProductDetails">{{ product.product_details }}</textarea>
+                                          </div>
+                                      
+                                          <!-- Category -->
+                                          <div class="mb-3">
+                                              <label for="editProductCategory" class="form-label">Category</label>
+                                              <input type="text" class="form-control" name="category" id="editProductCategory" value="{{ product.category }}">
+                                          </div>
+                                      
+                                          <!-- Price -->
+                                          <div class="mb-3">
+                                              <label for="editProductPrice" class="form-label">Price</label>
+                                              <input type="text" class="form-control" name="price" id="editProductPrice" value="{{ product.price }}">
+                                          </div>
+                                      
+                                          <!-- Quantity -->
+                                          <div class="mb-3">
+                                              <label for="editProductQuantity" class="form-label">Quantity</label>
+                                              <input type="text" class="form-control" name="quantity" id="editProductQuantity" value="{{ product.quantity }}">
+                                          </div>
+                                      
+                                          <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                                </div>
+                             
+                    
+                              </td>
+                          </tr>
+                          {% endfor %}
+    
                         </tbody>
                     </table>
                     </div>
@@ -345,7 +426,10 @@
           </div> 
         </main>
 
+
+
     <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -355,5 +439,7 @@
     <script src="/plugins/feather.min.js"></script>
     <!-- Custom scripts -->
     <script src="/static/js/seller_dashboard_functions/script.js"></script>
+    <script src="/static/js/seller_dashboard_functions/archive_product.js"></script>
+    <script src="/static/js/seller_dashboard_functions/edit_product.js"></script>
   </body>
 </html>

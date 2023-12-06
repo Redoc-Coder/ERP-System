@@ -25,7 +25,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_, desc
-from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating
+from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating, DisabledProduct
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
@@ -645,12 +645,14 @@ def buyNow(product_id):
 
     # Fetch the selected product
     product = Product.query.get(product_id)
+    total_price = product.price * product.order_quantity
     if user_image:
             user_image.profile = b64encode(user_image.profile).decode("utf-8")
 
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
-        return render_template("customers/one_checkout_page.html", cart_count=cart_count, products=[product], user_image = user_image)
+        return render_template("customers/one_checkout_page.html", cart_count=cart_count, products=[product], user_image = user_image,
+        total_price = total_price)
     else:
         # Handle the case where the product does not exist
    
@@ -879,6 +881,8 @@ def SellerDashboard():
         seller = accounts.query.get_or_404(seller_id)
         total_sales = seller.sales
         total_products = Product.query.filter_by(seller_id=seller_id).count()
+        delivered_orders = customerOrders.query.filter_by(seller_id=seller_id, status='delivered').all()
+        total_delivered_orders = len(delivered_orders)
         
 
     
@@ -889,7 +893,7 @@ def SellerDashboard():
         
         
     return render_template("sellers/seller_dashboard.html",orders=orders, total_sales=total_sales,
-    total_products=total_products)
+    total_products=total_products, total_delivered_orders = total_delivered_orders)
 
 
 @app.route("/seller/courier")
@@ -942,6 +946,85 @@ def AddProducts():
         
     return render_template("sellers/add_products.html", seller_products=products)
 
+#archive seller product
+@app.route('/delete_product_ajax/<int:product_id>', methods=['POST'])
+def delete_product_ajax(product_id):
+    product = Product.query.get_or_404(product_id)
+
+    try:
+        # Create a disabled product using the attributes of the original product
+        disabled_product = DisabledProduct(
+            product_name=product.product_name,
+            product_details=product.product_details,
+            product_image=product.product_image,
+            mime_type=product.mime_type,
+            category=product.category,
+            price=product.price,
+            quantity=product.quantity,
+            seller_id=product.seller_id,
+            deleted_at=datetime.now()
+        )
+
+        # Add the disabled product to the database
+        db.session.add(disabled_product)
+
+        # Delete the original product
+        db.session.delete(product)
+
+        db.session.commit()
+        response = {'status': 'success', 'message': f'The product "{product.product_name}" has been deleted.'}
+    except Exception as e:
+        db.session.rollback()
+        response = {'status': 'error', 'message': f'Error deleting the product: {str(e)}'}
+
+    return jsonify(response)
+
+#seller edit product
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/update_product/<int:product_id>", methods=["POST"])
+def update_product(product_id):
+    if "user_id" in session:
+        user_id = session["user_id"]
+        user = accounts.query.get(user_id)
+
+        # Assuming you have a Product model
+        product = Product.query.get_or_404(product_id)
+
+        # Update product details
+        product.product_name = request.form.get("product_name")
+        product.product_details = request.form.get("product_details")
+        product.category = request.form.get("category")
+
+# Check if price and quantity are provided before converting
+        price = request.form.get("price")
+        quantity = request.form.get("quantity")
+
+        if price is not None:
+            product.price = float(price)
+
+        if quantity is not None:
+            product.quantity = int(quantity)
+
+        # Handle file upload for product image
+        product_image = request.files.get("product_image")
+        if product_image and allowed_file(product_image.filename):
+            product.product_image = product_image.read()
+            product.mime_type = product_image.mimetype
+
+        try:
+            db.session.commit()
+            flash("Product updated successfully", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error updating product: {str(e)}", "error")
+
+    return redirect(url_for("AddProducts", product_id=product_id))
+
 
 @app.route('/store_rating', methods=['POST'])
 def store_rating():
@@ -981,7 +1064,14 @@ def store_rating():
 
 @app.route("/seller/viewtransactions")
 def Transactions():
-    return render_template("sellers/view_transactions.html")
+    if "user_id" in session:
+        user_id = session["user_id"]
+        delivered_orders = customerOrders.query.filter_by(seller_id=user_id, status='delivered').all()
+        return render_template("sellers/view_transactions.html", orders=delivered_orders)
+    else:
+        # Redirect to login or handle the case where the user is not logged in
+        return redirect(url_for("login"))
+
 
 
 @app.route("/seller/inventory")
