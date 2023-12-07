@@ -1118,6 +1118,8 @@ def AdminDashboard():
     sales_data = db.session.query(Product.category, func.sum(Product.sold).label('total_sold')) \
         .group_by(Product.category) \
         .all()
+    total_users = accounts.query.count()
+    total_products = Product.query.count()
 
     if sales_data:
         labels = [category for category, _ in sales_data]
@@ -1127,9 +1129,10 @@ def AdminDashboard():
         for seller in top_sellers_data:
             seller.profile = b64encode(seller.profile).decode("utf-8")
 
-        return render_template("administrator/dashboard.html", labels=labels, salesQuantities=sales_quantities, top_sellers_data=top_sellers_data)
+        return render_template("administrator/dashboard.html", labels=labels, salesQuantities=sales_quantities, top_sellers_data=top_sellers_data
+                               ,total_users=total_users, total_products=total_products)
 
-    return render_template("administrator/dashboard.html", labels=[], salesQuantities=[])
+    return render_template("administrator/dashboard.html", labels=[], salesQuantities=[], total_users=total_users)
 
 # Route to provide JSON data for the chart
 @app.route("/admin/admin-dashboard/data")
@@ -1165,10 +1168,13 @@ def User(user_id):
     per_page = 5
     user_products = get_paginated_user_products(page, per_page, user_id)
     user = accounts.query.get_or_404(user_id)
-    
+    total_products = Product.query.filter_by(seller_id=user.id).count()
    
+    for product in user_products:
+        product.product_image = b64encode(product.product_image).decode("utf-8")
 
-    return render_template('administrator/specUser.html', user=user, user_products=user_products, user_id=user_id)
+    return render_template('administrator/specUser.html', user=user, user_products=user_products, user_id=user_id,
+                           total_products = total_products)
 
 
 #for pagination

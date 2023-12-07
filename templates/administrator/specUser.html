@@ -171,7 +171,7 @@
                                   <span class="d-flex align-items-center justify-content-center " style="color: white;">
                                       <i class="fa-solid fa-peso-sign fa-2x" style="margin-right: 10px;"></i>
                                   </span>
-                                  <h5 style="color: white;" class="card-title"> Total sales: 5</h5>
+                                  <h5 style="color: white;" class="card-title"> Total sales: {{user.sales}}</h5>
                               </div>
                           </div>
                       </div>
@@ -181,7 +181,7 @@
                                   <span class="d-flex align-items-center justify-content-center" style="margin-right: 10px;">
                                       <i class="fa-solid fa-box fa-2x"></i>
                                   </span>
-                                  <h5 class="card-title">Total products: 5</h5>
+                                  <h5 class="card-title">Products: {{total_products}}</h5>
                               </div>
                           </div>
                       </div>
@@ -191,7 +191,7 @@
                             <span class="d-flex align-items-center justify-content-center " style="color: white;">
                                 <i class="fa-solid fa-peso-sign fa-2x" style="margin-right: 10px;"></i>
                             </span>
-                            <h5 style="color: white;" class="card-title"> Balance: 1000</h5>
+                            <h5 style="color: white;" class="card-title"> Transactions: 1000</h5>
                         </div>
                           </div>
                       </div>
@@ -199,36 +199,15 @@
 
               
                 
-            <div class="drop-search mb-2">
-                <form class="d-flex mt-3" style="margin-right: 10px;" role="search">
-                  <div class="input-group">
-                      <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="height: 29px; border-right: none;">                     
-                          <span class="input-group-text" style="border-left: none;" >
-                              <i class="fa fa-search"></i> <!-- Replace with your desired icon -->
-                          </span>
-                  </div>
-              </form>
-              <div class="btn-group">
-                <button id="dropdown-categ" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-               All
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  <li class="dropdown-item" onclick="changeDropdownValue('All')">All</li>
-                  <li class="dropdown-item" onclick="changeDropdownValue('Camping and Hiking Gear')">Camping and Hiking Gear</li>
-                  <li class="dropdown-item" onclick="changeDropdownValue('Exercise and Fitness Gear')">Exercise and Fitness Gear</li>
-                  <li class="dropdown-item" onclick="changeDropdownValue('Sports Equipment')">Sports Equipment</li>
-                  <li class="dropdown-item" onclick="changeDropdownValue('Outdoor Clothing')">Outdoor Clothing</li>
-                </ul>
-              </div>
-            </div>
 
 
-                <div class="lalagyan">
+
+                <div class="lalagyan mt-4">
 
                   <table class="table">
                     <thead>
                         <tr>
-                            <th></th>
+                          
                             <th scope="col">Product name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Price</th>
@@ -240,12 +219,12 @@
                         {% for product in user_products %}
                         <tr>
                             <td>
-                                <img src="/static/images/XPerience-LOGO only.png" alt="Person's Image" width="50" height="50">
+                                <img  src="data:{{ product.mime_type }};base64, {{ product.product_image }}"  alt="Person's Image" width="50" height="50">
                             </td>
                             <td>{{ product.product_name }}</td>
-                            <td>Camping and Hiking Gear</td>
-                            <td>100</td>
-                            <td>10</td>
+                            <td>{{product.category}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.quantity}}</td>
                             <td>
                               <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeProductModal_{{ product.id }}">
 
