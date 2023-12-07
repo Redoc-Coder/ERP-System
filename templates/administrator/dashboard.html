@@ -251,26 +251,7 @@
 
                 </div>
 
-        
 
-         
-                <div class="graphs col-xl-10 col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mt-3   ">
-                  
-                        
-                  
-                    <div id="revenueFilter" class="btn-group" role="group" aria-label="Basic radio toggle button group" style="height: 30px; background-color: transparent">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
-                        <label class="btn btn-outline-secondary" for="btnradio1" style="color: #CDE2FF; background-color: #0C144D;">Monthly revenue</label>
-                      
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-secondary " for="btnradio2" style="color: #999">Yearly revenue</label>
-                      
-                      </div>
-                    <div class="chartBox1 mt-2" style=" border-radius: 5px  ;">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-            
-            </div>
         
      
             <div class="graphs col-xl-10 col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mt-3 mb-3">
@@ -285,39 +266,19 @@
 
 </div>
 <div class="top-sellers col-xl-10 col-lg-10 col-md-10 col-sm-10 offset-md-2 offset-sm-2 offsent-lg-2 mb-3 ">
-
     <h3>Top sellers</h3>
     <div class="card-group">
+        {% for seller_data in top_sellers_data %}
         <div class="card">
-            <p class="card-title" style=" color: white; background-color: #0C144D; width: 20%; border-radius: 10px; position: absolute; text-align: center; left: 3%; top: 2%;">1</p>
-          <img src="/static/images/yoga.webp" class="card-img-top" alt="..." style="max-height: 200px;">
-          <div class="card-body">
-           
-            <p class="card-text"><small class="text-body-secondary">Seller 1</small></p>
-            <p class="card-text" ><small style="color: #0C144D;">Total sales <br> 1000</small></p>
-          </div>
+            <p class="card-title" style="color: white; background-color: #0C144D; width: 20%; border-radius: 10px; position: absolute; text-align: center; left: 3%; top: 2%;">{{ loop.index }}</p>
+            <img src="data:{{ seller_data.mime_type }};base64, {{ seller_data.profile }}" class="card-img-top" alt="..." style="max-height: 200px;">
+            <div class="card-body">
+                <p class="card-text"><small class="text-body-secondary">{{ seller_data.username }}</small></p>
+                <p class="card-text"><small style="color: #0C144D;">Total sales <br>{{ seller_data.sales }}</small></p>
+            </div>
         </div>
-        <div class="card">
-            <p class="card-title" style=" color: white; background-color: #0C144D; width: 20%; border-radius: 10px; position: absolute; text-align: center; left: 3%; top: 2%;">2</p>
-            <img src="/static/images/svg/store-2017.svg" class="card-img-top" alt="..."  style="max-height: 200px;">
-            <div class="card-body">
-                <p class="card-text"><small class="text-body-secondary">Seller 2</small></p>
-                <p class="card-text" ><small style="color: #0C144D;">Total sales <br> 1000</small></p>
-
-
-            </div>
-          </div>
-          <div class="card">
-            <p class="card-title" style=" color: white; background-color: #0C144D; width: 20%; border-radius: 10px; position: absolute; text-align: center; left: 3%; top: 2%;">3</p>
-            <img src="/static/images/svg/404.svg" class="card-img-top" alt="..."  style="max-height: 200px;">
-            <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary">Seller 3</small></p>
-            <p class="card-text" ><small style="color: #0C144D;">Total sales <br> 1000</small></p>
-
-            </div>
-          </div>
-      </div>
-  
+        {% endfor %}
+    </div>
 </div>
 
     

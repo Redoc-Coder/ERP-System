@@ -150,7 +150,7 @@ def LandingPage():
         camping_products=camping_hiking_gear_products,
         sports_products=sports_equipment_products,
         calculate_average_rating=calculate_average_rating,
-        user_image=user_image,
+        user_image=user_image, top_products = top_products
     )
 
 
@@ -433,7 +433,14 @@ def MyOrder():
         user_image = accounts.query.get(user_id)
         
         
+        # Fetch the ratings for the user
+        # Fetch the ratings for the specific user and products
+        user_ratings = Rating.query.filter(Rating.user_id == user_id, Rating.product_id.in_([order.product_id for order in user_order])).all()
 
+        # Attach ratings to the corresponding orders
+        for order in user_order:
+            matching_rating = next((rating for rating in user_ratings if rating.product_id == order.product_id), None)
+            order.user_rating = matching_rating.rating if matching_rating else 0
 
         for order in user_order:
             order.product_image = b64encode(order.product_image).decode("utf-8")
@@ -871,8 +878,13 @@ def update_order_status(order_id, new_status):
 
 
 
+myChart1 = None
+
+# Route to render the seller dashboard with the chart and top sellers data
 @app.route("/seller/dashboard")
 def SellerDashboard():
+    
+
     seller_id = session.get('user_id')
 
     if seller_id is not None:
@@ -883,17 +895,24 @@ def SellerDashboard():
         total_products = Product.query.filter_by(seller_id=seller_id).count()
         delivered_orders = customerOrders.query.filter_by(seller_id=seller_id, status='delivered').all()
         total_delivered_orders = len(delivered_orders)
-        
 
-    
-    
+
+
         for product in orders:
             product.product_image = b64encode(product.product_image).decode("utf-8")
 
-        
-        
-    return render_template("sellers/seller_dashboard.html",orders=orders, total_sales=total_sales,
-    total_products=total_products, total_delivered_orders = total_delivered_orders)
+        # Fetch top sellers data from the database
+
+
+    return render_template("sellers/seller_dashboard.html",
+                           orders=orders,
+                           total_sales=total_sales,
+                           total_products=total_products,
+                           total_delivered_orders=total_delivered_orders)
+
+
+
+
 
 
 @app.route("/seller/courier")
@@ -939,12 +958,15 @@ def AddProducts():
     if seller_id is not None:
         # Retrieve and decode the product images
         products = Product.query.filter_by(seller_id=seller_id).all()
+        disabled_products = DisabledProduct.query.filter_by(seller_id=seller_id).all()
         for product in products:
+            product.product_image = base64.b64encode(product.product_image).decode("utf-8")
+        for product in disabled_products:
             product.product_image = base64.b64encode(product.product_image).decode("utf-8")
     else:
         products = []  
         
-    return render_template("sellers/add_products.html", seller_products=products)
+    return render_template("sellers/add_products.html", seller_products=products, disabled_products=disabled_products)
 
 #archive seller product
 @app.route('/delete_product_ajax/<int:product_id>', methods=['POST'])
@@ -1066,7 +1088,10 @@ def store_rating():
 def Transactions():
     if "user_id" in session:
         user_id = session["user_id"]
-        delivered_orders = customerOrders.query.filter_by(seller_id=user_id, status='delivered').all()
+        delivered_orders = customerOrders.query.filter(
+    (customerOrders.seller_id == user_id) &
+    ((customerOrders.status == 'delivered') | (customerOrders.status == 'cancelled'))
+).all()
         return render_template("sellers/view_transactions.html", orders=delivered_orders)
     else:
         # Redirect to login or handle the case where the user is not logged in
@@ -1090,8 +1115,45 @@ def Accounting():
 # ADMIN
 @app.route("/admin/admin-dashboard")
 def AdminDashboard():
-    total_users = accounts.query.count()
-    return render_template("administrator/dashboard.html", total_users=total_users)
+    sales_data = db.session.query(Product.category, func.sum(Product.sold).label('total_sold')) \
+        .group_by(Product.category) \
+        .all()
+
+    if sales_data:
+        labels = [category for category, _ in sales_data]
+        sales_quantities = [total_sold for _, total_sold in sales_data]
+        top_sellers_data = accounts.query.order_by(accounts.sales.desc()).limit(3).all()
+
+        for seller in top_sellers_data:
+            seller.profile = b64encode(seller.profile).decode("utf-8")
+
+        return render_template("administrator/dashboard.html", labels=labels, salesQuantities=sales_quantities, top_sellers_data=top_sellers_data)
+
+    return render_template("administrator/dashboard.html", labels=[], salesQuantities=[])
+
+# Route to provide JSON data for the chart
+@app.route("/admin/admin-dashboard/data")
+def getChartData():
+    # Fetch actual sales data from the database
+    sales_data = db.session.query(Product.category, func.sum(Product.sold).label('total_sold')) \
+        .group_by(Product.category) \
+        .all()
+
+    if sales_data:
+        labels = [category for category, _ in sales_data]
+        sales_quantities = [total_sold for _, total_sold in sales_data]
+        return jsonify(labels=labels, salesQuantities=sales_quantities)
+
+    return jsonify(labels=[], salesQuantities=[])
+
+
+# Define a function to update the chart with data
+def updateChart(labels, salesQuantities):
+    global myChart1  # Access the global variable
+    myChart1.data.labels = labels
+    myChart1.data.datasets[0].data = salesQuantities
+    myChart1.update()
+
 
 def get_paginated_user_products(page, per_page, user_id):
     product = Product.query.filter_by(seller_id=user_id).paginate(page=page, per_page=per_page, error_out=False)

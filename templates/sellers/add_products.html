@@ -286,15 +286,16 @@
                                 <th scope="col">Product Details</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
+                                <th scope="col">Stock</th>
                                 <th scope="col">Date Added</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                           {% for product in seller_products %}
                           <tr>
                               <th scope="row">{{ product.id }}</th>
-                              <td class="w-25">
+                              <td class="">
                                   {% if 'svg' in product.mime_type %}
                                   <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
                                   {% elif 'jpeg' in product.mime_type %}
@@ -321,7 +322,7 @@
 
                                 <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1" 
                                 aria-labelledby="exampleModalLabel{{ product.id }}" aria-hidden="true">
-                               <div class="modal-dialog">
+                               <div class="modal-dialog modal-dialog-centered">
                                    <div class="modal-content">
                                        <div class="modal-header">
                                            <h1 class="modal-title fs-5" id="exampleModalLabel{{ product.id }}">Modal title</h1>
@@ -344,7 +345,7 @@
                         
                         <!-- Edit Modal -->
                         <div class="modal fade" id="editModal{{ product.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ product.id }}" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog ">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="editModalLabel{{ product.id }}">Edit Product</h1>
@@ -385,7 +386,21 @@
                                           <!-- Category -->
                                           <div class="mb-3">
                                               <label for="editProductCategory" class="form-label">Category</label>
-                                              <input type="text" class="form-control" name="category" id="editProductCategory" value="{{ product.category }}">
+                                              
+                                              <select
+                                              class="form-control category__width"
+                                              id="editProductCategory"
+                                              name="category" value="{{ product.category }}"
+                                            >
+                                              <option value="Camping & Hiking Gear">Camping & Hiking Gear</option>
+                                              <option value="Exercise & Fitness Gear">
+                                                Exercise & Fitness Gear
+                                              </option>
+                                              <option value="Sports Equipment">
+                                                Sports Equipment
+                                              </option>
+                                              <option value="Outdoor Clothing">Outdoor Clothing</option>
+                                            </select>
                                           </div>
                                       
                                           <!-- Price -->
@@ -423,8 +438,95 @@
                   </div>
                 </div>
               </div>
+
+           
           </div> 
+          
         </main>
+           <!--Disabled products-->
+           <div class="mt-5">
+            <h2 class="main-title">Disabled products</h2>
+              <div class="container table-responsive container__AddProducts">
+                <div class="row">
+                  <div class="col-12">
+                    <table class="table table-image">
+                      <thead>
+                          <tr>
+                              <th scope="col">Id</th>
+                              <th scope="col">Image</th>
+                              <th scope="col">Product Name</th>
+                              <th scope="col">Product Details</th>
+                              <th scope="col">Category</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Stock</th>
+                              
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for product in disabled_products %}
+                        <tr>
+                            <th scope="row">{{ product.id }}</th>
+                            <td class="">
+                                {% if 'svg' in product.mime_type %}
+                                <img src="data:image/svg+xml;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                {% elif 'jpeg' in product.mime_type %}
+                                <img src="data:image/jpeg;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                {% elif 'png' in product.mime_type %}
+                                <img src="data:image/png;base64,{{ product.product_image }}" class="img-fluid img-thumbnail" alt="Product Image" style="height: 100px; width: 100px;">
+                                {% else %}
+                                <p>Unsupported image type</p>
+                                {% endif %}
+                            </td>
+                            <td>{{ product.product_name }}</td>
+                            <td>{{ product.product_details }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>₱{{ product.price }}</td>
+                            <td>{{ product.quantity }}</td>
+                            
+                            <td>
+                              <div  style="min-width: 100px;  display: flex; justify-content: space-around;">
+
+                                <button type="button" class="btn btn-secondary " 
+                                data-bs-toggle="modal" data-bs-target="#addModal{{ product.id }}">
+                                  <i class="fa fa-plus"></i> 
+                              </button>
+
+                              <d  iv class="modal fade" id="addModal{{ product.id }}" tabindex="-1" 
+                              aria-labelledby="exampleModalLabel{{ product.id }}" aria-hidden="true">
+                             <div class="modal-dialog modal-dialog-centered">
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                         <h1 class="modal-title fs-5" id="exampleModalLabel{{ product.id }}">Modal title</h1>
+                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                     </div>
+                                     <div class="modal-body">
+                                         Add {{product.product_name}} to you product list?
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                         <button data-product-id="{{ product.id }}" type="button" class="btn btn-primary">Add</button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+     
+           
+
+
+                              </div>
+                           
+                  
+                            </td>
+                        </tr>
+                        {% endfor %}
+  
+                      </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
 
