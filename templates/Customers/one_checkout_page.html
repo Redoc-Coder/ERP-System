@@ -181,12 +181,13 @@
               <h4 class="card-title">Billing Information</h4>
               <form>
                 <div class="form-group mb-3">
-                  <label for="fullName">Full Name</label>
+                  <label for="fullName"></label>
                   <input
                     type="text"
                     class="form-control"
                     id="fullName"
-                    placeholder="Frenz Ricafort"
+                    placeholder=""
+                    value="{{user_image.firstname}} {{user_image.lastname}}"
                   />
                 </div>
                 <div class="form-group mb-3">
@@ -195,7 +196,8 @@
                     type="email"
                     class="form-control"
                     id="email"
-                    placeholder="frinz@example.com"
+                    placeholder=""
+                    value="{{user_image.email}}"
                   />
                 </div>
                 <div class="form-group mb-3">
@@ -204,7 +206,7 @@
                     type="text"
                     class="form-control"
                     id="address"
-                    placeholder="secret"
+                    placeholder=""
                   />
                 </div>
 
@@ -214,7 +216,7 @@
                     type="text"
                     class="form-control"
                     id="zipCode"
-                    placeholder="+63"
+                    placeholder=""
                   />
                 </div>
               </form>

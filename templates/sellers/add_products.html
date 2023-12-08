@@ -505,7 +505,9 @@
                                      </div>
                                      <div class="modal-footer">
                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                         <button data-product-id="{{ product.id }}" type="button" class="btn btn-primary">Add</button>
+                                         <button data-product-id="{{ product.id }}" data-seller-id="{{ product.seller_id }}" type="button" class="btn btn-primary add-product-btn">
+                                          <i class="fa fa-plus"></i> Add
+                                       </button>
                                      </div>
                                  </div>
                              </div>
@@ -543,5 +545,6 @@
     <script src="/static/js/seller_dashboard_functions/script.js"></script>
     <script src="/static/js/seller_dashboard_functions/archive_product.js"></script>
     <script src="/static/js/seller_dashboard_functions/edit_product.js"></script>
+    <script src="/static/js/seller_dashboard_functions/unarchive product.js"></script>
   </body>
 </html>

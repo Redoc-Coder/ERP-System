@@ -150,13 +150,7 @@
                      </div>
                   </div>
                 
-               
 
-                <div class="suspend" style=" position:absolute; bottom: 2%; left: 25%; cursor: pointer;">
-                  <span class="text-danger" style="font-size: 14px;"> Suspend user</span>
-
-                </div>
-              
 
             </div>
                 
@@ -191,7 +185,7 @@
                             <span class="d-flex align-items-center justify-content-center " style="color: white;">
                                 <i class="fa-solid fa-peso-sign fa-2x" style="margin-right: 10px;"></i>
                             </span>
-                            <h5 style="color: white;" class="card-title"> Transactions: 1000</h5>
+                            <h5 style="color: white;" class="card-title"> Transactions: {{total_delivered_orders}}</h5>
                         </div>
                           </div>
                       </div>
@@ -204,10 +198,10 @@
 
                 <div class="lalagyan mt-4">
 
-                  <table class="table">
+                  <table class="table" id="productTable">
                     <thead>
                         <tr>
-                          
+                            <th scope="col"></th>
                             <th scope="col">Product name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Price</th>
@@ -226,8 +220,7 @@
                             <td>{{product.price}}</td>
                             <td>{{product.quantity}}</td>
                             <td>
-                              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeProductModal_{{ product.id }}">
-
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeProductModal_{{ product.id }}">
                                     <i class="fa fa-trash"></i>
                                 </button>
                 
@@ -243,7 +236,11 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-danger">Remove</button>
+                                                <!-- Pass the product.id to the removeProduct function -->
+                                                <button type="button" class="btn btn-outline-secondary remove-from-cart" data-product-id="{{ product.id }}">
+                                                    Remove
+                                                </button>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -281,9 +278,12 @@
             </div>
             </div>
         </div>
-        
-        
+        <script>
 
+        </script>
+        
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="/static/js/admin_functions/remove_product.js"></script>
         <script src="/static/js/admin_functions/specUser.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

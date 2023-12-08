@@ -9,8 +9,8 @@ $(document).ready(function () {
             url: '/delete_product_ajax/' + productId,
             success: function (response) {
                 if (response.status === 'success') {
-                    // Remove the deleted row from the table
-                    currentRow.remove();
+
+                    location.reload()
                     // Trigger Bootstrap modal hide event and remove the modal from the DOM
                     currentModal.on('hidden.bs.modal', function () {
                         $(this).remove();

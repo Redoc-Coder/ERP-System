@@ -178,7 +178,7 @@
           {% for product in outdoor_clothing %}
            
             <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-delay="600">
-              <div class="card clickable-card">
+              <div class="card clickable-card" data-product-id="{{ product.id }}">
                 <!-- Product image -->
                 <div class="img-container" style="background-color: #F3F3F3;">
                   <img class="card-img-top" src="data:{{ product.mime_type }};base64, {{ product.product_image }}" alt="{{ product.name }}" height="200">
@@ -186,6 +186,7 @@
                 <!-- Product details -->
                 <div class="card-body">
                   <div style="line-height: 1.7;">
+                    <span style="color: #686665; font-size: 0.875rem;float: right;">{{product.sold}} sold</span>
                     <!-- Product name-->
                     <span style="font-size: 18px;" class="fw-bolder">
                       {{ product.product_name }}
@@ -196,6 +197,17 @@
                     <br>
                     <!-- Product price-->
                     <span style="font-size: 16px;" class="fw-bold">₱{{ product.price }}</span>
+                    <div
+                    class="small text-warning mb-2" style="display: flex;"
+                  >
+                  {% for _ in range(5) %}
+                  {% if loop.index <= product.average_rating %}
+                      <div class="bi-star-fill"></div>
+                  {% else %}
+                      <div class="bi-star"></div>
+                  {% endif %}
+              {% endfor %}
+                  </div>
                     <div class="mt-2" id="addToCartButton">
                       <!-- Add to Cart button -->
                       <button type="button" style="border-radius: 20px; font-weight: 650;" class="btn btn-outline-dark add-cart" data-product-id="{{ product.id }}">
@@ -204,12 +216,8 @@
                     </div>
                   </div>
                 </div>
-                <!-- Product actions -->
-                <div class="card-footer border-top-0 bg-transparent">
-                  <!-- Add any product-specific actions here if needed -->
-                </div>
-              </div>
             </div>
+          </div>
          
           {% endfor %}
 
@@ -227,5 +235,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="/static/js/addtocart.js"></script>
+    <script src="/static/js/landingpage.js"></script>
   </body>
 </html>

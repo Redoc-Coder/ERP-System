@@ -380,6 +380,9 @@ def ProductInfo(product_id):
         cart_count = len(user_cart)
          
         user_image = accounts.query.get(user_id)
+        products = Product.query.all()
+        for product in products:
+            product.average_rating = calculate_average_rating(product)
         
 
 
@@ -390,19 +393,15 @@ def ProductInfo(product_id):
     product = Product.query.get(product_id)
     
     related_products = Product.query.filter(Product.category == product.category, Product.id != product_id).all()
-    
-       
-
-    
-    
-        
+            
     seller_id = product.seller_id
     seller = accounts.query.get(seller_id)
     num_ratings = Rating.query.filter_by(product_id=product_id).count()
 
     for r_product in related_products:
         r_product.product_image = b64encode(r_product.product_image).decode("utf-8")
-        
+       
+
 
     if product is not None:
         product.product_image = b64encode(product.product_image).decode("utf-8")
@@ -410,7 +409,7 @@ def ProductInfo(product_id):
         
     
         return render_template("customers/product_info_page.html", cart_count=cart_count, product=product, seller=seller, num_ratings=num_ratings, 
-                               related_products=related_products, user_image=user_image,)
+                               related_products=related_products, user_image=user_image, calculate_average_rating = calculate_average_rating)
     else:
         # Handle the case where the product does not exist
 
@@ -752,6 +751,9 @@ def OutdoorClothing():
         user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        products = Product.query.all()
+        for product in products:
+            product.average_rating = calculate_average_rating(product)
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
@@ -776,6 +778,9 @@ def ExerciseFitnessGear():
         user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        products = Product.query.all()
+        for product in products:
+            product.average_rating = calculate_average_rating(product)
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
@@ -804,6 +809,9 @@ def SportsEquipment():
         user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        products = Product.query.all()
+        for product in products:
+            product.average_rating = calculate_average_rating(product)
     else:
         # User is not logged in, or no cart data found
         cart_count = 0
@@ -829,6 +837,9 @@ def CampingHikingGear():
         user_image = accounts.query.get(user_id)
         user_cart = cart.query.filter_by(customer_id=user_id).all()
         cart_count = len(user_cart)
+        products = Product.query.all()
+        for product in products:
+            product.average_rating = calculate_average_rating(product)
      else:
         # User is not logged in, or no cart data found
         cart_count = 0
@@ -1047,6 +1058,36 @@ def update_product(product_id):
 
     return redirect(url_for("AddProducts", product_id=product_id))
 
+@app.route('/add-product/<int:product_id>', methods=['POST'])
+def add_product(product_id):
+    try:
+        # Get the disabled product from the database
+        disabled_product = DisabledProduct.query.get_or_404(product_id)
+
+        # Create a new product using the disabled product's data
+        new_product = Product(
+            seller_id=disabled_product.seller_id,
+            product_name=disabled_product.product_name,
+            product_details=disabled_product.product_details,
+            product_image=disabled_product.product_image,
+            mime_type=disabled_product.mime_type,
+            category=disabled_product.category,
+            price=disabled_product.price,
+            quantity=disabled_product.quantity,
+
+        )
+
+        # Add the new product to the session and commit changes
+        db.session.add(new_product)
+        db.session.delete(disabled_product)
+        db.session.commit()
+
+        return jsonify({'message': 'Product successfully added'}), 200
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"Error adding product: {str(e)}")
+        # Return an error response
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 @app.route('/store_rating', methods=['POST'])
 def store_rating():
@@ -1120,7 +1161,7 @@ def AdminDashboard():
         .all()
     total_users = accounts.query.count()
     total_products = Product.query.count()
-
+    total_accounts_sales = db.session.query(func.sum(accounts.sales)).scalar() or 0
     if sales_data:
         labels = [category for category, _ in sales_data]
         sales_quantities = [total_sold for _, total_sold in sales_data]
@@ -1129,10 +1170,12 @@ def AdminDashboard():
         for seller in top_sellers_data:
             seller.profile = b64encode(seller.profile).decode("utf-8")
 
-        return render_template("administrator/dashboard.html", labels=labels, salesQuantities=sales_quantities, top_sellers_data=top_sellers_data
-                               ,total_users=total_users, total_products=total_products)
+    
 
-    return render_template("administrator/dashboard.html", labels=[], salesQuantities=[], total_users=total_users)
+        return render_template("administrator/dashboard.html", labels=labels, salesQuantities=sales_quantities, top_sellers_data=top_sellers_data
+                               ,total_users=total_users, total_products=total_products, total_accounts_sales = total_accounts_sales)
+
+    return render_template("administrator/dashboard.html", labels=[], salesQuantities=[], total_users=total_users,total_accounts_sales = total_accounts_sales)
 
 # Route to provide JSON data for the chart
 @app.route("/admin/admin-dashboard/data")
@@ -1141,6 +1184,8 @@ def getChartData():
     sales_data = db.session.query(Product.category, func.sum(Product.sold).label('total_sold')) \
         .group_by(Product.category) \
         .all()
+    
+    
 
     if sales_data:
         labels = [category for category, _ in sales_data]
@@ -1169,13 +1214,33 @@ def User(user_id):
     user_products = get_paginated_user_products(page, per_page, user_id)
     user = accounts.query.get_or_404(user_id)
     total_products = Product.query.filter_by(seller_id=user.id).count()
-   
+    delivered_orders = customerOrders.query.filter_by(seller_id=user.id, status='delivered').all()
+    total_delivered_orders = len(delivered_orders)
+    
+    
     for product in user_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
 
     return render_template('administrator/specUser.html', user=user, user_products=user_products, user_id=user_id,
-                           total_products = total_products)
+                           total_products = total_products, total_delivered_orders = total_delivered_orders)
 
+@app.route('/remove-product/<int:product_id>', methods=['POST'])
+def remove_product(product_id):
+    try:
+        # Get the product from the database
+        product = Product.query.get_or_404(product_id)
+
+        # Delete the product and commit changes
+        db.session.delete(product)
+        db.session.commit()
+
+        # Redirect to the user's page after deletion
+        return jsonify({'message': 'Product successfully removed'}), 200
+    except Exception as e:
+        # Log the exception for debugging purposes
+        print(f"Error removing product: {str(e)}")
+        # Return an error response
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 #for pagination
 def get_paginated_users(page, per_page):
@@ -1204,12 +1269,11 @@ def get_paginated_audit_trail(page, per_page):
 @app.route('/audit-trail')
 def AuditTrail():
     page = request.args.get('page', default=1, type=int)
-    per_page =10
+    per_page =11
     audit_records = get_paginated_audit_trail(page, per_page)
 
 
     return render_template('/administrator/auditTrail.html',audit_records=audit_records)
-
 
 @app.route("/admin/cashout-request")
 def CashoutRequest():
