@@ -150,7 +150,7 @@
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{{ url_for('Login') }}"
+                  <a class="dropdown-item" onclick="logoutAndRedirect()"
                     >Logout</a
                   >
                 </li>
@@ -262,5 +262,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="/static/js/logout.js"></script>
   </body>
 </html>

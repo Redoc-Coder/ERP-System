@@ -10,15 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
     var productElements = document.querySelectorAll('.product');
     productElements.forEach(function(productElement) {
       productIds.push(productElement.getAttribute('data-product-id'));
-    });
 
+    });
+    var address = document.getElementById('address').value;
+    var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     // Make an AJAX request to the server to place the order
     fetch('/place_order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ productIds: productIds }),
+      body: JSON.stringify({ productIds: productIds, 
+          address: address,
+        paymentMethod: paymentMethod, }),
+
     })
     .then(response => response.json())
     .then(data => {

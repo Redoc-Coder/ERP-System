@@ -6,6 +6,9 @@
         placeOrderButton.addEventListener('click', function () {
         // Get the product ID from the data-product-id attribute
         var productId = placeOrderButton.dataset.productId;
+        var address = document.getElementById('address').value;
+        var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
 
         // Send an AJAX request to the server
         fetch('/one_place_order', {
@@ -15,6 +18,8 @@
             },
             body: JSON.stringify({
             productId: productId,
+            address: address,
+            paymentMethod: paymentMethod,
             }),
         })
             .then(response => response.json())

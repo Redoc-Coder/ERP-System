@@ -164,7 +164,7 @@
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{{ url_for('Login') }}"
+                  <a class="dropdown-item" onclick="logoutAndRedirect()"
                     >Logout</a
                   >
                 </li>
@@ -589,5 +589,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="/static/js/addtocart.js"></script>
+    <script src="/static/js/logout.js" ></script>
   </body>
 </html>

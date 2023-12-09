@@ -473,7 +473,8 @@ def one_place_order():
    if request.method == 'POST':
         product_id = request.json.get('productId')
         customer_id = session.get('user_id')
-
+        address = request.json.get('address')  # Get the address value
+        payment_method = request.json.get('paymentMethod')  # Get the payment method value
         # Retrieve product details from the database based on product_id
         product = Product.query.get(product_id)
         seller_id = product.seller_id
@@ -490,6 +491,8 @@ def one_place_order():
             price=product.price,
             quantity=product.order_quantity,  
             total=product.price*product.order_quantity,  
+            address=address,
+            payment_method=payment_method
         )
 
         # Add the new order to the database
@@ -514,6 +517,8 @@ def one_place_order():
             quantity=product.order_quantity, 
             total=product.price*product.order_quantity,  
             category=product.category,
+            address=address,
+            payment_method=payment_method
         )
         db.session.add(customer_order)
         db.session.commit()
@@ -527,7 +532,8 @@ def place_order():
     if request.method == 'POST':
         product_ids = request.json.get('productIds', [])
         customer_id = session['user_id']
-    
+        address = request.json.get('address')  # Get the address value
+        payment_method = request.json.get('paymentMethod')  # Get the payment method value
         for product_id in product_ids:
             # Retrieve product details from the database based on product_id
             product = cart.query.get(product_id)
@@ -547,6 +553,8 @@ def place_order():
                 price=product.price,
                 quantity=product.quantity,  
                 total=product.price*product.quantity,  
+                address=address,
+                payment_method=payment_method
             )
 
             # Add the new order to the database
@@ -571,6 +579,8 @@ def place_order():
                 quantity=product.quantity, 
                 total=product.price,  
                 category=product.category,
+                address=address,
+                payment_method=payment_method   
         )
             db.session.add(customer_order)
             db.session.commit()
@@ -980,11 +990,19 @@ def AddProducts():
     return render_template("sellers/add_products.html", seller_products=products, disabled_products=disabled_products)
 
 #archive seller product
+
 @app.route('/delete_product_ajax/<int:product_id>', methods=['POST'])
 def delete_product_ajax(product_id):
     product = Product.query.get_or_404(product_id)
 
     try:
+        # Check if the product has any ratings
+        if product.num_ratings() > 0:
+            # Remove the ratings associated with the product
+            ratings = Rating.query.filter_by(product_id=product_id).all()
+            for rating in ratings:
+                db.session.delete(rating)
+
         # Create a disabled product using the attributes of the original product
         disabled_product = DisabledProduct(
             product_name=product.product_name,
@@ -1003,7 +1021,7 @@ def delete_product_ajax(product_id):
 
         # Delete the original product
         db.session.delete(product)
-
+        
         db.session.commit()
         response = {'status': 'success', 'message': f'The product "{product.product_name}" has been deleted.'}
     except Exception as e:
@@ -1011,7 +1029,6 @@ def delete_product_ajax(product_id):
         response = {'status': 'error', 'message': f'Error deleting the product: {str(e)}'}
 
     return jsonify(response)
-
 #seller edit product
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -1229,6 +1246,13 @@ def remove_product(product_id):
     try:
         # Get the product from the database
         product = Product.query.get_or_404(product_id)
+        
+        # Check if the product has any ratings
+        if product.num_ratings() > 0:
+            # Remove the ratings associated with the product
+            ratings = Rating.query.filter_by(product_id=product_id).all()
+            for rating in ratings:
+                db.session.delete(rating)
 
         # Delete the product and commit changes
         db.session.delete(product)
@@ -1294,29 +1318,14 @@ def SpecificUserTransaction():
 def SpecificUserAuditTrail():
     return render_template("administrator/userAuditTrail.html")
 
-#suspend user
-@app.route("/suspend-user", methods=["POST"])
-def suspend_user():
 
-    user_id_to_suspend = request.form.get("user_id")
-    if user_id_to_suspend:
-        user = accounts.query.get(user_id_to_suspend)
+@app.route('/logout', methods=['POST'])
+def logout():
+    # Perform any necessary logout logic (e.g., clearing session data)
+    session.clear()
 
-        if user:
-            # Toggle the suspension status
-            user.is_suspended = not user.is_suspended
-            db.session.commit()
-
-            # Create an audit trail record for the suspension
-            email = session["user_email"]  # Assuming the admin's email is in the session
-            audit_record = auditTrail(user=email, event_type='Suspend User', description=f'Suspended user with ID: {user.id}')
-            db.session.add(audit_record)
-            db.session.commit()
-
-            # Redirect back to the admin page or another appropriate destination
-            return redirect(url_for("admin_dashboard"))
-    
-    return "Invalid user or unauthorized access"  # You can customize this message or redirect to an error page
+    # You can return a JSON response if needed
+    return jsonify({'message': 'Logout successful'})
 
 # END OF ADMIN
 

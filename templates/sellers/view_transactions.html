@@ -57,9 +57,7 @@
                   ><span class="icon paper" aria-hidden="true"></span>View
                   Transactions</a
                 >
-                <a href="{{ url_for('Transactions') }}"
-                ><span class="icon paper" aria-hidden="true"></span>
-                Inventory</a>
+
 
               </li>
               <li>
@@ -196,6 +194,8 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total price</th>
+                            <th>Address</th>
+                            <th>Payment method</th>
                             <th>Status</th>
                             <th>Date</th>
                         </tr>
@@ -209,6 +209,8 @@
                             <td>{{ order.price }}</td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.total }}</td>
+                            <td>{{ order.address }}</td>
+                            <td>{{ order.payment_method }}</td>
                             <td>{{ order.status }}</td>
                             <td>{{ order.orderdate.strftime('%d.%m.%Y') }}</td>
                         </tr>

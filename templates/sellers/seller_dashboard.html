@@ -165,7 +165,7 @@
           <div class="container">
             <h2 class="main-title">Dashboard</h2>
             <div class="row stat-cards">
-              <div class="col-md-6 col-xl-3">
+              <div class="col-md-4 col-xl-4">
                 <article class="stat-cards-item">
                   <div class="stat-cards-icon primary">
                     <i data-feather="bar-chart-2" aria-hidden="true"></i>
@@ -183,7 +183,7 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 col-xl-3">
+              <div class="col-md-4 col-xl-4">
                 <article class="stat-cards-item">
                   <div class="stat-cards-icon warning">
                     <i data-feather="file" aria-hidden="true"></i>
@@ -201,7 +201,7 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 col-xl-3">
+              <div class="col-md-4 col-xl-4">
                 <article class="stat-cards-item">
                   <div class="stat-cards-icon purple">
                     <i data-feather="file" aria-hidden="true"></i>
@@ -221,26 +221,7 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 col-xl-3">
-                <article class="stat-cards-item">
-                  <div class="stat-cards-icon success">
-                    <i data-feather="feather" aria-hidden="true"></i>
-                  </div>
-                  <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">
-                      Diko pa alam ilalagay dito
-                    </p>
-                    <p class="stat-cards-info__title">...</p>
-                    <p class="stat-cards-info__progress">
-                      <span class="stat-cards-info__profit warning">
-                        <i data-feather="trending-up" aria-hidden="true"></i
-                        >0.00%
-                      </span>
-                      Last month
-                    </p>
-                  </div>
-                </article>
-              </div>
+      
             </div>
             <div class="row">
               <div class="col-lg-12">
@@ -258,6 +239,8 @@
                         <th>Customer</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
+                        <th>Address</th>
+                        <th>Payment method</th>
                         <th>Status</th>
                         <th>Order Date</th>
                         <th></th>
@@ -269,7 +252,7 @@
                       <tr>
                           <td>
                               <label class="users-table__checkbox">
-                                  <input type="checkbox" class="check" />
+                               
                                   <div class="categories-table-img">
                                       <picture>
                                         <img src="data:{{ order.mime_type }};base64, {{ order.product_image }}" alt="product" />
@@ -286,6 +269,8 @@
                           </td>
                           <td>{{ order.quantity }}</td>
                           <td>{{ order.total }}</td>
+                          <td>{{ order.address }}</td>
+                          <td>{{ order.payment_method }}</td>
                           <td><span class="badge-pending">{{ order.status }}</span></td>
                           <td>{{ order.orderdate.strftime('%d.%m.%Y') }}</td>
                           <td>
