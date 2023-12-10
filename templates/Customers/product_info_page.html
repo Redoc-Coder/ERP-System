@@ -217,7 +217,7 @@
                   
                      
                     <!--Quantity button-->
-                    <div class="basta " style="display: flex;  align-items: center;">
+                    <div id="quantityButton" data-product-id="{{ product.id }}" class="basta " style="display: flex;  align-items: center;">
                       
               
                       <div class="input-group mt-4" style="margin-right: 15px; max-width: 200px; border-radius: 20px; background-color: #EFF0F0;">
@@ -373,44 +373,6 @@
     </footer>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const quantityInput = document.getElementById('quantity');
-      const incrementButton = document.getElementById('increment');
-      const decrementButton = document.getElementById('decrement');
-
-      incrementButton.addEventListener('click', function () {
-        // Increment the quantity
-        quantityInput.value = parseInt(quantityInput.value) + 1;
-
-        // Make an AJAX request to update the order_quantity in the backend
-        updateOrderQuantity(quantityInput.value);
-      });
-
-      decrementButton.addEventListener('click', function () {
-        // Ensure the quantity doesn't go below 1
-        if (parseInt(quantityInput.value) > 1) {
-          // Decrement the quantity
-          quantityInput.value = parseInt(quantityInput.value) - 1;
-
-          // Make an AJAX request to update the order_quantity in the backend
-          updateOrderQuantity(quantityInput.value);
-        }
-      });
-      const productId = addToCartButton.getAttribute('data-product-id');
-      function updateOrderQuantity(newQuantity) {
-        // Make an AJAX request to update the order_quantity in the backend
-        fetch('/update_order_quantity', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            productId: productId, // Replace with the actual product ID
-            newOrderQuantity: newQuantity,
-          }),
-        });
-      }
-    });
 
 
     </script>
@@ -434,5 +396,6 @@
     <script src="/static/js/landingpage.js"></script>
     <script src="/static/js/buynow.js"></script>
     <script src="/static/js/logout.js"></script>
+    <script src="/static/js/oneUpdateQuantity.js"></script>
   </body>
 </html>

@@ -641,10 +641,14 @@ def update_order_quantity():
 
     # Update the order_quantity in the Product table
     product = Product.query.get(product_id)
-    product.order_quantity = new_order_quantity
-    db.session.commit()
 
-    return jsonify({'message': 'Order quantity updated successfully'}) 
+    # Check if the product exists
+    if product:
+        product.order_quantity = new_order_quantity
+        db.session.commit()
+        return jsonify({'message': 'Order quantity updated successfully'})
+    else:
+        return jsonify({'error': 'Product not found'}), 404
 
 @app.route("/checkout/<int:product_id>")
 def buyNow(product_id):
