@@ -1238,7 +1238,8 @@ def User(user_id):
     delivered_orders = customerOrders.query.filter_by(seller_id=user.id, status='delivered').all()
     total_delivered_orders = len(delivered_orders)
     
-    
+    if user:
+        user.profile = b64encode(user.profile).decode("utf-8")
     for product in user_products:
         product.product_image = b64encode(product.product_image).decode("utf-8")
 

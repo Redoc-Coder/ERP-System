@@ -275,7 +275,11 @@
                           </div>
                           <div class="col-md-2 " style="display: flex; align-items: center; justify-content: flex-end;">
                             <form method="post" action="{{ url_for('cancel_order', order_id=order.id) }}">
-                              <button type="submit" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
+                              {% if order.status in ['preparing', 'out for delivery'] %}
+                                  <button type="submit" class="btn btn-outline-danger" style="outline: none !important;" disabled>Cancel</button>
+                              {% else %}
+                                  <button type="submit" class="btn btn-outline-danger" style="outline: none !important;">Cancel</button>
+                              {% endif %}
                           </form>
                           </div>
                       

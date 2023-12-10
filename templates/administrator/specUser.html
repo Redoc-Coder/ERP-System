@@ -135,11 +135,11 @@
                 </div>
                <div class="links-cont  ">
                 <div class="user-profile" style="display: flex; justify-content: center;">
-                  <img src="/static/images/beanie.jpg" class="img-thumbnail" alt="..." style="height: 100px; width: 100px; border-radius: 50%;">
+                  <img  src="data:{{ user.mime_type }};base64, {{ user.profile }}" class="img-thumbnail" alt="..." style="height: 100px; width: 100px; border-radius: 50%;">
                 </div>
                 
                 <div class="user mb-4">
-                   <a style="text-decoration: none; color: black; font-size: 14px;">Seller 1</a>
+                   <a style="text-decoration: none; color: black; font-size: 14px;">{{user.username}}</a>
 
                 </div>
 
