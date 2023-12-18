@@ -2,33 +2,28 @@ import os
 from flask import (
     Flask,
     render_template,
-    request,
     url_for,
     redirect,
     session,
     request,
     jsonify, flash
 )
-from flask import send_file
-import io
+
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 from dotenv import load_dotenv
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired
 from flask_mail import Mail, Message
 from wtforms.validators import Email as EmailValidator
-import secrets
 from datetime import datetime
-from werkzeug.utils import secure_filename
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_, desc
-from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating, DisabledProduct
+from sqlalchemy import desc
 from sqlalchemy.sql import func
 from base64 import b64encode
 import base64
+from models import db, accounts, cart, auditTrail, Product, Orders, customerOrders, Rating, DisabledProduct
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -267,7 +262,7 @@ def SignUp():
         lastname = request.form["lastname"]
         username = request.form["username"]
         email = request.form["email"]
-        account_type = request.form["accountType"]
+
         password = request.form["password"]
 
         if accounts.query.filter_by(email=email).first():
@@ -285,7 +280,7 @@ def SignUp():
                 lastname=lastname,
                 username=username,
                 email=email,
-                account_type=account_type,
+                account_type='seller/buyer',
                 password=hashed_password,
                 mime_type='image/jpeg'  # Use the hashed password
             )
